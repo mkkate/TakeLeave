@@ -107,7 +107,7 @@ namespace TakeLeave.Data
             modelBuilder.Entity<Employee>()
                 .HasOne(e => e.DaysOff)
                 .WithOne(d => d.Employee)
-                .HasForeignKey<DaysOff>(d => d.EmployeeID)
+                .HasForeignKey<Employee>(e => e.DaysOffID)
                 .IsRequired();
 
 
