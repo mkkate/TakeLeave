@@ -1,6 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using TakeLeave.Data;
+using TakeLeave.Data.Database.Employees;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<TakeLeaveDbContext>(options =>
+    options.UseSqlServer(connectionString));
+builder.Services.AddIdentity<Employee, EmployeeRole>()
+    .AddEntityFrameworkStores<TakeLeaveDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

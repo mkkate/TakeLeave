@@ -12,6 +12,8 @@ namespace TakeLeave.Data.Database.DaysOffs
         public int? Unpaid { get; set; }
         public int? SickLeave { get; set; }
 
+        public int EmployeeID { get; set; }
+
         public Employee Employee { get; set; }
     }
 }
