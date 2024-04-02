@@ -11,12 +11,14 @@ namespace TakeLeave.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql("SET IDENTITY_INSERT DaysOffs ON " +
+                "IF NOT EXISTS (SELECT 1 FROM DaysOffs WHERE ID = 2) " +
                 "INSERT INTO DaysOffs " +
                 "(ID, Vacation, Paid, Unpaid, SickLeave) " +
                 "VALUES " +
                 $"(2, {20}, {5}, {0}, {11})");
 
-            migrationBuilder.Sql($"INSERT INTO Employees " +
+            migrationBuilder.Sql("IF NOT EXISTS (SELECT 1 FROM Employees WHERE UserName = 'emma.scott') " +
+                "INSERT INTO Employees " +
                 "(FirstName, LastName, Address, IDNumber, EmploymentStartDate, EmploymentEndDate, InsertDate, DeleteDate, DaysOffID," +
                 " PositionID, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp," +
                 " PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount, IsAdmin) " +
