@@ -1,0 +1,16 @@
+﻿@model LoginViewModel
+
+
+<h2>Login</h2>
+
+<form asp-action="Login" asp-controller="Login" method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Input.UserName" class="form-control" placeholder="UserName">
+        <label asp-for="Input.UserName"></label>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Input.Password" class="form-control" placeholder="Password">
+        <label asp-for="Input.Password"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
