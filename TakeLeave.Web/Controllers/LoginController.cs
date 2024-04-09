@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TakeLeave.Business.Constants;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Web.Models;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -39,7 +40,7 @@ namespace TakeLeave.Web.Controllers
 
                     if (employee != null)
                     {
-                        bool userRole = await _userManager.IsInRoleAsync(employee, "User");
+                        bool userRole = await _userManager.IsInRoleAsync(employee, EmployeeRoles.User);
 
                         return userRole ? RedirectToAction("Index", "User") : RedirectToAction("Index", "Hr");
                     }
