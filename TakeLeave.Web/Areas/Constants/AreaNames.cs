@@ -3,5 +3,6 @@
     public class AreaNames
     {
         public const string User = "User";
+        public const string HR = "HR";
     }
 }
