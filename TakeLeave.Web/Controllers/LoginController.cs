@@ -19,13 +19,13 @@ namespace TakeLeave.Web.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Login()
+        public IActionResult OnLogin()
         {
             return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> OnLogin(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid)
             {
