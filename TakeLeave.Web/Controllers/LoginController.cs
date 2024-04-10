@@ -43,7 +43,9 @@ namespace TakeLeave.Web.Controllers
                     {
                         bool userRole = await _userManager.IsInRoleAsync(employee, EmployeeRoles.User);
 
-                        return userRole ? RedirectToAction("Index", "Dashboard", new { area = AreaNames.User }) : RedirectToAction("Index", "Hr");
+                        return userRole ?
+                            RedirectToAction("Index", "Dashboard", new { area = AreaNames.User }) :
+                            RedirectToAction("Index", "Dashboard", new { area = AreaNames.HR });
                     }
                 }
             }

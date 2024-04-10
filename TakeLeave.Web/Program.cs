@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TakeLeave.Data;
 using TakeLeave.Data.Database.Employees;
@@ -11,6 +13,16 @@ builder.Services.AddDbContext<TakeLeaveDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddIdentity<Employee, EmployeeRole>()
     .AddEntityFrameworkStores<TakeLeaveDbContext>();
+
+builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+options =>
+{
+    options.LoginPath = "/Login/OnLogin";
+    options.LogoutPath = "/Logout/OnLogout";
+    options.AccessDeniedPath = "/Home/AccessDenied";
+    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -37,6 +49,6 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=IndexPageByRole}/{id?}");
 
 app.Run();
