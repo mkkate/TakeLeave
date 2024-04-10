@@ -5,5 +5,6 @@
         public const string Admin = "Admin";
         public const string HR = "HR";
         public const string User = "User";
+        public const string AdminOrHR = Admin + "," + HR;
     }
 }
