@@ -4,6 +4,6 @@ namespace TakeLeave.Business.Interfaces
 {
     public interface IUserService
     {
-        UserDTO GetUserDetails(int id);
+        UserDTO? GetUserDetails(int id);
     }
 }
