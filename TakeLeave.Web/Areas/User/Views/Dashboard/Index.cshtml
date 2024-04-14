@@ -1,1 +1,34 @@
-﻿<h2>User Page</h2>
+﻿@model TakeLeave.Web.Areas.User.Models.UserViewModel
+
+<div class="container w-75 mt-4 justify-content-center">
+    <h3>Hi @Model.FirstName, this is your information and number of days off:</h3>
+
+    <table class="table table-striped shadow mt-5 table-bordered user-info">
+        <tbody>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.FirstName)</td>
+                <td>@Html.DisplayFor(model => model.FirstName)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.LastName)</td>
+                <td>@Html.DisplayFor(model => model.LastName)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Address)</td>
+                <td>@Html.DisplayFor(model => model.Address)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Position)</td>
+                <td>@Html.DisplayFor(model => model.Position.SeniorityLevel) @Html.DisplayFor(model => model.Position.Title)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.EmploymentStartDate)</td>
+                <td>@Html.DisplayFor(model => model.EmploymentStartDate)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.EmploymentEndDate)</td>
+                <td>@Html.DisplayFor(model => model.EmploymentEndDate)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

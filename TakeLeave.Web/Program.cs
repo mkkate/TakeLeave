@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TakeLeave.Business.Interfaces;
+using TakeLeave.Business.Services;
 using TakeLeave.Data;
 using TakeLeave.Data.Database.Employees;
+using TakeLeave.Data.Interfaces;
+using TakeLeave.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +27,10 @@ options =>
     options.SlidingExpiration = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 });
+
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllersWithViews();
 
