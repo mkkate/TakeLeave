@@ -1,28 +1,29 @@
 ﻿using System.ComponentModel;
+using TakeLeave.Business.Constants;
 
 namespace TakeLeave.Web.Areas.User.Models
 {
     public class UserViewModel
     {
-        [DisplayName("First Name")]
+        [DisplayName(DisplayNameConstants.FirstName)]
         public string FirstName { get; set; }
 
-        [DisplayName("Last Name")]
+        [DisplayName(DisplayNameConstants.LastName)]
         public string LastName { get; set; }
 
-        [DisplayName("Address")]
+        [DisplayName(DisplayNameConstants.Address)]
         public string Address { get; set; }
 
-        [DisplayName("Start date")]
+        [DisplayName(DisplayNameConstants.StartDate)]
         public DateOnly EmploymentStartDate { get; set; }
 
-        [DisplayName("End date")]
+        [DisplayName(DisplayNameConstants.EndDate)]
         public DateOnly? EmploymentEndDate { get; set; }
 
 
         public DaysOffViewModel DaysOff { get; set; } = new DaysOffViewModel();
 
-        [DisplayName("Position")]
+        [DisplayName(DisplayNameConstants.Position)]
         public PositionViewModel Position { get; set; } = new PositionViewModel();
     }
 }

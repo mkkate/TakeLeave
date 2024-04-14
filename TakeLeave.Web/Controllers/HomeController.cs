@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TakeLeave.Business.Constants;
 using TakeLeave.Web.Areas.Constants;
+using TakeLeave.Web.Constants;
 using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Controllers
@@ -41,12 +42,12 @@ namespace TakeLeave.Web.Controllers
             if (User.Identity?.IsAuthenticated is true)
             {
                 return User.IsInRole(EmployeeRoles.User) ?
-                    RedirectToAction("Index", "Dashboard", new { area = AreaNames.User }) :
-                    RedirectToAction("Index", "Dashboard", new { area = AreaNames.HR });
+                    RedirectToAction(ControllerActionConstants.Index, ControllerNameConstants.Dashboard, new { area = AreaNames.User }) :
+                    RedirectToAction(ControllerActionConstants.Index, ControllerNameConstants.Dashboard, new { area = AreaNames.HR });
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(ControllerActionConstants.Index, ControllerNameConstants.Home);
             }
         }
     }

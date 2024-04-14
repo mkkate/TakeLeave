@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using TakeLeave.Business.Constants;
 
 namespace TakeLeave.Web.Models
 {
@@ -16,7 +18,7 @@ namespace TakeLeave.Web.Models
         public class InputModel()
         {
             [Required]
-            [Display(Name = "User name")]
+            [DisplayName(DisplayNameConstants.UserName)]
             public string UserName { get; set; }
 
             [Required]

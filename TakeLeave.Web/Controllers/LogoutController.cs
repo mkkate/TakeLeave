@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Data.Database.Employees;
+using TakeLeave.Web.Constants;
 
 namespace TakeLeave.Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace TakeLeave.Web.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("OnLogin", "Login");
+            return RedirectToAction(ControllerActionConstants.OnLogin, ControllerNameConstants.Login);
         }
     }
 }

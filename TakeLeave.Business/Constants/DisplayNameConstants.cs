@@ -1,0 +1,14 @@
+﻿namespace TakeLeave.Business.Constants
+{
+    public class DisplayNameConstants
+    {
+        public const string FirstName = "First Name";
+        public const string LastName = "Last Name";
+        public const string UserName = "User Name";
+        public const string Address = "Address";
+        public const string StartDate = "Start date";
+        public const string EndDate = "End date";
+        public const string SickLeave = "Sick leave";
+        public const string Position = "Position";
+    }
+}

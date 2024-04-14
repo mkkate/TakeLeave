@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Constants;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Web.Areas.Constants;
+using TakeLeave.Web.Constants;
 using TakeLeave.Web.Models;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -44,8 +45,8 @@ namespace TakeLeave.Web.Controllers
                         bool userRole = await _userManager.IsInRoleAsync(employee, EmployeeRoles.User);
 
                         return userRole ?
-                            RedirectToAction("Index", "Dashboard", new { area = AreaNames.User }) :
-                            RedirectToAction("Index", "Dashboard", new { area = AreaNames.HR });
+                            RedirectToAction(ControllerActionConstants.Index, ControllerNameConstants.Dashboard, new { area = AreaNames.User }) :
+                            RedirectToAction(ControllerActionConstants.Index, ControllerNameConstants.Dashboard, new { area = AreaNames.HR });
                     }
                 }
             }
