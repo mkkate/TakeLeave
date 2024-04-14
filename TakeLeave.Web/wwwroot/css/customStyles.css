@@ -1,0 +1,24 @@
+﻿.card-days-off {
+    background-color: whitesmoke;
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card.card-days-off .card-body {
+    padding-top: 22px;
+    color: dimgray;
+}
+
+.user-info > tbody > tr {
+    background-color: whitesmoke;
+}
+
+h2, h3 {
+    text-align: center;
+}

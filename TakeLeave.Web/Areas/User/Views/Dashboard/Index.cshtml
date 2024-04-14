@@ -31,4 +31,10 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="row mt-2 p-lg-5">
+        <div class="col mt-3">
+            @await Component.InvokeAsync("DaysOffs", Model.DaysOff)
+        </div>
+    </div>
 </div>

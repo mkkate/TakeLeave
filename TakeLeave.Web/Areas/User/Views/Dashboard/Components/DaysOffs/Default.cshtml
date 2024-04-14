@@ -1,0 +1,39 @@
+﻿@model TakeLeave.Web.Areas.User.Models.DaysOffViewModel
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card shadow card-days-off">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Vacation</h3>
+                <h5 class="card-text">@Html.DisplayNameFor(e => e.Vacation)</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow card-days-off">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Paid</h3>
+                <h5 class="card-text">@Html.DisplayNameFor(e => e.Paid)</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow card-days-off">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Unpaid</h3>
+                <h5 class="card-text">@Html.DisplayNameFor(e => e.Unpaid)</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow card-days-off">
+            <div class="card-body">
+                <h3 class="card-title">@Model.SickLeave</h3>
+                <h5 class="card-text">@Html.DisplayNameFor(e => e.SickLeave)</h5>
+            </div>
+        </div>
+    </div>
+</div>

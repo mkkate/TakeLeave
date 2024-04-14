@@ -7,6 +7,7 @@ using TakeLeave.Data;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Data.Interfaces;
 using TakeLeave.Data.Repositories;
+using TakeLeave.Web.Areas.User.ViewComponents;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,8 @@ options =>
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<DaysOffsViewComponent>();
 
 builder.Services.AddControllersWithViews();
 

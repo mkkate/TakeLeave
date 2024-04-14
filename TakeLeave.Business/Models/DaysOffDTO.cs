@@ -2,7 +2,6 @@
 {
     public class DaysOffDTO
     {
-        public int Id { get; set; }
         public int? Vacation { get; set; }
         public int? Paid { get; set; }
         public int? Unpaid { get; set; }
