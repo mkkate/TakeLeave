@@ -1,0 +1,42 @@
+﻿@model List<TakeLeave.Web.Areas.HR.Models.EmployeeViewModel>
+
+<div class="container mt-4 justify-content-center text-center">
+
+    <h3>List of all employees:</h3>
+
+    <table class="table table-secondary table-striped table-bordered border-secondary-subtle mt-4 shadow">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Position</th>
+                <th>Seniority</th>
+                <th>Days Off (V | P | U | SL)</th>
+                <th>Employment Start Date</th>
+                <th>Employment End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="@item.Id">
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@item.Position.Title</td>
+                    <td>@item.Position.SeniorityLevel</td>
+                    <td>@item.DaysOff.Vacation | @item.DaysOff.Paid | @item.DaysOff.Unpaid | @item.DaysOff.SickLeave</td>
+                    <td>@item.EmploymentStartDate</td>
+                    <td>@item.EmploymentEndDate</td>
+                    <td>
+                        <a asp-area="HR" asp-controller="Dashboard" asp-action="UpdateEmployee" asp-route-id="@item.Id">
+                            <img src="~/icons/edit.svg" />
+                        </a>
+                        <a asp-area="HR" asp-controller="Dashboard" asp-action="DeleteEmployee" asp-route-id="@item.Id">
+                            <img src="~/icons/delete.svg" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

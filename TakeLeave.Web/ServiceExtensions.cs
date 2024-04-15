@@ -15,6 +15,7 @@ namespace TakeLeave.Web
         public static void ConfigureAppServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
     }
 }
