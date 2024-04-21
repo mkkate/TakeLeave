@@ -25,5 +25,16 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             return View(employeesViewModel);
         }
+
+        public IActionResult UpdateEmployee(int id)
+        {
+            EmployeeUpdateDTO? employeeUpdateDTO = _employeeService.GetEmployeeById<EmployeeUpdateDTO>(id);
+
+            EmployeeUpdateViewModel? employeeUpdateViewModel = employeeUpdateDTO?.MapEmployeeUpdateDtoToEmployeeUpdateViewModel();
+
+            employeeUpdateViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
+
+            return View(employeeUpdateViewModel);
+        }
     }
 }

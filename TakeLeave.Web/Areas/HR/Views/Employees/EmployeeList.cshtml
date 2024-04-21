@@ -27,10 +27,10 @@
                     <td>@item.EmploymentStartDate</td>
                     <td>@item.EmploymentEndDate</td>
                     <td>
-                        <a asp-area="HR" asp-controller="Dashboard" asp-action="UpdateEmployee" asp-route-id="@item.Id">
+                        <a asp-area="HR" asp-controller="Employees" asp-action="UpdateEmployee" asp-route-id="@item.Id">
                             <img src="~/icons/edit.svg" />
                         </a>
-                        <a asp-area="HR" asp-controller="Dashboard" asp-action="DeleteEmployee" asp-route-id="@item.Id">
+                        <a asp-area="HR" asp-controller="Employees" asp-action="DeleteEmployee" asp-route-id="@item.Id">
                             <img src="~/icons/delete.svg" />
                         </a>
                     </td>

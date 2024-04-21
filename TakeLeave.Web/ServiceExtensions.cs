@@ -10,6 +10,7 @@ namespace TakeLeave.Web
         public static void ConfigureRepository(this IServiceCollection services)
         {
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IPositionRepository, PositionRepository>();
         }
 
         public static void ConfigureAppServices(this IServiceCollection services)

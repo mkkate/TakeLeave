@@ -25,5 +25,30 @@ namespace TakeLeave.Business.Mappers
 
             return employeeDTO;
         }
+
+        public static EmployeeUpdateDTO MapEmployeeToEmployeeUpdateDto(this Employee employee)
+        {
+            EmployeeUpdateDTO employeeUpdateDTO = new EmployeeUpdateDTO();
+
+            employeeUpdateDTO.Id = employee.Id;
+            employeeUpdateDTO.FirstName = employee.FirstName;
+            employeeUpdateDTO.LastName = employee.LastName;
+            employeeUpdateDTO.UserName = employee.UserName;
+            employeeUpdateDTO.Email = employee.Email;
+            employeeUpdateDTO.Address = employee.Address;
+            employeeUpdateDTO.IDNumber = employee.IDNumber;
+            employeeUpdateDTO.EmploymentStartDate = employee.EmploymentStartDate;
+            employeeUpdateDTO.EmploymentEndDate = employee.EmploymentEndDate;
+
+            employeeUpdateDTO.DaysOff.Vacation = employee.DaysOff.Vacation;
+            employeeUpdateDTO.DaysOff.Paid = employee.DaysOff.Paid;
+            employeeUpdateDTO.DaysOff.Unpaid = employee.DaysOff.Unpaid;
+            employeeUpdateDTO.DaysOff.SickLeave = employee.DaysOff.SickLeave;
+
+            employeeUpdateDTO.Position.Title = employee.Position.Title;
+            employeeUpdateDTO.Position.SeniorityLevel = Enum.GetName(typeof(SeniorityLevel), employee.Position.SeniorityLevel);
+
+            return employeeUpdateDTO;
+        }
     }
 }
