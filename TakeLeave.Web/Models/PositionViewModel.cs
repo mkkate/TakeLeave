@@ -1,4 +1,4 @@
-﻿namespace TakeLeave.Web.Areas.User.Models
+﻿namespace TakeLeave.Web.Models
 {
     public class PositionViewModel
     {

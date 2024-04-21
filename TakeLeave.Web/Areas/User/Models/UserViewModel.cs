@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using TakeLeave.Business.Constants;
+using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.User.Models
 {

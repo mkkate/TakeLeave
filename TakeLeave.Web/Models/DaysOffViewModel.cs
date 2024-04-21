@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using TakeLeave.Business.Constants;
 
-namespace TakeLeave.Web.Areas.User.Models
+namespace TakeLeave.Web.Models
 {
     public class DaysOffViewModel
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TakeLeave.Web.Areas.User.Models;
+using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.User.ViewComponents
 {

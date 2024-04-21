@@ -1,4 +1,4 @@
-﻿using TakeLeave.Web.Areas.User.Models;
+﻿using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.HR.Models
 {
