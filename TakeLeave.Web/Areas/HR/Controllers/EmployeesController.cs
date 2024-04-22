@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TakeLeave.Business.Constants;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.HR.Mappers;
@@ -26,11 +28,25 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             return View(employeesViewModel);
         }
 
+        [Authorize(Roles = EmployeeRoles.Admin)]
         public IActionResult UpdateEmployee(int id)
         {
             EmployeeUpdateDTO? employeeUpdateDTO = _employeeService.GetEmployeeById<EmployeeUpdateDTO>(id);
 
             EmployeeUpdateViewModel? employeeUpdateViewModel = employeeUpdateDTO?.MapEmployeeUpdateDtoToEmployeeUpdateViewModel();
+
+            employeeUpdateViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
+
+            return View(employeeUpdateViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public async Task<IActionResult> UpdateEmployee(EmployeeUpdateViewModel employeeUpdateViewModel)
+        {
+            EmployeeUpdateDTO employeeUpdateDTO = employeeUpdateViewModel.MapEmployeeUpdateViewModelToEmployeeUpdateDto();
+
+            await _employeeService.UpdateEmployeeAsync(employeeUpdateDTO);
 
             employeeUpdateViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
 

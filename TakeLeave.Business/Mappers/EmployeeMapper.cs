@@ -1,4 +1,5 @@
-﻿using TakeLeave.Business.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using TakeLeave.Business.Models;
 using TakeLeave.Data.Database.Employees;
 
 namespace TakeLeave.Business.Mappers
@@ -46,9 +47,34 @@ namespace TakeLeave.Business.Mappers
             employeeUpdateDTO.DaysOff.SickLeave = employee.DaysOff.SickLeave;
 
             employeeUpdateDTO.Position.Title = employee.Position.Title;
-            employeeUpdateDTO.Position.SeniorityLevel = Enum.GetName(typeof(SeniorityLevel), employee.Position.SeniorityLevel);
+            employeeUpdateDTO.Position.SeniorityLevel = Enum.GetName(typeof(Models.SeniorityLevel), employee.Position.SeniorityLevel);
 
             return employeeUpdateDTO;
+        }
+
+        public static void MapEmployeeUpdateDtoToEmployee(this EmployeeUpdateDTO employeeUpdateDTO, Employee employee, UserManager<Employee> userManager)
+        {
+            employee.Id = employeeUpdateDTO.Id;
+            employee.FirstName = employeeUpdateDTO.FirstName;
+            employee.LastName = employeeUpdateDTO.LastName;
+            employee.UserName = employeeUpdateDTO.UserName;
+            employee.Email = employeeUpdateDTO.Email;
+            employee.Address = employeeUpdateDTO.Address;
+            employee.IDNumber = employeeUpdateDTO.IDNumber;
+            employee.EmploymentStartDate = employeeUpdateDTO.EmploymentStartDate;
+            employee.EmploymentEndDate = employeeUpdateDTO.EmploymentEndDate;
+
+            //employee.DaysOff.Vacation = employeeUpdateDTO.DaysOff.Vacation;
+            //employee.DaysOff.Paid = employeeUpdateDTO.DaysOff.Paid;
+            //employee.DaysOff.Unpaid = employeeUpdateDTO.DaysOff.Unpaid;
+            //employee.DaysOff.SickLeave = employeeUpdateDTO.DaysOff.SickLeave;
+
+            employee.Position.Title = employeeUpdateDTO.Position.Title;
+            employee.Position.SeniorityLevel = Enum.Parse<Data.Database.Positions.SeniorityLevel>(employeeUpdateDTO.Position.SeniorityLevel);
+
+            employee.PasswordHash = userManager.PasswordHasher.HashPassword(employee, employeeUpdateDTO.Password);
+            employee.NormalizedUserName = userManager.NormalizeName(employee.UserName);
+            employee.NormalizedEmail = userManager.NormalizeEmail(employee.Email);
         }
     }
 }

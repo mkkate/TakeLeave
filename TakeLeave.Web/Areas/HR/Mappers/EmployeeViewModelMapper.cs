@@ -52,5 +52,30 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             return employeeUpdateViewModel;
         }
 
+        public static EmployeeUpdateDTO MapEmployeeUpdateViewModelToEmployeeUpdateDto(this EmployeeUpdateViewModel employeeUpdateViewModel)
+        {
+            EmployeeUpdateDTO employeeUpdateDTO = new EmployeeUpdateDTO();
+
+            employeeUpdateDTO.Id = employeeUpdateViewModel.Id;
+            employeeUpdateDTO.FirstName = employeeUpdateViewModel.FirstName;
+            employeeUpdateDTO.LastName = employeeUpdateViewModel.LastName;
+            employeeUpdateDTO.UserName = employeeUpdateViewModel.UserName;
+            employeeUpdateDTO.Email = employeeUpdateViewModel.Email;
+            employeeUpdateDTO.Password = employeeUpdateViewModel.Password;
+            employeeUpdateDTO.Address = employeeUpdateViewModel.Address;
+            employeeUpdateDTO.IDNumber = employeeUpdateViewModel.IDNumber;
+            employeeUpdateDTO.EmploymentStartDate = employeeUpdateViewModel.EmploymentStartDate;
+            employeeUpdateDTO.EmploymentEndDate = employeeUpdateViewModel.EmploymentEndDate;
+
+            employeeUpdateDTO.DaysOff.Vacation = employeeUpdateViewModel.DaysOff.Vacation;
+            employeeUpdateDTO.DaysOff.Paid = employeeUpdateViewModel.DaysOff.Paid;
+            employeeUpdateDTO.DaysOff.Unpaid = employeeUpdateViewModel.DaysOff.Unpaid;
+            employeeUpdateDTO.DaysOff.SickLeave = employeeUpdateViewModel.DaysOff.SickLeave;
+
+            employeeUpdateDTO.Position.Title = employeeUpdateViewModel.Position.Title;
+            employeeUpdateDTO.Position.SeniorityLevel = employeeUpdateViewModel.Position.SeniorityLevel;
+
+            return employeeUpdateDTO;
+        }
     }
 }
