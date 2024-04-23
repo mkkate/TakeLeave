@@ -67,10 +67,10 @@ namespace TakeLeave.Business.Mappers
             employee.EmploymentStartDate = employeeUpdateDTO.EmploymentStartDate;
             employee.EmploymentEndDate = employeeUpdateDTO.EmploymentEndDate;
 
-            //employee.DaysOff.Vacation = employeeUpdateDTO.DaysOff.Vacation;
-            //employee.DaysOff.Paid = employeeUpdateDTO.DaysOff.Paid;
-            //employee.DaysOff.Unpaid = employeeUpdateDTO.DaysOff.Unpaid;
-            //employee.DaysOff.SickLeave = employeeUpdateDTO.DaysOff.SickLeave;
+            employee.DaysOff.Vacation = employeeUpdateDTO.DaysOff.Vacation;
+            employee.DaysOff.Paid = employeeUpdateDTO.DaysOff.Paid;
+            employee.DaysOff.Unpaid = employeeUpdateDTO.DaysOff.Unpaid;
+            employee.DaysOff.SickLeave = employeeUpdateDTO.DaysOff.SickLeave;
 
             employee.PositionID = positionId;
 

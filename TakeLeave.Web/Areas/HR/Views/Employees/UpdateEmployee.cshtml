@@ -65,10 +65,27 @@
                     </select>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col">
-                    @await Component.InvokeAsync("DaysOffs", Model.DaysOff)
-                </div>
+            <div class="days-off-table-container justify-content-center">
+                <table class="table table-striped table-bordered text-center">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Type:</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.Vacation)</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.Paid)</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.Unpaid)</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.SickLeave)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Days off left:</th>
+                            <td><input asp-for="@Model.DaysOff.Vacation" class="form-control days-off-input" /></td>
+                            <td><input asp-for="@Model.DaysOff.Paid" class="form-control days-off-input" /></td>
+                            <td><input asp-for="@Model.DaysOff.Unpaid" class="form-control days-off-input" /></td>
+                            <td><input asp-for="@Model.DaysOff.SickLeave" class="form-control days-off-input" /></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="form-group mt-3">
                 <div class="col text-center">

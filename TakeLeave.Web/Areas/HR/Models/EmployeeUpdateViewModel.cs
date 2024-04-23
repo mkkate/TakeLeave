@@ -42,8 +42,6 @@ namespace TakeLeave.Web.Areas.HR.Models
         public DateTime? EmploymentEndDate { get; set; }
 
 
-        [ValidateNever]
-        public Tuple<int, int, int, int> DaysOffByType { get; set; }
         public DaysOffViewModel DaysOff { get; set; } = new DaysOffViewModel();
 
 
