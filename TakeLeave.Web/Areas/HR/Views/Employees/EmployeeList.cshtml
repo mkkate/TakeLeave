@@ -13,7 +13,10 @@
                 <th>Days Off (V | P | U | SL)</th>
                 <th>Employment Start Date</th>
                 <th>Employment End Date</th>
-                <th>Actions</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Actions</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -26,14 +29,17 @@
                     <td>@item.DaysOff.Vacation | @item.DaysOff.Paid | @item.DaysOff.Unpaid | @item.DaysOff.SickLeave</td>
                     <td>@item.EmploymentStartDate</td>
                     <td>@item.EmploymentEndDate</td>
-                    <td>
-                        <a asp-area="HR" asp-controller="Employees" asp-action="UpdateEmployee" asp-route-id="@item.Id">
-                            <img src="~/icons/edit.svg" />
-                        </a>
-                        <a asp-area="HR" asp-controller="Employees" asp-action="DeleteEmployee" asp-route-id="@item.Id">
-                            <img src="~/icons/delete.svg" />
-                        </a>
-                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-area="HR" asp-controller="Employees" asp-action="UpdateEmployee" asp-route-id="@item.Id">
+                                <img src="~/icons/edit.svg" />
+                            </a>
+                            <a asp-area="HR" asp-controller="Employees" asp-action="DeleteEmployee" asp-route-id="@item.Id">
+                                <img src="~/icons/delete.svg" />
+                            </a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
