@@ -2,14 +2,18 @@
 using Microsoft.IdentityModel.Tokens;
 using TakeLeave.Business.Constants;
 using TakeLeave.Data.Database.Employees;
+using TakeLeave.Data.Interfaces;
 
 namespace TakeLeave.Business.Helpers
 {
     public class EmployeeHelper
     {
-        public static async Task AssignRole(Employee employee, UserManager<Employee> userManager)
+        public static async Task AssignRole(
+            Employee employee,
+            UserManager<Employee> userManager,
+            IPositionRepository _positionRepository)
         {
-            string roleName = GetRoleName(employee);
+            string roleName = GetRoleName(employee, _positionRepository);
 
             if (!await userManager.IsInRoleAsync(employee, roleName))
             {
@@ -21,9 +25,16 @@ namespace TakeLeave.Business.Helpers
             await userManager.AddToRoleAsync(employee, roleName);
         }
 
-        public static string GetRoleName(Employee employee)
+        public static string GetRoleName(
+            Employee employee,
+            IPositionRepository _positionRepository)
         {
-            switch (employee.Position.Title)
+            string? positionTitle = _positionRepository
+                .GetByCondition(p => p.ID.Equals(employee.PositionID))
+                .FirstOrDefault()?
+                .Title;
+
+            switch (positionTitle)
             {
                 case PositionTitleConstants.HrManager:
                     return EmployeeRoles.Admin;
@@ -39,9 +50,12 @@ namespace TakeLeave.Business.Helpers
             }
         }
 
-        public static async Task RemoveRole(Employee employee, UserManager<Employee> _userManager)
+        public static async Task RemoveRole(
+            Employee employee,
+            UserManager<Employee> _userManager,
+            IPositionRepository _positionRepository)
         {
-            string roleName = GetRoleName(employee);
+            string roleName = GetRoleName(employee, _positionRepository);
 
             if (await _userManager.IsInRoleAsync(employee, roleName))
                 await _userManager.RemoveFromRoleAsync(employee, roleName);

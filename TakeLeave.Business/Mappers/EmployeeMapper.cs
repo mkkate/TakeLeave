@@ -52,7 +52,10 @@ namespace TakeLeave.Business.Mappers
             return employeeUpdateDTO;
         }
 
-        public static void MapEmployeeUpdateDtoToEmployee(this EmployeeUpdateDTO employeeUpdateDTO, Employee employee, UserManager<Employee> userManager)
+        public static void MapEmployeeUpdateDtoToEmployee(
+            this EmployeeUpdateDTO employeeUpdateDTO,
+            Employee employee, UserManager<Employee> userManager,
+            int positionId)
         {
             employee.Id = employeeUpdateDTO.Id;
             employee.FirstName = employeeUpdateDTO.FirstName;
@@ -69,8 +72,7 @@ namespace TakeLeave.Business.Mappers
             //employee.DaysOff.Unpaid = employeeUpdateDTO.DaysOff.Unpaid;
             //employee.DaysOff.SickLeave = employeeUpdateDTO.DaysOff.SickLeave;
 
-            employee.Position.Title = employeeUpdateDTO.Position.Title;
-            employee.Position.SeniorityLevel = Enum.Parse<Data.Database.Positions.SeniorityLevel>(employeeUpdateDTO.Position.SeniorityLevel);
+            employee.PositionID = positionId;
 
             employee.PasswordHash = userManager.PasswordHasher.HashPassword(employee, employeeUpdateDTO.Password);
             employee.NormalizedUserName = userManager.NormalizeName(employee.UserName);

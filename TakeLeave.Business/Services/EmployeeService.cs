@@ -62,11 +62,11 @@ namespace TakeLeave.Business.Services
             }
         }
 
-        public Tuple<List<string>, List<string>> GetPositionTitlesAndSeniorityLevels()
+        public Tuple<HashSet<string>, List<string>> GetPositionTitlesAndSeniorityLevels()
         {
             List<Position> positions = _positionRepository.GetAll().ToList();
 
-            List<string> positionTitles = positions.Select(title => title.Title).ToList();
+            HashSet<string> positionTitles = positions.Select(position => position.Title).ToHashSet();
 
             List<string> seniorityLevels = Enum.GetNames(typeof(SeniorityLevel)).ToList();
 
@@ -77,16 +77,21 @@ namespace TakeLeave.Business.Services
         {
             Employee? employee = await _employeeRepository
                 .GetByCondition(e => e.Id.Equals(employeeUpdateDTO.Id))
-                .Include(p => p.Position)
                 .Include(d => d.DaysOff)
                 .FirstOrDefaultAsync();
 
-            employeeUpdateDTO.MapEmployeeUpdateDtoToEmployee(employee, _userManager);
+            int positionId = _positionRepository.GetByCondition(position =>
+                position.Title.Equals(employeeUpdateDTO.Position.Title) &&
+                position.SeniorityLevel.Equals(Enum.Parse<Data.Database.Positions.SeniorityLevel>(employeeUpdateDTO.Position.SeniorityLevel)))
+                .FirstOrDefault()
+                .ID;
+
+            employeeUpdateDTO.MapEmployeeUpdateDtoToEmployee(employee, _userManager, positionId);
 
             _employeeRepository.Update(employee);
             _employeeRepository.Save();
 
-            await EmployeeHelper.AssignRole(employee, _userManager);
+            await EmployeeHelper.AssignRole(employee, _userManager, _positionRepository);
         }
     }
 }

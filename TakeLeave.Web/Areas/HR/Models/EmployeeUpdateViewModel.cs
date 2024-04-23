@@ -48,7 +48,7 @@ namespace TakeLeave.Web.Areas.HR.Models
 
 
         [ValidateNever]
-        public Tuple<List<string>, List<string>> PositionTitlesAndSeniorityLevels { get; set; }
+        public Tuple<HashSet<string>, List<string>> PositionTitlesAndSeniorityLevels { get; set; }
         public PositionViewModel Position { get; set; } = new PositionViewModel();
     }
 }
