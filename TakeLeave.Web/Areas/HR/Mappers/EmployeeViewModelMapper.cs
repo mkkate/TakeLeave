@@ -5,25 +5,25 @@ namespace TakeLeave.Web.Areas.HR.Mappers
 {
     public static class EmployeeViewModelMapper
     {
-        public static EmployeeViewModel MapEmployeeDtoToEmployeeViewModel(this EmployeeDTO employeeDTO)
+        public static EmployeeInfoViewModel MapEmployeeInfoDtoToEmployeeInfoViewModel(this EmployeeInfoDTO employeeDTO)
         {
-            EmployeeViewModel employeeViewModel = new EmployeeViewModel();
+            EmployeeInfoViewModel employeeInfoViewModel = new EmployeeInfoViewModel();
 
-            employeeViewModel.Id = employeeDTO.Id;
-            employeeViewModel.FirstName = employeeDTO.FirstName;
-            employeeViewModel.LastName = employeeDTO.LastName;
-            employeeViewModel.EmploymentStartDate = employeeDTO.EmploymentStartDate;
-            employeeViewModel.EmploymentEndDate = employeeDTO.EmploymentEndDate;
+            employeeInfoViewModel.Id = employeeDTO.Id;
+            employeeInfoViewModel.FirstName = employeeDTO.FirstName;
+            employeeInfoViewModel.LastName = employeeDTO.LastName;
+            employeeInfoViewModel.EmploymentStartDate = employeeDTO.EmploymentStartDate;
+            employeeInfoViewModel.EmploymentEndDate = employeeDTO.EmploymentEndDate;
 
-            employeeViewModel.DaysOff.Vacation = employeeDTO.DaysOff.Vacation;
-            employeeViewModel.DaysOff.Paid = employeeDTO.DaysOff.Paid;
-            employeeViewModel.DaysOff.Unpaid = employeeDTO.DaysOff.Unpaid;
-            employeeViewModel.DaysOff.SickLeave = employeeDTO.DaysOff.SickLeave;
+            employeeInfoViewModel.DaysOff.Vacation = employeeDTO.DaysOff.Vacation;
+            employeeInfoViewModel.DaysOff.Paid = employeeDTO.DaysOff.Paid;
+            employeeInfoViewModel.DaysOff.Unpaid = employeeDTO.DaysOff.Unpaid;
+            employeeInfoViewModel.DaysOff.SickLeave = employeeDTO.DaysOff.SickLeave;
 
-            employeeViewModel.Position.Title = employeeDTO.Position.Title;
-            employeeViewModel.Position.SeniorityLevel = employeeDTO.Position.SeniorityLevel;
+            employeeInfoViewModel.Position.Title = employeeDTO.Position.Title;
+            employeeInfoViewModel.Position.SeniorityLevel = employeeDTO.Position.SeniorityLevel;
 
-            return employeeViewModel;
+            return employeeInfoViewModel;
         }
 
         public static EmployeeUpdateViewModel MapEmployeeUpdateDtoToEmployeeUpdateViewModel(this EmployeeUpdateDTO employeeUpdateDTO)

@@ -2,7 +2,7 @@
 
 namespace TakeLeave.Web.Areas.HR.Models
 {
-    public class EmployeeViewModel
+    public class EmployeeInfoViewModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

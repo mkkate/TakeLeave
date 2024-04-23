@@ -19,13 +19,13 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
         public IActionResult EmployeeList()
         {
-            List<EmployeeDTO>? employeeDtoList = _employeeService.EmployeeList();
+            List<EmployeeInfoDTO>? employeeInfoDtoList = _employeeService.EmployeeList();
 
-            List<EmployeeViewModel>? employeesViewModel = employeeDtoList?
-                .Select(e => e.MapEmployeeDtoToEmployeeViewModel())
+            List<EmployeeInfoViewModel>? employeeInfoViewModels = employeeInfoDtoList?
+                .Select(e => e.MapEmployeeInfoDtoToEmployeeInfoViewModel())
                 .ToList();
 
-            return View(employeesViewModel);
+            return View(employeeInfoViewModels);
         }
 
         [Authorize(Roles = EmployeeRoles.Admin)]

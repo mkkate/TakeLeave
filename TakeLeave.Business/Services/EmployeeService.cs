@@ -27,18 +27,18 @@ namespace TakeLeave.Business.Services
             _userManager = userManager;
         }
 
-        public List<EmployeeDTO>? EmployeeList()
+        public List<EmployeeInfoDTO>? EmployeeList()
         {
             List<Employee> employees = _employeeRepository.GetAll()
                 .Include(e => e.DaysOff)
                 .Include(e => e.Position)
                 .ToList();
 
-            List<EmployeeDTO> employeeDTOs = employees
-                .Select(employee => employee.MapEmployeeToEmployeeDto())
+            List<EmployeeInfoDTO> employeeInfoDTOs = employees
+                .Select(employee => employee.MapEmployeeToEmployeeInfoDto())
                 .ToList();
 
-            return employeeDTOs;
+            return employeeInfoDTOs;
         }
 
         public T? GetEmployeeById<T>(int id) where T : class
@@ -51,8 +51,8 @@ namespace TakeLeave.Business.Services
 
             switch (typeof(T).Name)
             {
-                case nameof(EmployeeDTO):
-                    return employee?.MapEmployeeToEmployeeDto() as T;
+                case nameof(EmployeeInfoDTO):
+                    return employee?.MapEmployeeToEmployeeInfoDto() as T;
 
                 case nameof(EmployeeUpdateDTO):
                     return employee?.MapEmployeeToEmployeeUpdateDto() as T;

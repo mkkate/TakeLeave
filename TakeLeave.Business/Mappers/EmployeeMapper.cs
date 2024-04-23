@@ -6,25 +6,25 @@ namespace TakeLeave.Business.Mappers
 {
     public static class EmployeeMapper
     {
-        public static EmployeeDTO MapEmployeeToEmployeeDto(this Employee employee)
+        public static EmployeeInfoDTO MapEmployeeToEmployeeInfoDto(this Employee employee)
         {
-            EmployeeDTO employeeDTO = new EmployeeDTO();
+            EmployeeInfoDTO employeeInfoDTO = new EmployeeInfoDTO();
 
-            employeeDTO.Id = employee.Id;
-            employeeDTO.FirstName = employee.FirstName;
-            employeeDTO.LastName = employee.LastName;
-            employeeDTO.EmploymentStartDate = employee.EmploymentStartDate;
-            employeeDTO.EmploymentEndDate = employee.EmploymentEndDate;
+            employeeInfoDTO.Id = employee.Id;
+            employeeInfoDTO.FirstName = employee.FirstName;
+            employeeInfoDTO.LastName = employee.LastName;
+            employeeInfoDTO.EmploymentStartDate = employee.EmploymentStartDate;
+            employeeInfoDTO.EmploymentEndDate = employee.EmploymentEndDate;
 
-            employeeDTO.DaysOff.Vacation = employee.DaysOff.Vacation;
-            employeeDTO.DaysOff.Paid = employee.DaysOff.Paid;
-            employeeDTO.DaysOff.Unpaid = employee.DaysOff.Unpaid;
-            employeeDTO.DaysOff.SickLeave = employee.DaysOff.SickLeave;
+            employeeInfoDTO.DaysOff.Vacation = employee.DaysOff.Vacation;
+            employeeInfoDTO.DaysOff.Paid = employee.DaysOff.Paid;
+            employeeInfoDTO.DaysOff.Unpaid = employee.DaysOff.Unpaid;
+            employeeInfoDTO.DaysOff.SickLeave = employee.DaysOff.SickLeave;
 
-            employeeDTO.Position.Title = employee.Position.Title;
-            employeeDTO.Position.SeniorityLevel = Enum.GetName(typeof(SeniorityLevel), employee.Position.SeniorityLevel);
+            employeeInfoDTO.Position.Title = employee.Position.Title;
+            employeeInfoDTO.Position.SeniorityLevel = Enum.GetName(typeof(SeniorityLevel), employee.Position.SeniorityLevel);
 
-            return employeeDTO;
+            return employeeInfoDTO;
         }
 
         public static EmployeeUpdateDTO MapEmployeeToEmployeeUpdateDto(this Employee employee)

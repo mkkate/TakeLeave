@@ -1,6 +1,6 @@
 ﻿namespace TakeLeave.Business.Models
 {
-    public class EmployeeDTO
+    public class EmployeeInfoDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
