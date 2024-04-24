@@ -4,6 +4,7 @@ using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Mappers;
 using TakeLeave.Business.Models;
+using TakeLeave.Data.Database.DaysOffs;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Data.Database.Positions;
 using TakeLeave.Data.Interfaces;
@@ -15,15 +16,18 @@ namespace TakeLeave.Business.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionRepository _positionRepository;
+        private readonly IDaysOffRepository _daysOffRepository;
         private readonly UserManager<Employee> _userManager;
 
         public EmployeeService(
             IEmployeeRepository employeeRepository,
             IPositionRepository positionRepository,
+            IDaysOffRepository daysOffRepository,
             UserManager<Employee> userManager)
         {
             _employeeRepository = employeeRepository;
             _positionRepository = positionRepository;
+            _daysOffRepository = daysOffRepository;
             _userManager = userManager;
         }
 
@@ -89,6 +93,35 @@ namespace TakeLeave.Business.Services
             employeeDTO.MapEmployeeDtoToEmployeeForUpdate(employee, _userManager, positionId);
 
             _employeeRepository.Update(employee);
+            _employeeRepository.Save();
+
+            await EmployeeHelper.AssignRole(employee, _userManager, _positionRepository);
+        }
+
+        public async Task CreateEmployeeAsync(EmployeeDTO employeeDTO)
+        {
+            Employee employee = new Employee();
+
+            int positionId = _positionRepository.GetByCondition(position =>
+                position.Title.Equals(employeeDTO.Position.Title) &&
+                position.SeniorityLevel.Equals(Enum.Parse<Data.Database.Positions.SeniorityLevel>(employeeDTO.Position.SeniorityLevel)))
+                .FirstOrDefault()
+                .ID;
+
+            DaysOff daysOff = new DaysOff
+            {
+                Vacation = employeeDTO.DaysOff.Vacation,
+                Paid = employeeDTO.DaysOff.Paid,
+                Unpaid = employeeDTO.DaysOff.Unpaid,
+                SickLeave = employeeDTO.DaysOff.SickLeave
+            };
+
+            _daysOffRepository.Insert(daysOff);
+            _daysOffRepository.Save();
+
+            employeeDTO.MapEmployeeDtoToEmployeeForCreate(employee, _userManager, positionId, daysOff.ID);
+
+            _employeeRepository.Insert(employee);
             _employeeRepository.Save();
 
             await EmployeeHelper.AssignRole(employee, _userManager, _positionRepository);

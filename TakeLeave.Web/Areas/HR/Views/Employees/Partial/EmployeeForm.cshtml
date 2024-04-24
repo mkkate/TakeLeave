@@ -1,0 +1,101 @@
+﻿@model TakeLeave.Web.Areas.HR.Models.EmployeeViewModel
+
+@{
+    string actionValue = ViewBag.IsUpdateView != null && ViewBag.IsUpdateView ? "Update" : "Create";
+}
+
+<h2>@actionValue Employee</h2>
+
+<div class="card shadow container w-75 mt-4 employee-form">
+    <div class="card-body justify-content-center">
+        <form method="post">
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="@Model.FirstName" class="control-label"></label>
+                    <input asp-for="@Model.FirstName" class="form-control" />
+                </div>
+                <div class="col">
+                    <label asp-for="@Model.LastName" class="control-label"></label>
+                    <input asp-for="@Model.LastName" class="form-control" />
+                </div>
+                <div class="col">
+                    <label asp-for="@Model.UserName" class="control-label"></label>
+                    <input asp-for="@Model.UserName" class="form-control" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="@Model.Email" class="control-label"></label>
+                    <input asp-for="@Model.Email" class="form-control" />
+                </div>
+                <div class="col">
+                    <label asp-for="@Model.Password" class="control-label"></label>
+                    <input asp-for="@Model.Password" class="form-control" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="@Model.Address" class="control-label"></label>
+                    <input asp-for="@Model.Address" class="form-control" />
+                </div>
+                <div class="col">
+                    <label asp-for="@Model.IDNumber" class="control-label"></label>
+                    <input asp-for="@Model.IDNumber" class="form-control" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="@Model.EmploymentStartDate" class="control-label"></label>
+                    <input asp-for="@Model.EmploymentStartDate" class="form-control" />
+                </div>
+                <div class="col">
+                    <label asp-for="@Model.EmploymentEndDate" class="control-label"></label>
+                    <input asp-for="@Model.EmploymentEndDate" class="form-control" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="@Model.PositionTitlesAndSeniorityLevels.Item1" class="control-label">Position:</label>
+                    <select asp-for="@Model.Position.Title" class="form-control"
+                            asp-items="@(new SelectList(Model.PositionTitlesAndSeniorityLevels.Item1))">
+                        <option value="">Select title:</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label asp-for="@Model.PositionTitlesAndSeniorityLevels.Item2" class="control-label">Seniority:</label>
+                    <select asp-for="@Model.Position.SeniorityLevel" class="form-control"
+                            asp-items="@(new SelectList(Model.PositionTitlesAndSeniorityLevels.Item2))">
+                        <option value="">Select level:</option>
+                    </select>
+                </div>
+            </div>
+            <div class="days-off-table-container justify-content-center">
+                <table class="table table-striped table-bordered text-center">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Type:</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.Vacation)</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.Paid)</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.Unpaid)</th>
+                            <th>@Html.DisplayNameFor(model => model.DaysOff.SickLeave)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Days off left:</th>
+                            <td><input asp-for="@Model.DaysOff.Vacation" class="form-control days-off-input" /></td>
+                            <td><input asp-for="@Model.DaysOff.Paid" class="form-control days-off-input" /></td>
+                            <td><input asp-for="@Model.DaysOff.Unpaid" class="form-control days-off-input" /></td>
+                            <td><input asp-for="@Model.DaysOff.SickLeave" class="form-control days-off-input" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group mt-3">
+                <div class="col text-center">
+                    <input type="submit" value="@actionValue" class="btn btn-primary col-4 col-form-label" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

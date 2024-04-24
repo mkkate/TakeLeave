@@ -4,6 +4,15 @@
 
     <h3>List of all employees:</h3>
 
+    @if (User.IsInRole("Admin"))
+    {
+        <button type="submit"
+                class="btn btn-primary mt-3"
+                onclick="location.href='@Url.Action("CreateEmployee", "Employees")'">
+            Create New Employee
+        </button>
+    }
+
     <table class="table table-secondary table-striped table-bordered border-secondary-subtle mt-4 shadow">
         <thead>
             <tr>

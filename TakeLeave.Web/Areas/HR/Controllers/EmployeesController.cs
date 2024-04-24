@@ -17,6 +17,27 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             _employeeService = employeeService;
         }
 
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult CreateEmployee()
+        {
+            EmployeeViewModel employee = new EmployeeViewModel();
+
+            employee.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
+
+            return View(employee);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public async Task<IActionResult> CreateEmployee(EmployeeViewModel employeeViewModel)
+        {
+            EmployeeDTO employeeDTO = employeeViewModel.MapEmployeeViewModelToEmployeeDto();
+
+            await _employeeService.CreateEmployeeAsync(employeeDTO);
+
+            return RedirectToAction(nameof(EmployeeList));
+        }
+
         public IActionResult EmployeeList()
         {
             List<EmployeeInfoDTO>? employeeInfoDtoList = _employeeService.EmployeeList();

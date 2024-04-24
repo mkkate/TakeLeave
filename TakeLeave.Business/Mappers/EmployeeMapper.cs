@@ -80,11 +80,44 @@ namespace TakeLeave.Business.Mappers
             employee.NormalizedEmail = userManager.NormalizeEmail(employee.Email);
         }
 
+        public static void MapEmployeeDtoToEmployeeForCreate(
+            this EmployeeDTO employeeDTO,
+            Employee employee, UserManager<Employee> userManager,
+            int positionId,
+            int daysOffId)
+        {
+            employee.FirstName = employeeDTO.FirstName;
+            employee.LastName = employeeDTO.LastName;
+            employee.UserName = employeeDTO.UserName;
+            employee.Email = employeeDTO.Email;
+            employee.Address = employeeDTO.Address;
+            employee.IDNumber = employeeDTO.IDNumber;
+            employee.EmploymentStartDate = employeeDTO.EmploymentStartDate;
+            employee.EmploymentEndDate = employeeDTO.EmploymentEndDate;
+
+            employee.DaysOffID = daysOffId;
+
             employee.PositionID = positionId;
 
-            employee.PasswordHash = userManager.PasswordHasher.HashPassword(employee, employeeUpdateDTO.Password);
+            employee.PasswordHash = userManager.PasswordHasher.HashPassword(employee, employeeDTO.Password);
             employee.NormalizedUserName = userManager.NormalizeName(employee.UserName);
             employee.NormalizedEmail = userManager.NormalizeEmail(employee.Email);
+
+            employee.InsertDate = DateTime.UtcNow;
+            employee.DeleteDate = null;
+            employee.SecurityStamp = Guid.NewGuid().ToString();
+            employee.ConcurrencyStamp = Guid.NewGuid().ToString();
+            //employee.PhoneNumber = employeeUpdateDTO.PhoneNumber;
+
+            // hardcode
+            employee.EmailConfirmed = true;
+            employee.PhoneNumberConfirmed = false;//
+            employee.TwoFactorEnabled = false;
+            employee.LockoutEnd = null;
+            employee.LockoutEnabled = true;
+            employee.AccessFailedCount = 0;
+
+            //employee.IsAdmin = false;
         }
     }
 }
