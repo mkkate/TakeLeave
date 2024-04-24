@@ -31,26 +31,26 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         [Authorize(Roles = EmployeeRoles.Admin)]
         public IActionResult UpdateEmployee(int id)
         {
-            EmployeeUpdateDTO? employeeUpdateDTO = _employeeService.GetEmployeeById<EmployeeUpdateDTO>(id);
+            EmployeeDTO? employeeDTO = _employeeService.GetEmployeeById<EmployeeDTO>(id);
 
-            EmployeeUpdateViewModel? employeeUpdateViewModel = employeeUpdateDTO?.MapEmployeeUpdateDtoToEmployeeUpdateViewModel();
+            EmployeeViewModel? employeeViewModel = employeeDTO?.MapEmployeeDtoToEmployeeViewModel();
 
-            employeeUpdateViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
+            employeeViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
 
-            return View(employeeUpdateViewModel);
+            return View(employeeViewModel);
         }
 
         [HttpPost]
         [Authorize(Roles = EmployeeRoles.Admin)]
-        public async Task<IActionResult> UpdateEmployee(EmployeeUpdateViewModel employeeUpdateViewModel)
+        public async Task<IActionResult> UpdateEmployee(EmployeeViewModel employeeViewModel)
         {
-            EmployeeUpdateDTO employeeUpdateDTO = employeeUpdateViewModel.MapEmployeeUpdateViewModelToEmployeeUpdateDto();
+            EmployeeDTO employeeDTO = employeeViewModel.MapEmployeeViewModelToEmployeeDto();
 
-            await _employeeService.UpdateEmployeeAsync(employeeUpdateDTO);
+            await _employeeService.UpdateEmployeeAsync(employeeDTO);
 
-            employeeUpdateViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
+            employeeViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
 
-            return View(employeeUpdateViewModel);
+            return View(employeeViewModel);
         }
     }
 }

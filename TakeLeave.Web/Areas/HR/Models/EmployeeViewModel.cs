@@ -6,7 +6,7 @@ using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.HR.Models
 {
-    public class EmployeeUpdateViewModel
+    public class EmployeeViewModel
     {
         public int Id { get; set; }
 

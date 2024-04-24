@@ -7,6 +7,6 @@ namespace TakeLeave.Business.Interfaces
         List<EmployeeInfoDTO>? EmployeeList();
         T? GetEmployeeById<T>(int id) where T : class;
         Tuple<HashSet<string>, List<string>> GetPositionTitlesAndSeniorityLevels();
-        Task UpdateEmployeeAsync(EmployeeUpdateDTO employeeUpdateDTO);
+        Task UpdateEmployeeAsync(EmployeeDTO employeeDTO);
     }
 }

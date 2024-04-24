@@ -27,50 +27,58 @@ namespace TakeLeave.Business.Mappers
             return employeeInfoDTO;
         }
 
-        public static EmployeeUpdateDTO MapEmployeeToEmployeeUpdateDto(this Employee employee)
+        public static EmployeeDTO MapEmployeeToEmployeeDto(this Employee employee)
         {
-            EmployeeUpdateDTO employeeUpdateDTO = new EmployeeUpdateDTO();
+            EmployeeDTO employeeDTO = new EmployeeDTO();
 
-            employeeUpdateDTO.Id = employee.Id;
-            employeeUpdateDTO.FirstName = employee.FirstName;
-            employeeUpdateDTO.LastName = employee.LastName;
-            employeeUpdateDTO.UserName = employee.UserName;
-            employeeUpdateDTO.Email = employee.Email;
-            employeeUpdateDTO.Address = employee.Address;
-            employeeUpdateDTO.IDNumber = employee.IDNumber;
-            employeeUpdateDTO.EmploymentStartDate = employee.EmploymentStartDate;
-            employeeUpdateDTO.EmploymentEndDate = employee.EmploymentEndDate;
+            employeeDTO.Id = employee.Id;
+            employeeDTO.FirstName = employee.FirstName;
+            employeeDTO.LastName = employee.LastName;
+            employeeDTO.UserName = employee.UserName;
+            employeeDTO.Email = employee.Email;
+            employeeDTO.Address = employee.Address;
+            employeeDTO.IDNumber = employee.IDNumber;
+            employeeDTO.EmploymentStartDate = employee.EmploymentStartDate;
+            employeeDTO.EmploymentEndDate = employee.EmploymentEndDate;
 
-            employeeUpdateDTO.DaysOff.Vacation = employee.DaysOff.Vacation;
-            employeeUpdateDTO.DaysOff.Paid = employee.DaysOff.Paid;
-            employeeUpdateDTO.DaysOff.Unpaid = employee.DaysOff.Unpaid;
-            employeeUpdateDTO.DaysOff.SickLeave = employee.DaysOff.SickLeave;
+            employeeDTO.DaysOff.Vacation = employee.DaysOff.Vacation;
+            employeeDTO.DaysOff.Paid = employee.DaysOff.Paid;
+            employeeDTO.DaysOff.Unpaid = employee.DaysOff.Unpaid;
+            employeeDTO.DaysOff.SickLeave = employee.DaysOff.SickLeave;
 
-            employeeUpdateDTO.Position.Title = employee.Position.Title;
-            employeeUpdateDTO.Position.SeniorityLevel = Enum.GetName(typeof(Models.SeniorityLevel), employee.Position.SeniorityLevel);
+            employeeDTO.Position.Title = employee.Position.Title;
+            employeeDTO.Position.SeniorityLevel = Enum.GetName(typeof(Models.SeniorityLevel), employee.Position.SeniorityLevel);
 
-            return employeeUpdateDTO;
+            return employeeDTO;
         }
 
-        public static void MapEmployeeUpdateDtoToEmployee(
-            this EmployeeUpdateDTO employeeUpdateDTO,
+        public static void MapEmployeeDtoToEmployeeForUpdate(
+            this EmployeeDTO employeeDTO,
             Employee employee, UserManager<Employee> userManager,
             int positionId)
         {
-            employee.Id = employeeUpdateDTO.Id;
-            employee.FirstName = employeeUpdateDTO.FirstName;
-            employee.LastName = employeeUpdateDTO.LastName;
-            employee.UserName = employeeUpdateDTO.UserName;
-            employee.Email = employeeUpdateDTO.Email;
-            employee.Address = employeeUpdateDTO.Address;
-            employee.IDNumber = employeeUpdateDTO.IDNumber;
-            employee.EmploymentStartDate = employeeUpdateDTO.EmploymentStartDate;
-            employee.EmploymentEndDate = employeeUpdateDTO.EmploymentEndDate;
+            employee.Id = employeeDTO.Id;
+            employee.FirstName = employeeDTO.FirstName;
+            employee.LastName = employeeDTO.LastName;
+            employee.UserName = employeeDTO.UserName;
+            employee.Email = employeeDTO.Email;
+            employee.Address = employeeDTO.Address;
+            employee.IDNumber = employeeDTO.IDNumber;
+            employee.EmploymentStartDate = employeeDTO.EmploymentStartDate;
+            employee.EmploymentEndDate = employeeDTO.EmploymentEndDate;
+            //employee.PhoneNumber = employeeUpdateDTO.PhoneNumber;
 
-            employee.DaysOff.Vacation = employeeUpdateDTO.DaysOff.Vacation;
-            employee.DaysOff.Paid = employeeUpdateDTO.DaysOff.Paid;
-            employee.DaysOff.Unpaid = employeeUpdateDTO.DaysOff.Unpaid;
-            employee.DaysOff.SickLeave = employeeUpdateDTO.DaysOff.SickLeave;
+            employee.DaysOff.Vacation = employeeDTO.DaysOff.Vacation;
+            employee.DaysOff.Paid = employeeDTO.DaysOff.Paid;
+            employee.DaysOff.Unpaid = employeeDTO.DaysOff.Unpaid;
+            employee.DaysOff.SickLeave = employeeDTO.DaysOff.SickLeave;
+
+            employee.PositionID = positionId;
+
+            employee.PasswordHash = userManager.PasswordHasher.HashPassword(employee, employeeDTO.Password);
+            employee.NormalizedUserName = userManager.NormalizeName(employee.UserName);
+            employee.NormalizedEmail = userManager.NormalizeEmail(employee.Email);
+        }
 
             employee.PositionID = positionId;
 

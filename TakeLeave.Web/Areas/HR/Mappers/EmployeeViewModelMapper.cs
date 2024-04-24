@@ -26,56 +26,56 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             return employeeInfoViewModel;
         }
 
-        public static EmployeeUpdateViewModel MapEmployeeUpdateDtoToEmployeeUpdateViewModel(this EmployeeUpdateDTO employeeUpdateDTO)
+        public static EmployeeViewModel MapEmployeeDtoToEmployeeViewModel(this EmployeeDTO employeeDTO)
         {
-            EmployeeUpdateViewModel employeeUpdateViewModel = new EmployeeUpdateViewModel();
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel();
 
-            employeeUpdateViewModel.Id = employeeUpdateDTO.Id;
-            employeeUpdateViewModel.FirstName = employeeUpdateDTO.FirstName;
-            employeeUpdateViewModel.LastName = employeeUpdateDTO.LastName;
-            employeeUpdateViewModel.UserName = employeeUpdateDTO.UserName;
-            employeeUpdateViewModel.Email = employeeUpdateDTO.Email;
-            employeeUpdateViewModel.Password = employeeUpdateDTO.Password;
-            employeeUpdateViewModel.Address = employeeUpdateDTO.Address;
-            employeeUpdateViewModel.IDNumber = employeeUpdateDTO.IDNumber;
-            employeeUpdateViewModel.EmploymentStartDate = employeeUpdateDTO.EmploymentStartDate;
-            employeeUpdateViewModel.EmploymentEndDate = employeeUpdateDTO.EmploymentEndDate;
+            employeeViewModel.Id = employeeDTO.Id;
+            employeeViewModel.FirstName = employeeDTO.FirstName;
+            employeeViewModel.LastName = employeeDTO.LastName;
+            employeeViewModel.UserName = employeeDTO.UserName;
+            employeeViewModel.Email = employeeDTO.Email;
+            employeeViewModel.Password = employeeDTO.Password;
+            employeeViewModel.Address = employeeDTO.Address;
+            employeeViewModel.IDNumber = employeeDTO.IDNumber;
+            employeeViewModel.EmploymentStartDate = employeeDTO.EmploymentStartDate;
+            employeeViewModel.EmploymentEndDate = employeeDTO.EmploymentEndDate;
 
-            employeeUpdateViewModel.DaysOff.Vacation = employeeUpdateDTO.DaysOff.Vacation;
-            employeeUpdateViewModel.DaysOff.Paid = employeeUpdateDTO.DaysOff.Paid;
-            employeeUpdateViewModel.DaysOff.Unpaid = employeeUpdateDTO.DaysOff.Unpaid;
-            employeeUpdateViewModel.DaysOff.SickLeave = employeeUpdateDTO.DaysOff.SickLeave;
+            employeeViewModel.DaysOff.Vacation = employeeDTO.DaysOff.Vacation;
+            employeeViewModel.DaysOff.Paid = employeeDTO.DaysOff.Paid;
+            employeeViewModel.DaysOff.Unpaid = employeeDTO.DaysOff.Unpaid;
+            employeeViewModel.DaysOff.SickLeave = employeeDTO.DaysOff.SickLeave;
 
-            employeeUpdateViewModel.Position.Title = employeeUpdateDTO.Position.Title;
-            employeeUpdateViewModel.Position.SeniorityLevel = employeeUpdateDTO.Position.SeniorityLevel;
+            employeeViewModel.Position.Title = employeeDTO.Position.Title;
+            employeeViewModel.Position.SeniorityLevel = employeeDTO.Position.SeniorityLevel;
 
-            return employeeUpdateViewModel;
+            return employeeViewModel;
         }
 
-        public static EmployeeUpdateDTO MapEmployeeUpdateViewModelToEmployeeUpdateDto(this EmployeeUpdateViewModel employeeUpdateViewModel)
+        public static EmployeeDTO MapEmployeeViewModelToEmployeeDto(this EmployeeViewModel employeeViewModel)
         {
-            EmployeeUpdateDTO employeeUpdateDTO = new EmployeeUpdateDTO();
+            EmployeeDTO employeeDTO = new EmployeeDTO();
 
-            employeeUpdateDTO.Id = employeeUpdateViewModel.Id;
-            employeeUpdateDTO.FirstName = employeeUpdateViewModel.FirstName;
-            employeeUpdateDTO.LastName = employeeUpdateViewModel.LastName;
-            employeeUpdateDTO.UserName = employeeUpdateViewModel.UserName;
-            employeeUpdateDTO.Email = employeeUpdateViewModel.Email;
-            employeeUpdateDTO.Password = employeeUpdateViewModel.Password;
-            employeeUpdateDTO.Address = employeeUpdateViewModel.Address;
-            employeeUpdateDTO.IDNumber = employeeUpdateViewModel.IDNumber;
-            employeeUpdateDTO.EmploymentStartDate = employeeUpdateViewModel.EmploymentStartDate;
-            employeeUpdateDTO.EmploymentEndDate = employeeUpdateViewModel.EmploymentEndDate;
+            employeeDTO.Id = employeeViewModel.Id;
+            employeeDTO.FirstName = employeeViewModel.FirstName;
+            employeeDTO.LastName = employeeViewModel.LastName;
+            employeeDTO.UserName = employeeViewModel.UserName;
+            employeeDTO.Email = employeeViewModel.Email;
+            employeeDTO.Password = employeeViewModel.Password;
+            employeeDTO.Address = employeeViewModel.Address;
+            employeeDTO.IDNumber = employeeViewModel.IDNumber;
+            employeeDTO.EmploymentStartDate = employeeViewModel.EmploymentStartDate;
+            employeeDTO.EmploymentEndDate = employeeViewModel.EmploymentEndDate;
 
-            employeeUpdateDTO.DaysOff.Vacation = employeeUpdateViewModel.DaysOff.Vacation;
-            employeeUpdateDTO.DaysOff.Paid = employeeUpdateViewModel.DaysOff.Paid;
-            employeeUpdateDTO.DaysOff.Unpaid = employeeUpdateViewModel.DaysOff.Unpaid;
-            employeeUpdateDTO.DaysOff.SickLeave = employeeUpdateViewModel.DaysOff.SickLeave;
+            employeeDTO.DaysOff.Vacation = employeeViewModel.DaysOff.Vacation;
+            employeeDTO.DaysOff.Paid = employeeViewModel.DaysOff.Paid;
+            employeeDTO.DaysOff.Unpaid = employeeViewModel.DaysOff.Unpaid;
+            employeeDTO.DaysOff.SickLeave = employeeViewModel.DaysOff.SickLeave;
 
-            employeeUpdateDTO.Position.Title = employeeUpdateViewModel.Position.Title;
-            employeeUpdateDTO.Position.SeniorityLevel = employeeUpdateViewModel.Position.SeniorityLevel;
+            employeeDTO.Position.Title = employeeViewModel.Position.Title;
+            employeeDTO.Position.SeniorityLevel = employeeViewModel.Position.SeniorityLevel;
 
-            return employeeUpdateDTO;
+            return employeeDTO;
         }
     }
 }

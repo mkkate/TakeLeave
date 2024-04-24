@@ -54,8 +54,8 @@ namespace TakeLeave.Business.Services
                 case nameof(EmployeeInfoDTO):
                     return employee?.MapEmployeeToEmployeeInfoDto() as T;
 
-                case nameof(EmployeeUpdateDTO):
-                    return employee?.MapEmployeeToEmployeeUpdateDto() as T;
+                case nameof(EmployeeDTO):
+                    return employee?.MapEmployeeToEmployeeDto() as T;
 
                 default:
                     throw new NotSupportedException($"Type {typeof(T).Name} is not supported.");
@@ -73,20 +73,20 @@ namespace TakeLeave.Business.Services
             return Tuple.Create(positionTitles, seniorityLevels);
         }
 
-        public async Task UpdateEmployeeAsync(EmployeeUpdateDTO employeeUpdateDTO)
+        public async Task UpdateEmployeeAsync(EmployeeDTO employeeDTO)
         {
             Employee? employee = await _employeeRepository
-                .GetByCondition(e => e.Id.Equals(employeeUpdateDTO.Id))
+                .GetByCondition(e => e.Id.Equals(employeeDTO.Id))
                 .Include(d => d.DaysOff)
                 .FirstOrDefaultAsync();
 
             int positionId = _positionRepository.GetByCondition(position =>
-                position.Title.Equals(employeeUpdateDTO.Position.Title) &&
-                position.SeniorityLevel.Equals(Enum.Parse<Data.Database.Positions.SeniorityLevel>(employeeUpdateDTO.Position.SeniorityLevel)))
+                position.Title.Equals(employeeDTO.Position.Title) &&
+                position.SeniorityLevel.Equals(Enum.Parse<Data.Database.Positions.SeniorityLevel>(employeeDTO.Position.SeniorityLevel)))
                 .FirstOrDefault()
                 .ID;
 
-            employeeUpdateDTO.MapEmployeeUpdateDtoToEmployee(employee, _userManager, positionId);
+            employeeDTO.MapEmployeeDtoToEmployeeForUpdate(employee, _userManager, positionId);
 
             _employeeRepository.Update(employee);
             _employeeRepository.Save();
