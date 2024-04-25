@@ -18,6 +18,7 @@ namespace TakeLeave.Web
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IPositionService, PositionService>();
         }
     }
 }

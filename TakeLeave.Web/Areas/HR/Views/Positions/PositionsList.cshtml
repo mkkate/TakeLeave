@@ -1,0 +1,64 @@
+﻿@using TakeLeave.Business.Models
+@model TakeLeave.Web.Areas.HR.Models.PositionsViewModel
+
+<div class="container mt-4 justify-content-center text-center">
+
+    <h3>List of all positions:</h3>
+
+    <table class="table table-light table-striped table-bordered border-secondary-subtle mt-4 shadow">
+        <thead class="table-secondary">
+            <tr>
+                <th>Title</th>
+                <th>Seniority level</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (KeyValuePair<string, List<Tuple<string, string>>> pair in Model.TitlesAndSeniorityLevels)
+            {
+                <tr>
+                    <td class="position-title">@pair.Key</td>
+                    <td>
+                        <select class="form-control seniority-dropdown">
+                            @foreach (var seniorityLevel in @pair.Value)
+                            {
+                                <option value="@seniorityLevel.Item1">@seniorityLevel.Item1</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <span class="description-placeholder">@pair.Value.First().Item2</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.seniority-dropdown').change(function () {
+                var selectedSeniority = $(this).val();
+                var title = $(this).closest('tr').find('.position-title').text().trim();
+                var description = $(this).closest('tr').find('.description-placeholder');
+
+                $.ajax({
+                    url: '@Url.Action("GetPositionDescription", "Positions")',
+                    type: 'GET',
+                    data: { title: title, seniority: selectedSeniority },
+                    success: function (response) {
+                        description.text(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching description:', error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
