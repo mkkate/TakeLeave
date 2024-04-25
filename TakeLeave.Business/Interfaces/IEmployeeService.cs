@@ -9,5 +9,6 @@ namespace TakeLeave.Business.Interfaces
         Tuple<HashSet<string>, List<string>> GetPositionTitlesAndSeniorityLevels();
         Task UpdateEmployeeAsync(EmployeeDTO employeeDTO);
         Task CreateEmployeeAsync(EmployeeDTO employeeDTO);
+        Task DeleteEmployeeAsync(int id);
     }
 }

@@ -42,3 +42,12 @@ h2, h3 {
     overflow-x: auto;
     margin: auto;
 }
+
+.delete-employee {
+    background-color: lightyellow;
+    width: 500px;
+}
+
+dt, dd {
+    margin-right: 35px;
+}

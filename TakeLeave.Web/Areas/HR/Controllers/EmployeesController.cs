@@ -73,5 +73,24 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             return View(employeeViewModel);
         }
+
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult DeleteEmployee(int id)
+        {
+            EmployeeInfoDTO? employeeInfoDTO = _employeeService.GetEmployeeById<EmployeeInfoDTO>(id);
+
+            return employeeInfoDTO is null ?
+                BadRequest() :
+                View(employeeInfoDTO.MapEmployeeInfoDtoToEmployeeInfoViewModel());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public async Task<IActionResult> DeleteEmployee(EmployeeInfoViewModel employeeInfoViewModel)
+        {
+            await _employeeService.DeleteEmployeeAsync(employeeInfoViewModel.Id);
+
+            return RedirectToAction(nameof(EmployeeList));
+        }
     }
 }

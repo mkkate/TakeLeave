@@ -33,7 +33,7 @@ namespace TakeLeave.Business.Services
 
         public List<EmployeeInfoDTO>? EmployeeList()
         {
-            List<Employee> employees = _employeeRepository.GetAll()
+            List<Employee> employees = _employeeRepository.GetAllNotDeleted()
                 .Include(e => e.DaysOff)
                 .Include(e => e.Position)
                 .ToList();
@@ -125,6 +125,23 @@ namespace TakeLeave.Business.Services
             _employeeRepository.Save();
 
             await EmployeeHelper.AssignRole(employee, _userManager, _positionRepository);
+        }
+
+        public async Task DeleteEmployeeAsync(int id)
+        {
+            Employee? employee = _employeeRepository
+                .GetByCondition(e => e.Id.Equals(id))
+                .FirstOrDefault();
+
+            if (employee is not null)
+            {
+                employee.DeleteDate = DateTime.UtcNow;
+
+                _employeeRepository.Update(employee);
+                _employeeRepository.Save();
+
+                await EmployeeHelper.RemoveRole(employee, _userManager, _positionRepository);
+            }
         }
     }
 }

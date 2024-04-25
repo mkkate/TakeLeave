@@ -10,5 +10,6 @@
         public const string EndDate = "End date";
         public const string SickLeave = "Sick leave";
         public const string Position = "Position";
+        public const string SeniorityLevel = "Seniority Level";
     }
 }

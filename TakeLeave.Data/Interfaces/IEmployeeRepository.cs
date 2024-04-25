@@ -4,5 +4,6 @@ namespace TakeLeave.Data.Interfaces
 {
     public interface IEmployeeRepository : IRepositoryBase<Employee>
     {
+        IQueryable<Employee> GetAllNotDeleted();
     }
 }

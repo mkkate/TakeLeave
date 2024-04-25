@@ -8,5 +8,9 @@ namespace TakeLeave.Data.Repositories
         public EmployeeRepository(TakeLeaveDbContext dbContext) : base(dbContext)
         {
         }
+        public IQueryable<Employee> GetAllNotDeleted()
+        {
+            return GetByCondition(e => e.DeleteDate.Equals(null));
+        }
     }
 }
