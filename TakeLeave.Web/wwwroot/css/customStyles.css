@@ -51,3 +51,13 @@ h2, h3 {
 dt, dd {
     margin-right: 35px;
 }
+
+.modal-dialog {
+    width: auto !important;
+    max-width: 65%;
+    margin-top: 7%;
+}
+
+.modal-content {
+    width: auto !important;
+}

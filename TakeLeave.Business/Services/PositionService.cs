@@ -1,4 +1,8 @@
-﻿using TakeLeave.Business.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using TakeLeave.Business.Interfaces;
+using TakeLeave.Business.Mappers;
+using TakeLeave.Business.Models;
+using TakeLeave.Data.Database.Employees;
 using TakeLeave.Data.Database.Positions;
 using TakeLeave.Data.Interfaces;
 
@@ -47,6 +51,22 @@ namespace TakeLeave.Business.Services
                     ?.Description;
 
             return description is null ? string.Empty : description;
+        }
+
+        public List<EmployeeInfoDTO> GetEmployeesListForSpecifiedPosition(string title, Models.SeniorityLevel seniority)
+        {
+            List<Employee>? employees = _positionRepository.GetByCondition(
+                p => p.Title.Equals(title.Trim()) &&
+                p.SeniorityLevel.Equals((Data.Database.Positions.SeniorityLevel)seniority))
+                .Include(p => p.Employees)
+                .ThenInclude(e => e.DaysOff)
+                .FirstOrDefault()?
+                .Employees
+                .ToList();
+
+            var employeesList = employees.Select(e => e.MapEmployeeToEmployeeInfoDto()).ToList();
+
+            return employeesList;
         }
     }
 }
