@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TakeLeave.Business.Constants;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.HR.Mappers;
 using TakeLeave.Web.Areas.HR.Models;
+using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.HR.Controllers
 {
@@ -39,6 +42,27 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             List<EmployeeInfoViewModel> employeeInfoViewModels = employeeInfoDTOs.Select(e => e.MapEmployeeInfoDtoToEmployeeInfoViewModel()).ToList();
 
             return PartialView("/Areas/HR/Views/Employees/EmployeeList.cshtml", employeeInfoViewModels);
+        }
+
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult CreatePosition()
+        {
+            PositionViewModel positionViewModel = new PositionViewModel();
+
+            positionViewModel.SeniorityLevels = _positionService.GetSeniorityLevels();
+
+            return View(positionViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult CreatePosition(PositionViewModel positionViewModel)
+        {
+            PositionDTO positionDTO = positionViewModel.MapPositionViewModelToPositionDto();
+
+            _positionService.CreatePosition(positionDTO);
+
+            return RedirectToAction(nameof(PositionsList));
         }
     }
 }

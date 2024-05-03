@@ -68,5 +68,19 @@ namespace TakeLeave.Business.Services
 
             return employeesList;
         }
+
+        public HashSet<string> GetSeniorityLevels()
+        {
+            return Enum.GetNames(typeof(Models.SeniorityLevel))
+                .ToHashSet();
+        }
+
+        public void CreatePosition(PositionDTO positionDTO)
+        {
+            Position position = positionDTO.MapPositionDtoToPosition();
+
+            _positionRepository.Insert(position);
+            _positionRepository.Save();
+        }
     }
 }

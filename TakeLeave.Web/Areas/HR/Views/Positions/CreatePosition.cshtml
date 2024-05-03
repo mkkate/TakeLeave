@@ -1,0 +1,31 @@
+﻿@model TakeLeave.Web.Models.PositionViewModel
+
+<div class="card shadow container w-50 mt-5 position-form justify-content-center text-center">
+    <h3 class="card-title mt-3">Create new position</h3>
+
+    <div class="card-body">
+        <form method="post">
+            <div class="input-group mb-3">
+                <label asp-for="@Model.Title" class="input-group-text" id="basic-addon1">Position Title</label>
+                <input asp-for="@Model.Title" type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <label asp-for="@Model.SeniorityLevel" class="input-group-text" id="basic-addon1"></label>
+                <select asp-for="@Model.SeniorityLevel" class="form-control"
+                        asp-items="@(new SelectList(Model.SeniorityLevels))">
+                    <option value="">Select level:</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <label asp-for="@Model.Description" class="input-group-text"></label>
+                <textarea asp-for="@Model.Description" type="text" class="form-control" placeholder="Description" rows="3"></textarea>
+            </div>
+            <div class="form-group mt-3">
+                <div class="col text-center">
+                    <input type="submit" value="Create" class="btn btn-primary col-4 col-form-label" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -5,6 +5,15 @@
 
     <h3>List of all positions:</h3>
 
+    @if (User.IsInRole("Admin"))
+    {
+        <button type="submit"
+                class="btn btn-primary mt-3"
+                onclick="location.href='@Url.Action("CreatePosition", "Positions")'">
+            Create New Position
+        </button>
+    }
+
     <table class="table table-light table-striped table-bordered border-secondary-subtle mt-4 shadow">
         <thead class="table-secondary">
             <tr>
