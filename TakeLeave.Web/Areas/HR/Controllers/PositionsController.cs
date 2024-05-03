@@ -51,7 +51,6 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             positionViewModel.SeniorityLevels = _positionService.GetSeniorityLevels();
 
-            return View(positionViewModel);
             return PartialView(positionViewModel);
         }
 
@@ -62,6 +61,29 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             PositionDTO positionDTO = positionViewModel.MapPositionViewModelToPositionDto();
 
             _positionService.CreatePosition(positionDTO);
+
+            return RedirectToAction(nameof(PositionsList));
+        }
+
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult UpdatePosition(string title, SeniorityLevel seniorityLevel)
+        {
+            PositionDTO positionDTO = _positionService.GetPosition(title, seniorityLevel);
+
+            PositionViewModel positionViewModel = positionDTO.MapPositionDtoToPositionViewModel();
+
+            positionViewModel.SeniorityLevels = _positionService.GetSeniorityLevels();
+
+            return PartialView(positionViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult UpdatePosition(PositionViewModel positionViewModel)
+        {
+            PositionDTO positionDTO = positionViewModel.MapPositionViewModelToPositionDto();
+
+            _positionService.UpdatePosition(positionDTO);
 
             return RedirectToAction(nameof(PositionsList));
         }

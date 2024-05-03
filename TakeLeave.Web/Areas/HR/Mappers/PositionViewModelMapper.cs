@@ -14,5 +14,15 @@ namespace TakeLeave.Web.Areas.HR.Mappers
                 Description = positionViewModel.Description
             };
         }
+
+        public static PositionViewModel MapPositionDtoToPositionViewModel(this PositionDTO positionDTO)
+        {
+            return new PositionViewModel()
+            {
+                Title = positionDTO.Title,
+                SeniorityLevel = positionDTO.SeniorityLevel,
+                Description = positionDTO.Description
+            };
+        }
     }
 }

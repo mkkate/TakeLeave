@@ -43,7 +43,7 @@
                             <img src="~/icons/employees-list.svg" />
                         </a>@if (User.IsInRole("Admin"))
                         {
-                            <a asp-area="HR" asp-controller="Positions" asp-action="UpdatePosition" asp-route-title="@pair.Key">
+                            <a href="#" class="update-position">
                                 <img src="~/icons/edit.svg" />
                             </a>
                             <a asp-area="HR" asp-controller="Positions" asp-action="DeletePositions" asp-route-title="@pair.Key">
@@ -123,6 +123,26 @@
                 $.get(url, function (data) {
                     var tempElement = $('<div>').html(data);
                     var modalContent = tempElement.find('#modal-content-position').html();
+                    $('#employeeModal .modal-body').html(modalContent);
+                    $('#employeeModal').modal('show');
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('.update-position').click(function (e) {
+                e.preventDefault();
+
+                var title = $(this).closest('tr').find('.position-title').text().trim();
+                var selectedSeniority = $(this).closest('tr').find('.seniority-dropdown').val();
+
+                var url = '@Url.Action("UpdatePosition", "Positions")';
+                url += '?title=' + encodeURIComponent(title);
+                url += '&seniorityLevel=' + encodeURIComponent(selectedSeniority);
+
+                $.get(url, function (data) {
+                    var tempElement = $('<div>').html(data);
+                    var modalContent = tempElement.find('#modal-content-position-update').html();
                     $('#employeeModal .modal-body').html(modalContent);
                     $('#employeeModal').modal('show');
                 });

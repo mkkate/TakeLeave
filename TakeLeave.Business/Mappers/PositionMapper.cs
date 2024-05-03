@@ -5,14 +5,21 @@ namespace TakeLeave.Business.Mappers
 {
     public static class PositionMapper
     {
-        public static Position MapPositionDtoToPosition(this PositionDTO positionDTO)
+        public static void MapPositionDtoToPosition(this PositionDTO positionDTO, Position position)
         {
-            return new Position()
+            position.Title = positionDTO.Title;
+            position.SeniorityLevel = Enum.Parse<Data.Database.Positions.SeniorityLevel>(positionDTO.SeniorityLevel);
+            position.Description = positionDTO.Description;
+        }
+
+        public static PositionDTO MapPositionToPositionDto(this Position position)
+        {
+            return new PositionDTO()
             {
-                Title = positionDTO.Title,
-                SeniorityLevel = Enum.Parse<Data.Database.Positions.SeniorityLevel>(positionDTO.SeniorityLevel),
-                Description = positionDTO.Description
-            };
+                Title = position.Title,
+                SeniorityLevel = Enum.GetName(position.SeniorityLevel),
+                Description = position.Description
+            }; ;
         }
     }
 }

@@ -9,5 +9,7 @@ namespace TakeLeave.Business.Interfaces
         List<EmployeeInfoDTO> GetEmployeesListForSpecifiedPosition(string title, Models.SeniorityLevel seniority);
         HashSet<string> GetSeniorityLevels();
         void CreatePosition(PositionDTO positionDTO);
+        PositionDTO GetPosition(string title, Models.SeniorityLevel seniorityLevel);
+        void UpdatePosition(PositionDTO positionDTO);
     }
 }

@@ -77,7 +77,8 @@ namespace TakeLeave.Business.Services
 
         public void CreatePosition(PositionDTO positionDTO)
         {
-            Position position = positionDTO.MapPositionDtoToPosition();
+            Position position = new Position();
+            positionDTO.MapPositionDtoToPosition(position);
 
             var existing = _positionRepository.GetByCondition(p => p.Title.Equals(position.Title) && p.SeniorityLevel.Equals(position.SeniorityLevel)).FirstOrDefault();
 
@@ -88,6 +89,32 @@ namespace TakeLeave.Business.Services
 
             _positionRepository.Insert(position);
             _positionRepository.Save();
+        }
+
+        public PositionDTO GetPosition(string title, Models.SeniorityLevel seniorityLevel)
+        {
+            Position? position = _positionRepository.GetByCondition(
+                p => p.Title.Equals(title) &&
+                p.SeniorityLevel.Equals((Data.Database.Positions.SeniorityLevel)seniorityLevel))
+                .FirstOrDefault();
+
+            return position.MapPositionToPositionDto();
+        }
+
+        public void UpdatePosition(PositionDTO positionDTO)
+        {
+            Position? position = _positionRepository.GetByCondition(
+                p => p.Title.Equals(positionDTO.Title) &&
+                p.SeniorityLevel.Equals(Enum.Parse<Data.Database.Positions.SeniorityLevel>(positionDTO.SeniorityLevel)))
+                .FirstOrDefault();
+
+            if (position != null)
+            {
+                positionDTO.MapPositionDtoToPosition(position);
+
+                _positionRepository.Update(position);
+                _positionRepository.Save();
+            }
         }
     }
 }

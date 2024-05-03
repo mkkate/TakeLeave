@@ -1,21 +1,18 @@
 ﻿@model TakeLeave.Web.Models.PositionViewModel
 
-<div id="modal-content-position">
+<div id="modal-content-position-update">
     <div class="card shadow container w-50 mt-2 position-form justify-content-center text-center">
-        <h3 class="card-title mt-3">Create new position</h3>
+        <h3 class="card-title mt-3">Update position</h3>
 
         <div class="card-body">
-            <form method="post" asp-action="CreatePosition" asp-controller="Positions">
+            <form method="post" asp-action="UpdatePosition" asp-controller="Positions">
                 <div class="input-group mb-3">
                     <label asp-for="@Model.Title" class="input-group-text" id="basic-addon1">Position Title</label>
-                    <input asp-for="@Model.Title" type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+                    <input asp-for="@Model.Title" type="text" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <label asp-for="@Model.SeniorityLevel" class="input-group-text" id="basic-addon1"></label>
-                    <select asp-for="@Model.SeniorityLevel" class="form-control"
-                            asp-items="@(new SelectList(Model.SeniorityLevels))">
-                        <option value="">Select level:</option>
-                    </select>
+                    <input asp-for="@Model.SeniorityLevel" type="text" class="form-control" placeholder="Seniority Level" aria-label="Username" aria-describedby="basic-addon1" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <label asp-for="@Model.Description" class="input-group-text"></label>
@@ -23,7 +20,7 @@
                 </div>
                 <div class="form-group mt-3">
                     <div class="col text-center">
-                        <input type="submit" value="Create" class="btn btn-primary col-4 col-form-label" />
+                        <input type="submit" value="Update" class="btn btn-primary col-4 col-form-label" />
                     </div>
                 </div>
             </form>
