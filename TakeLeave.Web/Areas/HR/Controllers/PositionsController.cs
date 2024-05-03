@@ -52,6 +52,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             positionViewModel.SeniorityLevels = _positionService.GetSeniorityLevels();
 
             return View(positionViewModel);
+            return PartialView(positionViewModel);
         }
 
         [HttpPost]

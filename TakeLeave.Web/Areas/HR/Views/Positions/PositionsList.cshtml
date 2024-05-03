@@ -8,8 +8,7 @@
     @if (User.IsInRole("Admin"))
     {
         <button type="submit"
-                class="btn btn-primary mt-3"
-                onclick="location.href='@Url.Action("CreatePosition", "Positions")'">
+                class="btn btn-primary mt-3 create-new-position">
             Create New Position
         </button>
     }
@@ -61,7 +60,6 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="employeeModalLabel">Employee List</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -110,6 +108,21 @@
                 $.get(url, function (data) {
                     var tempElement = $('<div>').html(data);
                     var modalContent = tempElement.find('#modal-content').html();
+                    $('#employeeModal .modal-body').html(modalContent);
+                    $('#employeeModal').modal('show');
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('.create-new-position').click(function (e) {
+                e.preventDefault();
+
+                var url = '@Url.Action("CreatePosition", "Positions")';
+
+                $.get(url, function (data) {
+                    var tempElement = $('<div>').html(data);
+                    var modalContent = tempElement.find('#modal-content-position').html();
                     $('#employeeModal .modal-body').html(modalContent);
                     $('#employeeModal').modal('show');
                 });

@@ -79,6 +79,13 @@ namespace TakeLeave.Business.Services
         {
             Position position = positionDTO.MapPositionDtoToPosition();
 
+            var existing = _positionRepository.GetByCondition(p => p.Title.Equals(position.Title) && p.SeniorityLevel.Equals(position.SeniorityLevel)).FirstOrDefault();
+
+            if (existing != null)
+            {
+                return;
+            }
+
             _positionRepository.Insert(position);
             _positionRepository.Save();
         }
