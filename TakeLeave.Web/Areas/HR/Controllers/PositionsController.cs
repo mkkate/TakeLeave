@@ -12,10 +12,14 @@ namespace TakeLeave.Web.Areas.HR.Controllers
     public class PositionsController : BaseHrController
     {
         private readonly IPositionService _positionService;
+        private readonly IEmployeeRoleService _employeeRoleService;
 
-        public PositionsController(IPositionService positionService)
+        public PositionsController(
+            IPositionService positionService,
+            IEmployeeRoleService employeeRoleService)
         {
             _positionService = positionService;
+            _employeeRoleService = employeeRoleService;
         }
 
         public IActionResult PositionsList()
@@ -50,6 +54,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             PositionViewModel positionViewModel = new PositionViewModel();
 
             positionViewModel.SeniorityLevels = _positionService.GetSeniorityLevels();
+
+            positionViewModel.EmployeeRoles = _employeeRoleService.GetEmployeeRoles();
 
             return PartialView(positionViewModel);
         }

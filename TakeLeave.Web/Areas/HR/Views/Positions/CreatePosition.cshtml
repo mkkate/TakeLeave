@@ -18,6 +18,13 @@
                     </select>
                 </div>
                 <div class="input-group mb-3">
+                    <label asp-for="@Model.EmployeeRoles" class="input-group-text" id="basic-addon1"></label>
+                    <select asp-for="@Model.EmployeeRoleId" class="form-control"
+                            asp-items="@(new SelectList(Model.EmployeeRoles,"Key","Value"))">
+                        <option value="">Select role:</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
                     <label asp-for="@Model.Description" class="input-group-text"></label>
                     <textarea asp-for="@Model.Description" type="text" class="form-control" placeholder="Description" rows="4"></textarea>
                 </div>

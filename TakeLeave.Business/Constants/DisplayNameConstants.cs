@@ -11,5 +11,6 @@
         public const string SickLeave = "Sick leave";
         public const string Position = "Position";
         public const string SeniorityLevel = "Seniority Level";
+        public const string EmployeeRole = "Employee Role";
     }
 }

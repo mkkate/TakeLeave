@@ -10,6 +10,7 @@ namespace TakeLeave.Business.Mappers
             position.Title = positionDTO.Title;
             position.SeniorityLevel = Enum.Parse<Data.Database.Positions.SeniorityLevel>(positionDTO.SeniorityLevel);
             position.Description = positionDTO.Description;
+            position.EmployeeRoleID = positionDTO.EmployeeRoleId;
         }
 
         public static PositionDTO MapPositionToPositionDto(this Position position)

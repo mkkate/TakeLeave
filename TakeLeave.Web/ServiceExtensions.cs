@@ -10,6 +10,7 @@ namespace TakeLeave.Web
         public static void ConfigureRepository(this IServiceCollection services)
         {
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmployeeRoleRepository, EmployeeRoleRepository>();
             services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddScoped<IDaysOffRepository, DaysOffRepository>();
         }
@@ -18,6 +19,7 @@ namespace TakeLeave.Web
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
             services.AddScoped<IPositionService, PositionService>();
         }
     }

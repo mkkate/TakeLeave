@@ -10,6 +10,9 @@ namespace TakeLeave.Web.Models
         public string SeniorityLevel { get; set; }
         public string Description { get; set; }
 
+        public int EmployeeRoleId { get; set; }
+        [DisplayName(DisplayNameConstants.EmployeeRole)]
+        public Dictionary<int, string?> EmployeeRoles { get; set; }
 
         public HashSet<string> SeniorityLevels { get; set; }
     }

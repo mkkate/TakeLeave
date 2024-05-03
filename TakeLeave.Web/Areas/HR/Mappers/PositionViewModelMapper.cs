@@ -11,7 +11,8 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             {
                 Title = positionViewModel.Title,
                 SeniorityLevel = positionViewModel.SeniorityLevel,
-                Description = positionViewModel.Description
+                Description = positionViewModel.Description,
+                EmployeeRoleId = positionViewModel.EmployeeRoleId
             };
         }
 

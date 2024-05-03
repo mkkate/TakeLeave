@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TakeLeave.Business.Constants;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Data.Interfaces;
 
@@ -29,25 +29,13 @@ namespace TakeLeave.Business.Helpers
             Employee employee,
             IPositionRepository _positionRepository)
         {
-            string? positionTitle = _positionRepository
+            var roleName = _positionRepository
                 .GetByCondition(p => p.ID.Equals(employee.PositionID))
+                .Include(er => er.EmployeeRole)
                 .FirstOrDefault()?
-                .Title;
+                .EmployeeRole.Name;
 
-            switch (positionTitle)
-            {
-                case PositionTitleConstants.HrManager:
-                    return EmployeeRoles.Admin;
-
-                case PositionTitleConstants.Recruiter:
-                    return EmployeeRoles.HR;
-
-                case PositionTitleConstants.SoftwareDeveloper:
-                    return EmployeeRoles.User;
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return roleName ?? throw new NotImplementedException();
         }
 
         public static async Task RemoveRole(
