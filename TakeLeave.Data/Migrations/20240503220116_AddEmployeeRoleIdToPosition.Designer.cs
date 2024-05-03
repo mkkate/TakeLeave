@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TakeLeave.Data;
 
@@ -11,9 +12,11 @@ using TakeLeave.Data;
 namespace TakeLeave.Data.Migrations
 {
     [DbContext(typeof(TakeLeaveDbContext))]
-    partial class TakeLeaveDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240503220116_AddEmployeeRoleIdToPosition")]
+    partial class AddEmployeeRoleIdToPosition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

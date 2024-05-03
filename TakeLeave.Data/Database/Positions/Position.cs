@@ -16,6 +16,8 @@ namespace TakeLeave.Data.Database.Positions
 
         public SeniorityLevel SeniorityLevel { get; set; }
 
+        public int EmployeeRoleID { get; set; }
+        public EmployeeRole EmployeeRole { get; set; }
 
         public ICollection<Employee> Employees { get; set; }
     }
