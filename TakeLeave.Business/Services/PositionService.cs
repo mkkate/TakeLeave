@@ -27,7 +27,13 @@ namespace TakeLeave.Business.Services
             {
                 if (titlesAndSeniorityLevels.ContainsKey(position.Title))
                 {
-                    titlesAndSeniorityLevels[position.Title].Add((position.SeniorityLevel.ToString(), position.Description).ToTuple());
+                    titlesAndSeniorityLevels[position.Title]
+                        .Add((position.SeniorityLevel.ToString(), position.Description)
+                        .ToTuple());
+
+                    titlesAndSeniorityLevels[position.Title] = titlesAndSeniorityLevels[position.Title]
+                        .OrderBy(t => Enum.Parse(typeof(Data.Database.Positions.SeniorityLevel), t.Item1))
+                        .ToList();
                 }
                 else
                 {
