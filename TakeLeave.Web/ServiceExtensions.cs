@@ -13,6 +13,7 @@ namespace TakeLeave.Web
             services.AddScoped<IEmployeeRoleRepository, EmployeeRoleRepository>();
             services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddScoped<IDaysOffRepository, DaysOffRepository>();
+            services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
         }
 
         public static void ConfigureAppServices(this IServiceCollection services)
@@ -21,6 +22,7 @@ namespace TakeLeave.Web
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
             services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<ILeaveRequestService, LeaveRequestService>();
         }
     }
 }
