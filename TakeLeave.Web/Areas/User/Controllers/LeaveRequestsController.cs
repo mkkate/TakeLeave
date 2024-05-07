@@ -27,12 +27,10 @@ namespace TakeLeave.Web.Areas.User.Controllers
         {
             DaysOffDTO? daysOffDTO = _userService.GetUserDetails(GetLoggedInEmployeeId())?.DaysOff;
 
-            LeaveRequestViewModel leaveRequestViewModel = new();
-
-            leaveRequestViewModel.DaysOff.Vacation = daysOffDTO.Vacation;
-            leaveRequestViewModel.DaysOff.Paid = daysOffDTO.Paid;
-            leaveRequestViewModel.DaysOff.Unpaid = daysOffDTO.Unpaid;
-            leaveRequestViewModel.DaysOff.SickLeave = daysOffDTO.SickLeave;
+            LeaveRequestViewModel leaveRequestViewModel = new()
+            {
+                DaysOff = daysOffDTO.MapDaysOffDtoToDaysOffViewModel()
+            };
 
             return View(leaveRequestViewModel);
         }
@@ -44,10 +42,7 @@ namespace TakeLeave.Web.Areas.User.Controllers
 
             leaveRequestDTO.EmployeeID = GetLoggedInEmployeeId();
 
-            leaveRequestDTO.DaysOff.Vacation = leaveRequestViewModel.DaysOff.Vacation;
-            leaveRequestDTO.DaysOff.Paid = leaveRequestViewModel.DaysOff.Paid;
-            leaveRequestDTO.DaysOff.Unpaid = leaveRequestViewModel.DaysOff.Unpaid;
-            leaveRequestDTO.DaysOff.SickLeave = leaveRequestViewModel.DaysOff.SickLeave;
+            leaveRequestDTO.DaysOff = leaveRequestViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
 
             _leaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 

@@ -1,5 +1,6 @@
 ﻿using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.HR.Models;
+using TakeLeave.Web.Areas.User.Mappers;
 
 namespace TakeLeave.Web.Areas.HR.Mappers
 {
@@ -15,10 +16,7 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             employeeInfoViewModel.EmploymentStartDate = employeeDTO.EmploymentStartDate;
             employeeInfoViewModel.EmploymentEndDate = employeeDTO.EmploymentEndDate;
 
-            employeeInfoViewModel.DaysOff.Vacation = employeeDTO.DaysOff.Vacation;
-            employeeInfoViewModel.DaysOff.Paid = employeeDTO.DaysOff.Paid;
-            employeeInfoViewModel.DaysOff.Unpaid = employeeDTO.DaysOff.Unpaid;
-            employeeInfoViewModel.DaysOff.SickLeave = employeeDTO.DaysOff.SickLeave;
+            employeeInfoViewModel.DaysOff = employeeDTO.DaysOff.MapDaysOffDtoToDaysOffViewModel();
 
             employeeInfoViewModel.Position.Title = employeeDTO.Position.Title;
             employeeInfoViewModel.Position.SeniorityLevel = employeeDTO.Position.SeniorityLevel;
@@ -41,10 +39,7 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             employeeViewModel.EmploymentStartDate = employeeDTO.EmploymentStartDate;
             employeeViewModel.EmploymentEndDate = employeeDTO.EmploymentEndDate;
 
-            employeeViewModel.DaysOff.Vacation = employeeDTO.DaysOff.Vacation;
-            employeeViewModel.DaysOff.Paid = employeeDTO.DaysOff.Paid;
-            employeeViewModel.DaysOff.Unpaid = employeeDTO.DaysOff.Unpaid;
-            employeeViewModel.DaysOff.SickLeave = employeeDTO.DaysOff.SickLeave;
+            employeeViewModel.DaysOff = employeeDTO.DaysOff.MapDaysOffDtoToDaysOffViewModel();
 
             employeeViewModel.Position.Title = employeeDTO.Position.Title;
             employeeViewModel.Position.SeniorityLevel = employeeDTO.Position.SeniorityLevel;
@@ -67,10 +62,7 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             employeeDTO.EmploymentStartDate = employeeViewModel.EmploymentStartDate;
             employeeDTO.EmploymentEndDate = employeeViewModel.EmploymentEndDate;
 
-            employeeDTO.DaysOff.Vacation = employeeViewModel.DaysOff.Vacation;
-            employeeDTO.DaysOff.Paid = employeeViewModel.DaysOff.Paid;
-            employeeDTO.DaysOff.Unpaid = employeeViewModel.DaysOff.Unpaid;
-            employeeDTO.DaysOff.SickLeave = employeeViewModel.DaysOff.SickLeave;
+            employeeDTO.DaysOff = employeeViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
 
             employeeDTO.Position.Title = employeeViewModel.Position.Title;
             employeeDTO.Position.SeniorityLevel = employeeViewModel.Position.SeniorityLevel;

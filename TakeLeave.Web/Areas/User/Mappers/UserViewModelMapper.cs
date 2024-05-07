@@ -15,10 +15,7 @@ namespace TakeLeave.Web.Areas.User.Mappers
             userViewModel.EmploymentStartDate = userDTO.EmploymentStartDate;
             userViewModel.EmploymentEndDate = userDTO.EmploymentEndDate;
 
-            userViewModel.DaysOff.Vacation = userDTO.DaysOff.Vacation;
-            userViewModel.DaysOff.Paid = userDTO.DaysOff.Paid;
-            userViewModel.DaysOff.Unpaid = userDTO.DaysOff.Unpaid;
-            userViewModel.DaysOff.SickLeave = userDTO.DaysOff.SickLeave;
+            userViewModel.DaysOff = userDTO.DaysOff.MapDaysOffDtoToDaysOffViewModel();
 
             userViewModel.Position.Title = userDTO.Position.Title;
             userViewModel.Position.SeniorityLevel = userDTO.Position.SeniorityLevel;
