@@ -1,6 +1,6 @@
-﻿using TakeLeave.Business.Interfaces;
+﻿using TakeLeave.Business.Helpers;
+using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Mappers;
-using TakeLeave.Business.Models;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Data.Database.LeaveRequests;
 using TakeLeave.Data.Interfaces;
@@ -19,13 +19,13 @@ namespace TakeLeave.Business.Services
 
         public void CreateLeaveRequest(LeaveRequestDTO leaveRequestDTO)
         {
-            double requestedDaysOff = CountRequestedDaysOff(
+            double requestedDaysOff = DaysOffHelper.CountRequestedDaysOff(
                 leaveRequestDTO.LeaveStartDate,
                 leaveRequestDTO.LeaveEndDate);
 
             LeaveRequestType leaveRequestType = Enum.Parse<LeaveRequestType>(leaveRequestDTO.LeaveType);
 
-            bool hasEnoughDays = HasEnoughDays(
+            bool hasEnoughDays = DaysOffHelper.HasEnoughDays(
                 requestedDaysOff,
                 leaveRequestDTO.DaysOff,
                 leaveRequestType);
@@ -36,48 +36,6 @@ namespace TakeLeave.Business.Services
 
                 _leaveRequestRepository.Insert(leaveRequest);
                 _leaveRequestRepository.Save();
-            }
-        }
-
-        private double CountRequestedDaysOff(DateTime startDate, DateTime endDate)
-        {
-            return endDate.AddDays(1).Subtract(startDate).TotalDays - CountWeekendDays(startDate, endDate);
-        }
-
-        public double CountWeekendDays(DateTime startDate, DateTime endDate)
-        {
-            double countWeekendDays = 0;
-            DateTime currentDate = startDate;
-
-            while (currentDate <= endDate)
-            {
-                if (currentDate.DayOfWeek == DayOfWeek.Saturday || currentDate.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    countWeekendDays++;
-                }
-                currentDate = currentDate.AddDays(1);
-            }
-
-            return countWeekendDays;
-        }
-
-        private bool HasEnoughDays(double requestedDaysOff, DaysOffDTO daysOffDTO, LeaveRequestType leaveRequestType)
-        {
-            switch (leaveRequestType)
-            {
-                case LeaveRequestType.Vacation:
-                    return requestedDaysOff <= daysOffDTO.Vacation;
-
-                case LeaveRequestType.Paid:
-                    return requestedDaysOff <= daysOffDTO.Paid;
-
-                case LeaveRequestType.Unpaid:
-                    return requestedDaysOff <= daysOffDTO.Unpaid;
-
-                case LeaveRequestType.SickLeave:
-                    return requestedDaysOff <= daysOffDTO.SickLeave;
-
-                default: return false;
             }
         }
     }
