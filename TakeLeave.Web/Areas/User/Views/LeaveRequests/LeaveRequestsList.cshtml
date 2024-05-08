@@ -4,8 +4,7 @@
     <h3>List of all your leave requests:</h3>
 
     <button type="submit"
-            class="btn btn-primary mt-3"
-            onclick="location.href='@Url.Action("CreateLeaveRequest", "LeaveRequests")'">
+            class="btn btn-primary mt-3 leave-request-create">
         Create New Leave Request
     </button>
 
@@ -42,4 +41,37 @@
         </tbody>
     </table>
 
+
+    <div class="modal fade" id="leaveRequestModal" tabindex="-1" role="dialog" aria-labelledby="leaveRequestModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Content will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.leave-request-create').click(function (e) {
+                e.preventDefault();
+
+                var url = '@Url.Action("CreateLeaveRequest", "LeaveRequests")';
+
+                $.get(url, function (data) {
+                    var tempElement = $('<div>').html(data);
+                    var modalContent = tempElement.find('#modal-content-leave-request').html();
+                    $('#leaveRequestModal .modal-body').html(modalContent);
+                    $('#leaveRequestModal').modal('show');
+                });
+            });
+        });
+    </script>
+}

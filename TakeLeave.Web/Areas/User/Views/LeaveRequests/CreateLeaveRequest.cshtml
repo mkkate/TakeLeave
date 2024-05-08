@@ -1,45 +1,47 @@
 ﻿@model LeaveRequestViewModel
 @using TakeLeave.Business.Models.LeaveRequests
 
-<div class="card shadow container w-75 mt-2 position-form justify-content-center text-center">
-    <h3 class="card-title mt-3">Create new leave request</h3>
+<div id="modal-content-leave-request">
+    <div class="card shadow container w-75 mt-2 position-form justify-content-center text-center">
+        <h3 class="card-title mt-3">Create new leave request</h3>
 
-    <div class="card-body">
-        <form method="post" asp-action="CreateLeaveRequest" asp-controller="LeaveRequests">
-            <div class="input-group mb-3">
-                <label asp-for="@Model.LeaveStartDate" class="input-group-text"></label>
-                <input asp-for="@Model.LeaveStartDate" type="date" value="@DateTime.UtcNow" class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <label asp-for="@Model.LeaveEndDate" class="input-group-text"></label>
-                <input asp-for="@Model.LeaveEndDate" type="date" value="@DateTime.UtcNow" class="form-control">
-            </div>
-            <div class="input-group mb-3">
-                <label asp-for="@Model.LeaveType" class="input-group-text"></label>
-                <select asp-for="@Model.LeaveType" class="form-control"
-                        asp-items="Html.GetEnumSelectList<LeaveRequestType>()">
-                    <option value="">Select leave type:</option>
-                </select>
-            </div>
-            <div class="input-group mb-3">
-                <label asp-for="@Model.Comment" class="input-group-text"></label>
-                <textarea asp-for="@Model.Comment" type="text" class="form-control" placeholder="Comment" rows="4"></textarea>
-            </div>
-            <div class="input-group mb-3">
-                <div class="col mt-3">
-                    <input asp-for="@Model.DaysOff.Vacation" type="hidden" />
-                    <input asp-for="@Model.DaysOff.Paid" type="hidden" />
-                    <input asp-for="@Model.DaysOff.Unpaid" type="hidden" />
-                    <input asp-for="@Model.DaysOff.SickLeave" type="hidden" />
-                    @await Component.InvokeAsync("DaysOffs", Model.DaysOff)
+        <div class="card-body">
+            <form method="post" asp-action="CreateLeaveRequest" asp-controller="LeaveRequests">
+                <div class="input-group mb-3">
+                    <label asp-for="@Model.LeaveStartDate" class="input-group-text"></label>
+                    <input asp-for="@Model.LeaveStartDate" type="date" value="@DateTime.UtcNow" class="form-control">
                 </div>
-            </div>
+                <div class="input-group mb-3">
+                    <label asp-for="@Model.LeaveEndDate" class="input-group-text"></label>
+                    <input asp-for="@Model.LeaveEndDate" type="date" value="@DateTime.UtcNow" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <label asp-for="@Model.LeaveType" class="input-group-text"></label>
+                    <select asp-for="@Model.LeaveType" class="form-control"
+                            asp-items="Html.GetEnumSelectList<LeaveRequestType>()">
+                        <option value="">Select leave type:</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label asp-for="@Model.Comment" class="input-group-text"></label>
+                    <textarea asp-for="@Model.Comment" type="text" class="form-control" placeholder="Comment" rows="4"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="col mt-3">
+                        <input asp-for="@Model.DaysOff.Vacation" type="hidden" />
+                        <input asp-for="@Model.DaysOff.Paid" type="hidden" />
+                        <input asp-for="@Model.DaysOff.Unpaid" type="hidden" />
+                        <input asp-for="@Model.DaysOff.SickLeave" type="hidden" />
+                        @await Component.InvokeAsync("DaysOffs", Model.DaysOff)
+                    </div>
+                </div>
 
-            <div class="form-group mt-3">
-                <div class="col text-center">
-                    <input type="submit" value="Create" class="btn btn-primary col-4 col-form-label" />
+                <div class="form-group mt-3">
+                    <div class="col text-center">
+                        <input type="submit" value="Create" class="btn btn-primary col-4 col-form-label" />
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
