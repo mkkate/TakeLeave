@@ -20,5 +20,18 @@ namespace TakeLeave.Business.Mappers
                 Status = leaveRequestDTO.Status.IsNullOrEmpty() ? LeaveRequestStatus.OnWait : Enum.Parse<LeaveRequestStatus>(leaveRequestDTO.Status),
             };
         }
+
+        public static LeaveRequestDTO MapLeaveRequestToLeaveRequestDto(this LeaveRequest leaveRequest)
+        {
+            return new()
+            {
+                LeaveStartDate = leaveRequest.LeaveStartDate,
+                LeaveEndDate = leaveRequest.LeaveEndDate,
+                LeaveType = Enum.GetName(leaveRequest.LeaveType),
+                Comment = leaveRequest.Comment,
+                EmployeeID = leaveRequest.EmployeeID,
+                Status = Enum.GetName(leaveRequest.Status),
+            };
+        }
     }
 }

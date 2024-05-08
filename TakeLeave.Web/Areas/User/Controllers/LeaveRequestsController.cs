@@ -48,5 +48,16 @@ namespace TakeLeave.Web.Areas.User.Controllers
 
             return View(leaveRequestViewModel);
         }
+
+        public IActionResult LeaveRequestsList()
+        {
+            List<LeaveRequestDTO> leaveRequestDTOs = _leaveRequestService.GetLeaveRequestsForLoggedInUser(GetLoggedInEmployeeId());
+
+            List<LeaveRequestViewModel> leaveRequestViewModels = leaveRequestDTOs
+                .Select(leaveDTO => leaveDTO.MapLeaveRequestDtoToLeaveRequestViewModel())
+                .ToList();
+
+            return View(leaveRequestViewModels);
+        }
     }
 }

@@ -38,5 +38,18 @@ namespace TakeLeave.Business.Services
                 _leaveRequestRepository.Save();
             }
         }
+
+        public List<LeaveRequestDTO> GetLeaveRequestsForLoggedInUser(int id)
+        {
+            List<LeaveRequest> leaveRequests = _leaveRequestRepository.
+                GetByCondition(leave => leave.EmployeeID.Equals(id))
+                .ToList();
+
+            List<LeaveRequestDTO> leaveRequestDTOs = leaveRequests
+                .Select(leave => leave.MapLeaveRequestToLeaveRequestDto())
+                .ToList();
+
+            return leaveRequestDTOs;
+        }
     }
 }
