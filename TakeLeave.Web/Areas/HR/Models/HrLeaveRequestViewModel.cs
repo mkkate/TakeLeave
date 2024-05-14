@@ -7,8 +7,8 @@ namespace TakeLeave.Web.Areas.HR.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime LeaveStartDate { get; set; }
-        public DateTime LeaveEndDate { get; set; }
+        public DateOnly LeaveStartDate { get; set; }
+        public DateOnly LeaveEndDate { get; set; }
         public string? Comment { get; set; }
 
         public string Status { get; set; }

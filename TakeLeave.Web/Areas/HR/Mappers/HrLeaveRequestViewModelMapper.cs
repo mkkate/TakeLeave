@@ -13,10 +13,11 @@ namespace TakeLeave.Web.Areas.Hr.Mappers
 
             return new()
             {
+                Id = leaveRequestDTO.Id,
                 FirstName = leaveRequestDTO.FirstName,
                 LastName = leaveRequestDTO.LastName,
-                LeaveStartDate = leaveRequestDTO.LeaveStartDate,
-                LeaveEndDate = leaveRequestDTO.LeaveEndDate,
+                LeaveStartDate = DateOnly.FromDateTime(leaveRequestDTO.LeaveStartDate),
+                LeaveEndDate = DateOnly.FromDateTime(leaveRequestDTO.LeaveEndDate),
                 LeaveType = leaveRequestType.GetEnumDescription(),
                 Status = leaveRequestStatus.GetEnumDescription(),
                 Comment = leaveRequestDTO.Comment,

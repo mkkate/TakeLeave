@@ -9,6 +9,7 @@ namespace TakeLeave.Business.Mappers
         {
             return new()
             {
+                Id = leaveRequest.ID,
                 FirstName = leaveRequest.RequestedByEmployee.FirstName,
                 LastName = leaveRequest.RequestedByEmployee.LastName,
                 LeaveStartDate = leaveRequest.LeaveStartDate,

@@ -23,8 +23,8 @@
             {
                 <tr id="@item.Id">
                     <td>@item.FirstName @item.LastName</td>
-                    <td>@item.LeaveStartDate</td>
-                    <td>@item.LeaveEndDate</td>
+                    <td>@item.LeaveStartDate.ToString("dd-MM-yyyy")</td>
+                    <td>@item.LeaveEndDate.ToString("dd-MM-yyyy")</td>
                     <td>@item.LeaveType</td>
                     <td>
                         <a asp-area="HR" asp-controller="LeaveRequests" asp-action="UpdateLeaveRequest" asp-route-id="@item.Id">
