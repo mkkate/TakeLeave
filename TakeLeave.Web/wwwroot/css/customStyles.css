@@ -1,7 +1,7 @@
 ﻿.card-days-off {
     background-color: whitesmoke;
-    width: 135px;
-    height: 135px;
+    width: 115px;
+    height: 115px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -19,7 +19,7 @@
     background-color: whitesmoke;
 }
 
-h2, h3 {
+h2, h3, h4 {
     text-align: center;
 }
 

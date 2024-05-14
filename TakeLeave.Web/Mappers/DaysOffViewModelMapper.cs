@@ -1,7 +1,7 @@
 ﻿using TakeLeave.Business.Models;
 using TakeLeave.Web.Models;
 
-namespace TakeLeave.Web.Areas.User.Mappers
+namespace TakeLeave.Web.Mappers
 {
     public static class DaysOffViewModelMapper
     {

@@ -1,5 +1,6 @@
 ﻿using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.User.Models;
+using TakeLeave.Web.Mappers;
 
 namespace TakeLeave.Web.Areas.User.Mappers
 {
