@@ -10,6 +10,8 @@
         public string Status { get; set; }
         public string LeaveType { get; set; }
 
+        public string HrFirstName { get; set; }
+        public string HrLastName { get; set; }
         public int HandledByHrId { get; set; }
 
         public DaysOffViewModel DaysOff { get; set; } = new();

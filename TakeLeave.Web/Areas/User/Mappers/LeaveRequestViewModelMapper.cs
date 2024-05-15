@@ -29,6 +29,9 @@ namespace TakeLeave.Web.Areas.User.Mappers
                 LeaveType = leaveRequestType.GetEnumDescription(),
                 Status = leaveRequestStatus.GetEnumDescription(),
                 Comment = leaveRequestDTO.Comment,
+                HandledByHrId = leaveRequestDTO.HandledByHrID ?? 0,
+                HrFirstName = leaveRequestDTO.HrFirstName,
+                HrLastName = leaveRequestDTO.HrLastName,
             };
         }
     }

@@ -11,6 +11,8 @@
         public string LeaveType { get; set; }
 
         public int EmployeeID { get; set; }
+        public string HrFirstName { get; set; }
+        public string HrLastName { get; set; }
         public int? HandledByHrID { get; set; }
 
         public DaysOffDTO DaysOff { get; set; } = new();

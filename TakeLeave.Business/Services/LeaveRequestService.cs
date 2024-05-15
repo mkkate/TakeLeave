@@ -1,4 +1,5 @@
-﻿using TakeLeave.Business.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Mappers;
 using TakeLeave.Business.Models.LeaveRequests;
@@ -43,6 +44,7 @@ namespace TakeLeave.Business.Services
         {
             List<LeaveRequest> leaveRequests = _leaveRequestRepository.
                 GetByCondition(leave => leave.EmployeeID.Equals(id))
+                .Include(lr => lr.HandledByHr)
                 .ToList();
 
             List<LeaveRequestDTO> leaveRequestDTOs = leaveRequests

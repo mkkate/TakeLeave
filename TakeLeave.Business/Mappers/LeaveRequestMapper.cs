@@ -31,6 +31,9 @@ namespace TakeLeave.Business.Mappers
                 Comment = leaveRequest.Comment,
                 EmployeeID = leaveRequest.EmployeeID,
                 Status = Enum.GetName(leaveRequest.Status),
+                HandledByHrID = leaveRequest.HandledByHrID,
+                HrFirstName = leaveRequest.HandledByHrID != 0 ? leaveRequest.HandledByHr.FirstName : string.Empty,
+                HrLastName = leaveRequest.HandledByHrID != 0 ? leaveRequest.HandledByHr.LastName : string.Empty,
             };
         }
     }
