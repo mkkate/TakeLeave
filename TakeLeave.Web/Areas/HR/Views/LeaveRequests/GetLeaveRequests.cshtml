@@ -1,7 +1,7 @@
 ﻿@model List<TakeLeave.Web.Areas.HR.Models.HrLeaveRequestViewModel>
 
 <div class="container mt-4 justify-content-center text-center">
-    <h3>List of all your leave requests:</h3>
+    <h3>List of all leave requests:</h3>
 
     <button type="submit"
             class="btn btn-primary mt-3 leave-request-create">
@@ -15,6 +15,7 @@
                 <th>Leave Start Date</th>
                 <th>Leave End Date</th>
                 <th>Leave Type</th>
+                <th>Status</th>
                 @if (User.IsInRole("Admin"))
                 {
                     <th>Actions</th>
@@ -29,17 +30,31 @@
                     <td data-leave-start-date="@item.LeaveStartDate">@item.LeaveStartDate.ToString("dd-MM-yyyy")</td>
                     <td data-leave-end-date="@item.LeaveEndDate">@item.LeaveEndDate.ToString("dd-MM-yyyy")</td>
                     <td data-leave-type="@item.LeaveType">@item.LeaveType</td>
+                    <td>@item.Status</td>
                     @if (User.IsInRole("Admin"))
                     {
                         <td>
-                            <a asp-area="HR" asp-controller="LeaveRequests" asp-action="UpdateLeaveRequest" asp-route-id="@item.Id">
-                                <img src="~/icons/edit.svg" />Edit
+                            <a asp-area="HR"
+                               asp-controller="LeaveRequests"
+                               asp-action="UpdateLeaveRequest"
+                               asp-route-id="@item.Id"
+                               class="btn btn-info btn-actions">
+                                <img src="~/icons/edit.svg" />
+                                Edit
                             </a>
-                            <a href="#" class="approve-leave-request" data-leave-id="@item.Id">
-                                <img src="~/icons/approve.svg" />Approve
+                            <a href="#"
+                               class="approve-leave-request btn btn-success btn-actions"
+                               data-leave-id="@item.Id">
+                                <img src="~/icons/approve.svg" />
+                                Approve
                             </a>
-                            <a asp-area="HR" asp-controller="LeaveRequests" asp-action="RejectLeaveRequest" asp-route-id="@item.Id">
-                                <img src="~/icons/reject.svg" />Reject
+                            <a asp-area="HR"
+                               asp-controller="LeaveRequests"
+                               asp-action="RejectLeaveRequest"
+                               asp-route-id="@item.Id"
+                               class="btn btn-danger btn-actions">
+                                <img src="~/icons/reject.svg" />
+                                Reject
                             </a>
                         </td>
                     }
@@ -53,6 +68,17 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+            $('.btn-actions').each(function () {
+                var status = $(this).closest('tr').find('td:eq(4)').text().trim();
+                if (status !== "On wait") {
+                    $(this).addClass('disabled');
+                    $(this).removeAttr('href');
+                    $(this).click(function (e) {
+                        e.preventDefault();
+                    });
+                }
+            });
+
             $('.approve-leave-request').click(function (e) {
                 e.preventDefault();
 
