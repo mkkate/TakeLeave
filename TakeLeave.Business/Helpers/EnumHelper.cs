@@ -13,5 +13,26 @@ namespace TakeLeave.Business.Helpers
 
             return attribute != null ? attribute.Name : enumValue.ToString();
         }
+
+        public static T GetEnumValueFromDisplayName<T>(string displayName)
+        {
+            try
+            {
+                foreach (T enumValue in Enum.GetValues(typeof(T)))
+                {
+                    var desc = enumValue.GetEnumDescription<T>();
+                    if (desc.Equals(displayName))
+                    {
+                        return enumValue;
+                    }
+                }
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

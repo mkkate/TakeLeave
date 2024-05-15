@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TakeLeave.Business.Constants;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Web.Areas.Hr.Mappers;
@@ -24,6 +26,28 @@ namespace TakeLeave.Web.Areas.HR.Controllers
                 .ToList();
 
             return View(hrLeaveRequestViewModels);
+        }
+
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult UpdateLeaveRequest(int id)
+        {
+            HrLeaveRequestDTO hrLeaveRequestDTO = _hrLeaveRequestService.GetLeaveRequestById(id);
+
+            HrLeaveRequestViewModel hrLeaveRequestViewModel = hrLeaveRequestDTO.MapHrLeaveRequestDtoToHrLeaveRequestViewModel();
+            hrLeaveRequestViewModel.LeaveTypes = _hrLeaveRequestService.GetLeaveTypes();
+
+            return View(hrLeaveRequestViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult UpdateLeaveRequest(HrLeaveRequestViewModel hrLeaveRequestViewModel)
+        {
+            HrLeaveRequestDTO hrLeaveRequestDTO = hrLeaveRequestViewModel.MapHrLeaveRequestViewModelToHrLeaveRequestDto();
+
+            _hrLeaveRequestService.UpdateLeaveRequest(hrLeaveRequestDTO);
+
+            return RedirectToAction(nameof(GetLeaveRequests));
         }
     }
 }

@@ -12,5 +12,7 @@
         public const string Position = "Position";
         public const string SeniorityLevel = "Seniority Level";
         public const string EmployeeRole = "Employee Role";
+        public const string LeaveStartDate = "Leave start date";
+        public const string LeaveEndDate = "Leave end date";
     }
 }

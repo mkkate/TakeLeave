@@ -1,6 +1,7 @@
 ﻿using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Web.Areas.HR.Models;
+using TakeLeave.Web.Mappers;
 
 namespace TakeLeave.Web.Areas.Hr.Mappers
 {
@@ -20,7 +21,18 @@ namespace TakeLeave.Web.Areas.Hr.Mappers
                 LeaveEndDate = DateOnly.FromDateTime(leaveRequestDTO.LeaveEndDate),
                 LeaveType = leaveRequestType.GetEnumDescription(),
                 Status = leaveRequestStatus.GetEnumDescription(),
-                Comment = leaveRequestDTO.Comment,
+                DaysOff = leaveRequestDTO.DaysOff.MapDaysOffDtoToDaysOffViewModel(),
+            };
+        }
+
+        public static HrLeaveRequestDTO MapHrLeaveRequestViewModelToHrLeaveRequestDto(this HrLeaveRequestViewModel leaveRequestViewModel)
+        {
+            return new()
+            {
+                Id = leaveRequestViewModel.Id,
+                LeaveStartDate = leaveRequestViewModel.LeaveStartDate.ToDateTime(TimeOnly.MinValue),
+                LeaveEndDate = leaveRequestViewModel.LeaveEndDate.ToDateTime(TimeOnly.MinValue),
+                LeaveType = leaveRequestViewModel.LeaveType,
             };
         }
     }

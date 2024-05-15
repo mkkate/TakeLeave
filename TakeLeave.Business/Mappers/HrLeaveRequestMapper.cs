@@ -1,5 +1,7 @@
-﻿using TakeLeave.Business.Models.LeaveRequests;
+﻿using TakeLeave.Business.Helpers;
+using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Data.Database.LeaveRequests;
+using LeaveRequestType = TakeLeave.Data.Database.LeaveRequests.LeaveRequestType;
 
 namespace TakeLeave.Business.Mappers
 {
@@ -15,10 +17,17 @@ namespace TakeLeave.Business.Mappers
                 LeaveStartDate = leaveRequest.LeaveStartDate,
                 LeaveEndDate = leaveRequest.LeaveEndDate,
                 LeaveType = Enum.GetName(leaveRequest.LeaveType),
-                Comment = leaveRequest.Comment,
-                EmployeeID = leaveRequest.EmployeeID,
                 Status = Enum.GetName(leaveRequest.Status),
             };
+        }
+
+        public static void MapHrLeaveRequestDtoToLeaveRequest(this HrLeaveRequestDTO hrLeaveRequestDTO, LeaveRequest leaveRequest)
+        {
+            leaveRequest.ID = hrLeaveRequestDTO.Id;
+            leaveRequest.LeaveStartDate = hrLeaveRequestDTO.LeaveStartDate;
+            leaveRequest.LeaveEndDate = hrLeaveRequestDTO.LeaveEndDate;
+            leaveRequest.LeaveType = (LeaveRequestType)EnumHelper
+                .GetEnumValueFromDisplayName<Models.LeaveRequests.LeaveRequestType>(hrLeaveRequestDTO.LeaveType);
         }
     }
 }

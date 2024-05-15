@@ -1,0 +1,47 @@
+﻿@model TakeLeave.Web.Areas.HR.Models.HrLeaveRequestViewModel
+
+<div class="container w-50 mt-4">
+    <div class="card card-edit-leave">
+        <div class="card-body">
+            <form method="post">
+                <div class="row mb-3">
+                    <input asp-for="@Model.Id" class="form-control" type="hidden" />
+                    <input asp-for="@Model.FirstName" class="form-control" type="hidden" />
+                    <input asp-for="@Model.LastName" class="form-control" type="hidden" />
+                    <h4 class="control-label">
+                        @Model.FirstName @Model.LastName has this amount of available days off left:
+                    </h4>
+                    <div class="col mt-3">
+                        @await Component.InvokeAsync("DaysOffs", Model.DaysOff)
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="@Model.LeaveTypes" class="col-4 col-form-label">Leave type</label>
+                    <div class="col-6">
+                        <select asp-for="@Model.LeaveType" class="form-control"
+                                asp-items="@(new SelectList(Model.LeaveTypes))">
+                            <option value="">Select leave type:</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="@Model.LeaveStartDate" class="col-4 col-form-label"></label>
+                    <div class="col-6">
+                        <input id="LeaveStartDate" asp-for="@Model.LeaveStartDate" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="@Model.LeaveEndDate" class="col-4 col-form-label"></label>
+                    <div class="col-6">
+                        <input id="LeaveEndDate" asp-for="@Model.LeaveEndDate" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

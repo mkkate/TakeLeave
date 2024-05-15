@@ -15,7 +15,10 @@
                 <th>Leave Start Date</th>
                 <th>Leave End Date</th>
                 <th>Leave Type</th>
-                <th>Actions</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Actions</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -26,20 +29,20 @@
                     <td>@item.LeaveStartDate.ToString("dd-MM-yyyy")</td>
                     <td>@item.LeaveEndDate.ToString("dd-MM-yyyy")</td>
                     <td>@item.LeaveType</td>
-                    <td>
-                        <a asp-area="HR" asp-controller="LeaveRequests" asp-action="UpdateLeaveRequest" asp-route-id="@item.Id">
-                            <img src="~/icons/edit.svg" />
-                        </a>
-                        @if (User.IsInRole("Admin"))
-                        {
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-area="HR" asp-controller="LeaveRequests" asp-action="UpdateLeaveRequest" asp-route-id="@item.Id">
+                                <img src="~/icons/edit.svg" />
+                            </a>
                             <a asp-area="HR" asp-controller="LeaveRequests" asp-action="ApproveLeaveRequest" asp-route-id="@item.Id">
                                 <img src="~/icons/approve.svg" />
                             </a>
                             <a asp-area="HR" asp-controller="LeaveRequests" asp-action="RejectLeaveRequest" asp-route-id="@item.Id">
                                 <img src="~/icons/reject.svg" />
                             </a>
-                        }
-                    </td>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
