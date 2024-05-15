@@ -2,16 +2,13 @@
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Business.Models.LeaveRequests;
-using TakeLeave.Web.Areas.Constants;
 using TakeLeave.Web.Areas.User.Mappers;
-using TakeLeave.Web.Controllers;
 using TakeLeave.Web.Mappers;
 using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.User.Controllers
 {
-    [Area(AreaNames.User)]
-    public class LeaveRequestsController : BaseController
+    public class LeaveRequestsController : BaseUserController
     {
         private readonly ILeaveRequestService _leaveRequestService;
         private readonly IUserService _userService;

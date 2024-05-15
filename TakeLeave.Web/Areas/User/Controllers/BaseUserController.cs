@@ -4,11 +4,11 @@ using TakeLeave.Business.Constants;
 using TakeLeave.Web.Areas.Constants;
 using TakeLeave.Web.Controllers;
 
-namespace TakeLeave.Web.Areas.HR.Controllers
+namespace TakeLeave.Web.Areas.User.Controllers
 {
-    [Area(AreaNames.HR)]
-    [Authorize(Roles = EmployeeRoles.AdminOrHR)]
-    public class BaseHrController : BaseController
+    [Area(AreaNames.User)]
+    [Authorize(Roles = EmployeeRoles.User)]
+    public class BaseUserController : BaseController
     {
 
     }

@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using TakeLeave.Business.Constants;
+﻿using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
-using TakeLeave.Web.Areas.Constants;
 using TakeLeave.Web.Areas.User.Mappers;
 using TakeLeave.Web.Areas.User.Models;
-using TakeLeave.Web.Controllers;
 
 namespace TakeLeave.Web.Areas.User.Controllers
 {
-    [Area(AreaNames.User)]
-    [Authorize(Roles = EmployeeRoles.User)]
-    public class DashboardController : BaseController
+    public class DashboardController : BaseUserController
     {
         private readonly IUserService _userService;
 
