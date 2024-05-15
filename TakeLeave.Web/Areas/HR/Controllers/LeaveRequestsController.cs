@@ -49,5 +49,16 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }
+
+        [HttpPost]
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult ApproveLeaveRequest(HrLeaveRequestViewModel hrLeaveRequestViewModel)
+        {
+            HrLeaveRequestDTO hrLeaveRequestDTO = hrLeaveRequestViewModel.MapHrLeaveRequestViewModelToHrLeaveRequestDto();
+
+            _hrLeaveRequestService.ApproveLeaveRequest(hrLeaveRequestDTO, GetLoggedInEmployeeId());
+
+            return RedirectToAction(nameof(GetLeaveRequests));
+        }
     }
 }

@@ -24,22 +24,22 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr id="@item.Id">
+                <tr id="@item.Id" class="leave-id">
                     <td>@item.FirstName @item.LastName</td>
-                    <td>@item.LeaveStartDate.ToString("dd-MM-yyyy")</td>
-                    <td>@item.LeaveEndDate.ToString("dd-MM-yyyy")</td>
-                    <td>@item.LeaveType</td>
+                    <td data-leave-start-date="@item.LeaveStartDate">@item.LeaveStartDate.ToString("dd-MM-yyyy")</td>
+                    <td data-leave-end-date="@item.LeaveEndDate">@item.LeaveEndDate.ToString("dd-MM-yyyy")</td>
+                    <td data-leave-type="@item.LeaveType">@item.LeaveType</td>
                     @if (User.IsInRole("Admin"))
                     {
                         <td>
                             <a asp-area="HR" asp-controller="LeaveRequests" asp-action="UpdateLeaveRequest" asp-route-id="@item.Id">
-                                <img src="~/icons/edit.svg" />
+                                <img src="~/icons/edit.svg" />Edit
                             </a>
-                            <a asp-area="HR" asp-controller="LeaveRequests" asp-action="ApproveLeaveRequest" asp-route-id="@item.Id">
-                                <img src="~/icons/approve.svg" />
+                            <a href="#" class="approve-leave-request" data-leave-id="@item.Id">
+                                <img src="~/icons/approve.svg" />Approve
                             </a>
                             <a asp-area="HR" asp-controller="LeaveRequests" asp-action="RejectLeaveRequest" asp-route-id="@item.Id">
-                                <img src="~/icons/reject.svg" />
+                                <img src="~/icons/reject.svg" />Reject
                             </a>
                         </td>
                     }
@@ -49,3 +49,32 @@
     </table>
 
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.approve-leave-request').click(function (e) {
+                e.preventDefault();
+
+                var leaveId = $(this).data('leave-id');
+                var start = $(this).closest('tr').find('[data-leave-start-date]').data('leave-start-date');
+                var end = $(this).closest('tr').find('[data-leave-end-date]').data('leave-end-date');
+                var leaveType = $(this).closest('tr').find('[data-leave-type]').data('leave-type');
+
+                var modelData = {
+                    Id: leaveId,
+                    LeaveStartDate: start,
+                    LeaveEndDate: end,
+                    LeaveType: leaveType
+                };
+
+                var url = '@Url.Action("ApproveLeaveRequest", "LeaveRequests")';
+
+                $.post(url, modelData, function (responseData, status) {
+                    console.log("Post request status: " + status);
+                    console.log("Response data: " + responseData);
+                });
+            });
+        });
+    </script>
+}

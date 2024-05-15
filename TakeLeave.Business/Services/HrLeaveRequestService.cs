@@ -5,6 +5,8 @@ using TakeLeave.Business.Mappers;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Data.Database.LeaveRequests;
 using TakeLeave.Data.Interfaces;
+using LeaveRequestStatus = TakeLeave.Data.Database.LeaveRequests.LeaveRequestStatus;
+using LeaveRequestType = TakeLeave.Data.Database.LeaveRequests.LeaveRequestType;
 
 namespace TakeLeave.Business.Services
 {
@@ -72,6 +74,44 @@ namespace TakeLeave.Business.Services
 
                 _leaveRequestRepository.Update(leaveRequest);
                 _leaveRequestRepository.Save();
+            }
+        }
+
+        public void ApproveLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO, int loggedHrId)
+        {
+            LeaveRequest? leaveRequest = _leaveRequestRepository
+                .GetByCondition(lr => lr.ID.Equals(hrLeaveRequestDTO.Id))
+                .Include(lr => lr.RequestedByEmployee)
+                .Include(e => e.RequestedByEmployee.DaysOff)
+                .FirstOrDefault();
+
+            if (leaveRequest is not null)
+            {
+                double requestedDaysOff = DaysOffHelper.CountRequestedDaysOff(
+                hrLeaveRequestDTO.LeaveStartDate,
+                hrLeaveRequestDTO.LeaveEndDate);
+
+                LeaveRequestType leaveRequestType = (LeaveRequestType)EnumHelper.
+                    GetEnumValueFromDisplayName<Models.LeaveRequests.LeaveRequestType>(hrLeaveRequestDTO.LeaveType);
+
+                bool hasEnoughDays = DaysOffHelper.HasEnoughDays(
+                    requestedDaysOff,
+                    leaveRequest.RequestedByEmployee.DaysOff.MapDaysOffToDaysOffDto(),
+                    leaveRequestType);
+
+                if (hasEnoughDays)
+                {
+                    leaveRequest.Status = LeaveRequestStatus.Approved;
+                    leaveRequest.HandledByHrID = loggedHrId;
+
+                    DaysOffHelper.ReduceDaysOff(
+                        (int)requestedDaysOff,
+                        leaveRequestType,
+                        leaveRequest.RequestedByEmployee.DaysOff);
+
+                    _leaveRequestRepository.Update(leaveRequest);
+                    _leaveRequestRepository.Save();
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using TakeLeave.Business.Models;
+using TakeLeave.Data.Database.DaysOffs;
 using TakeLeave.Data.Database.LeaveRequests;
 
 namespace TakeLeave.Business.Helpers
@@ -53,6 +54,33 @@ namespace TakeLeave.Business.Helpers
                     return requestedDaysOff <= daysOffDTO.SickLeave;
 
                 default: return false;
+            }
+        }
+
+        public static void ReduceDaysOff(
+            int requestedDaysOff,
+            LeaveRequestType leaveRequestType,
+            DaysOff daysOff)
+        {
+            switch (leaveRequestType)
+            {
+                case LeaveRequestType.Vacation:
+                    daysOff.Vacation -= requestedDaysOff;
+                    break;
+
+                case LeaveRequestType.Paid:
+                    daysOff.Paid -= requestedDaysOff;
+                    break;
+
+                case LeaveRequestType.Unpaid:
+                    daysOff.Unpaid -= requestedDaysOff;
+                    break;
+
+                case LeaveRequestType.SickLeave:
+                    daysOff.SickLeave -= requestedDaysOff;
+                    break;
+
+                default: break;
             }
         }
     }
