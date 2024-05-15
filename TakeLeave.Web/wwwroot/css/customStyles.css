@@ -65,3 +65,12 @@ dt, dd {
 .position-form {
     background-color: lightblue;
 }
+
+a > img {
+    width: 19px;
+    height: auto;
+}
+
+a {
+    margin-left: 6px;
+}

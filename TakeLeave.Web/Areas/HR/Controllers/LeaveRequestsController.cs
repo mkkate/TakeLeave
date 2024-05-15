@@ -60,5 +60,13 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }
+
+        [Authorize(Roles = EmployeeRoles.Admin)]
+        public IActionResult RejectLeaveRequest(int id)
+        {
+            _hrLeaveRequestService.RejectLeaveRequest(id, GetLoggedInEmployeeId());
+
+            return RedirectToAction(nameof(GetLeaveRequests));
+        }
     }
 }

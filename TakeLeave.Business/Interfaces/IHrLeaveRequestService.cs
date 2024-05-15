@@ -9,5 +9,6 @@ namespace TakeLeave.Business.Interfaces
         HashSet<string> GetLeaveTypes();
         void UpdateLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO);
         void ApproveLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO, int loggedHrId);
+        void RejectLeaveRequest(int id, int loggedHrId);
     }
 }

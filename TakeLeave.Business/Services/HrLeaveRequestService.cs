@@ -114,5 +114,21 @@ namespace TakeLeave.Business.Services
                 }
             }
         }
+
+        public void RejectLeaveRequest(int id, int loggedHrId)
+        {
+            LeaveRequest? leaveRequest = _leaveRequestRepository
+                .GetByCondition(lr => lr.ID.Equals(id))
+                .FirstOrDefault();
+
+            if (leaveRequest is not null)
+            {
+                leaveRequest.Status = LeaveRequestStatus.Rejected;
+                leaveRequest.HandledByHrID = loggedHrId;
+
+                _leaveRequestRepository.Update(leaveRequest);
+                _leaveRequestRepository.Save();
+            }
+        }
     }
 }
