@@ -15,16 +15,16 @@ namespace TakeLeave.Web.Areas.HR.Controllers
     public class LeaveRequestsController : BaseHrController
     {
         private readonly IHrLeaveRequestService _hrLeaveRequestService;
-        private readonly ILeaveRequestService _leaveRequestService;
+        private readonly IUserLeaveRequestService _userLeaveRequestService;
         private readonly IUserService _userService;
 
         public LeaveRequestsController(
             IHrLeaveRequestService hrLeaveRequestService,
-            ILeaveRequestService leaveRequestService,
+            IUserLeaveRequestService userLeaveRequestService,
             IUserService userService)
         {
             _hrLeaveRequestService = hrLeaveRequestService;
-            _leaveRequestService = leaveRequestService;
+            _userLeaveRequestService = userLeaveRequestService;
             _userService = userService;
         }
 
@@ -101,7 +101,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             leaveRequestDTO.DaysOff = leaveRequestViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
 
-            _leaveRequestService.CreateLeaveRequest(leaveRequestDTO);
+            _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }

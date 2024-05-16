@@ -10,14 +10,14 @@ namespace TakeLeave.Web.Areas.User.Controllers
 {
     public class LeaveRequestsController : BaseUserController
     {
-        private readonly ILeaveRequestService _leaveRequestService;
+        private readonly IUserLeaveRequestService _userLeaveRequestService;
         private readonly IUserService _userService;
 
         public LeaveRequestsController(
-            ILeaveRequestService leaveRequestService,
+            IUserLeaveRequestService userLeaveRequestService,
             IUserService userService)
         {
-            _leaveRequestService = leaveRequestService;
+            _userLeaveRequestService = userLeaveRequestService;
             _userService = userService;
         }
 
@@ -42,14 +42,14 @@ namespace TakeLeave.Web.Areas.User.Controllers
 
             leaveRequestDTO.DaysOff = leaveRequestViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
 
-            _leaveRequestService.CreateLeaveRequest(leaveRequestDTO);
+            _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 
             return View(leaveRequestViewModel);
         }
 
         public IActionResult LeaveRequestsList()
         {
-            List<LeaveRequestDTO> leaveRequestDTOs = _leaveRequestService.GetLeaveRequestsForLoggedInUser(GetLoggedInEmployeeId());
+            List<LeaveRequestDTO> leaveRequestDTOs = _userLeaveRequestService.GetLeaveRequestsForLoggedInUser(GetLoggedInEmployeeId());
 
             List<LeaveRequestViewModel> leaveRequestViewModels = leaveRequestDTOs
                 .Select(leaveDTO => leaveDTO.MapLeaveRequestDtoToLeaveRequestViewModel())

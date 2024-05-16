@@ -9,11 +9,11 @@ using LeaveRequestType = TakeLeave.Data.Database.LeaveRequests.LeaveRequestType;
 
 namespace TakeLeave.Business.Services
 {
-    public class LeaveRequestService : ILeaveRequestService
+    public class UserLeaveRequestService : IUserLeaveRequestService
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
 
-        public LeaveRequestService(ILeaveRequestRepository leaveRequestRepository)
+        public UserLeaveRequestService(ILeaveRequestRepository leaveRequestRepository)
         {
             _leaveRequestRepository = leaveRequestRepository;
         }

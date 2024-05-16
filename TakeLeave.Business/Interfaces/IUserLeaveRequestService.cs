@@ -2,7 +2,7 @@
 
 namespace TakeLeave.Business.Interfaces
 {
-    public interface ILeaveRequestService
+    public interface IUserLeaveRequestService
     {
         void CreateLeaveRequest(LeaveRequestDTO leaveRequestDTO);
         List<LeaveRequestDTO> GetLeaveRequestsForLoggedInUser(int id);

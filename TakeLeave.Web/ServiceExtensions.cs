@@ -22,7 +22,7 @@ namespace TakeLeave.Web
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeRoleService, EmployeeRoleService>();
             services.AddScoped<IPositionService, PositionService>();
-            services.AddScoped<ILeaveRequestService, LeaveRequestService>();
+            services.AddScoped<IUserLeaveRequestService, UserLeaveRequestService>();
             services.AddScoped<IHrLeaveRequestService, HrLeaveRequestService>();
         }
     }
