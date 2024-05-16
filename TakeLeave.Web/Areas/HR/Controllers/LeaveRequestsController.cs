@@ -2,19 +2,30 @@
 using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Constants;
 using TakeLeave.Business.Interfaces;
+using TakeLeave.Business.Models;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Web.Areas.Hr.Mappers;
 using TakeLeave.Web.Areas.HR.Models;
+using TakeLeave.Web.Areas.User.Mappers;
+using TakeLeave.Web.Mappers;
+using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.HR.Controllers
 {
     public class LeaveRequestsController : BaseHrController
     {
         private readonly IHrLeaveRequestService _hrLeaveRequestService;
+        private readonly ILeaveRequestService _leaveRequestService;
+        private readonly IUserService _userService;
 
-        public LeaveRequestsController(IHrLeaveRequestService hrLeaveRequestService)
+        public LeaveRequestsController(
+            IHrLeaveRequestService hrLeaveRequestService,
+            ILeaveRequestService leaveRequestService,
+            IUserService userService)
         {
             _hrLeaveRequestService = hrLeaveRequestService;
+            _leaveRequestService = leaveRequestService;
+            _userService = userService;
         }
 
         public IActionResult GetLeaveRequests()
@@ -65,6 +76,32 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         public IActionResult RejectLeaveRequest(int id)
         {
             _hrLeaveRequestService.RejectLeaveRequest(id, GetLoggedInEmployeeId());
+
+            return RedirectToAction(nameof(GetLeaveRequests));
+        }
+
+        public IActionResult CreateLeaveRequest()
+        {
+            DaysOffDTO? daysOffDTO = _userService.GetUserDetails(GetLoggedInEmployeeId())?.DaysOff;
+
+            LeaveRequestViewModel leaveRequestViewModel = new()
+            {
+                DaysOff = daysOffDTO.MapDaysOffDtoToDaysOffViewModel()
+            };
+
+            return View("~/Areas/User/Views/LeaveRequests/CreateLeaveRequest.cshtml", leaveRequestViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateLeaveRequest(LeaveRequestViewModel leaveRequestViewModel)
+        {
+            LeaveRequestDTO leaveRequestDTO = leaveRequestViewModel.MapLeaveRequestViewModelToLeaveRequestDto();
+
+            leaveRequestDTO.EmployeeID = GetLoggedInEmployeeId();
+
+            leaveRequestDTO.DaysOff = leaveRequestViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
+
+            _leaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }
