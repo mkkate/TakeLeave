@@ -44,7 +44,7 @@ namespace TakeLeave.Web.Areas.User.Controllers
 
             _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 
-            return View(leaveRequestViewModel);
+            return RedirectToAction(nameof(LeaveRequestsList));
         }
 
         public IActionResult LeaveRequestsList()

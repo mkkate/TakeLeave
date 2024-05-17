@@ -23,7 +23,7 @@ namespace TakeLeave.Business.Mappers
 
         public static LeaveRequestDTO MapLeaveRequestToLeaveRequestDto(this LeaveRequest leaveRequest)
         {
-            return new()
+            LeaveRequestDTO leaveRequestDTO = new()
             {
                 LeaveStartDate = leaveRequest.LeaveStartDate,
                 LeaveEndDate = leaveRequest.LeaveEndDate,
@@ -31,10 +31,22 @@ namespace TakeLeave.Business.Mappers
                 Comment = leaveRequest.Comment,
                 EmployeeID = leaveRequest.EmployeeID,
                 Status = Enum.GetName(leaveRequest.Status),
-                HandledByHrID = leaveRequest.HandledByHrID,
-                HrFirstName = leaveRequest.HandledByHrID != 0 ? leaveRequest.HandledByHr.FirstName : string.Empty,
-                HrLastName = leaveRequest.HandledByHrID != 0 ? leaveRequest.HandledByHr.LastName : string.Empty,
             };
+
+            if (leaveRequest.HandledByHr is null)
+            {
+                leaveRequestDTO.HandledByHrID = 0;
+                leaveRequestDTO.HrFirstName = string.Empty;
+                leaveRequestDTO.HrLastName = string.Empty;
+            }
+            else
+            {
+                leaveRequestDTO.HandledByHrID = leaveRequest.HandledByHrID;
+                leaveRequestDTO.HrFirstName = leaveRequest.HandledByHr.FirstName;
+                leaveRequestDTO.HrLastName = leaveRequest.HandledByHr.LastName;
+            }
+
+            return leaveRequestDTO;
         }
     }
 }
