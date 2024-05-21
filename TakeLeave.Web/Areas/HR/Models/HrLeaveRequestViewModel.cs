@@ -22,6 +22,9 @@ namespace TakeLeave.Web.Areas.HR.Models
         public HashSet<string> LeaveTypes { get; set; }
 
         public int HandledByHrId { get; set; }
+        public int RequestedByEmployeeId { get; set; }
+        public int LoggedInEmployeeId { get; set; }
+
 
         public DaysOffViewModel DaysOff { get; set; } = new();
     }

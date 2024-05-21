@@ -1,4 +1,4 @@
-﻿@model List<TakeLeave.Web.Areas.HR.Models.HrLeaveRequestViewModel>
+﻿@model TakeLeave.Web.Areas.HR.Models.HrLeaveRequestsViewModel
 
 <div class="container mt-4 justify-content-center text-center">
     <h3>List of all leave requests:</h3>
@@ -25,9 +25,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.HrLeaveRequests)
             {
                 <tr id="@item.Id" class="leave-id">
+                    <input asp-for="@item.RequestedByEmployeeId" class="requested-by-employee-id" type="hidden" />
                     <td>@item.FirstName @item.LastName</td>
                     <td data-leave-start-date="@item.LeaveStartDate">@item.LeaveStartDate.ToString("dd-MM-yyyy")</td>
                     <td data-leave-end-date="@item.LeaveEndDate">@item.LeaveEndDate.ToString("dd-MM-yyyy")</td>
@@ -98,7 +99,8 @@
 
             $('.btn-actions').each(function () {
                 var status = $(this).closest('tr').find('td:eq(4)').text().trim();
-                if (status !== "On wait") {
+                var employeeRequestedId = $(this).closest('tr').find('.requested-by-employee-id').val();
+                if (status !== "On wait" || employeeRequestedId == @Model.LoggedInEmployeeId) {
                     $(this).addClass('disabled');
                     $(this).removeAttr('href');
                     $(this).click(function (e) {

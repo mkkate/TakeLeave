@@ -10,6 +10,7 @@
         public string Status { get; set; }
         public string LeaveType { get; set; }
         public int? HandledByHrID { get; set; }
+        public int RequestedByEmployeeID { get; set; }
 
         public DaysOffDTO DaysOff { get; set; } = new();
     }

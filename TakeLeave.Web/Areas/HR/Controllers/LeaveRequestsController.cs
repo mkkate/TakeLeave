@@ -32,11 +32,17 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         {
             List<HrLeaveRequestDTO> leaveRequestDTOs = _hrLeaveRequestService.GetLeaveRequests();
 
-            List<HrLeaveRequestViewModel> hrLeaveRequestViewModels = leaveRequestDTOs
+            List<HrLeaveRequestViewModel> hrLeaveRequests = leaveRequestDTOs
                 .Select(lr => lr.MapHrLeaveRequestDtoToHrLeaveRequestViewModel())
                 .ToList();
 
-            return View(hrLeaveRequestViewModels);
+            HrLeaveRequestsViewModel hrLeaveRequestsViewModel = new()
+            {
+                HrLeaveRequests = hrLeaveRequests,
+                LoggedInEmployeeId = GetLoggedInEmployeeId(),
+            };
+
+            return View(hrLeaveRequestsViewModel);
         }
 
         [Authorize(Roles = EmployeeRoles.Admin)]

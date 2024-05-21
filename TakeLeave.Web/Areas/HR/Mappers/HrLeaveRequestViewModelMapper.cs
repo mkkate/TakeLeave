@@ -22,6 +22,7 @@ namespace TakeLeave.Web.Areas.Hr.Mappers
                 LeaveType = leaveRequestType.GetEnumDescription(),
                 Status = leaveRequestStatus.GetEnumDescription(),
                 DaysOff = leaveRequestDTO.DaysOff.MapDaysOffDtoToDaysOffViewModel(),
+                RequestedByEmployeeId = leaveRequestDTO.RequestedByEmployeeID,
             };
         }
 

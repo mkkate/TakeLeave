@@ -18,6 +18,7 @@ namespace TakeLeave.Business.Mappers
                 LeaveEndDate = leaveRequest.LeaveEndDate,
                 LeaveType = Enum.GetName(leaveRequest.LeaveType),
                 Status = Enum.GetName(leaveRequest.Status),
+                RequestedByEmployeeID = leaveRequest.EmployeeID,
             };
         }
 
