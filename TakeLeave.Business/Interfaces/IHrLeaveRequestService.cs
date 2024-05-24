@@ -1,4 +1,5 @@
-﻿using TakeLeave.Business.Models.LeaveRequests;
+﻿using TakeLeave.Business.Models;
+using TakeLeave.Business.Models.LeaveRequests;
 
 namespace TakeLeave.Business.Interfaces
 {
@@ -10,5 +11,6 @@ namespace TakeLeave.Business.Interfaces
         void UpdateLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO);
         void ApproveLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO, int loggedHrId);
         void RejectLeaveRequest(int id, int loggedHrId);
+        List<CalendarDTO> GetEmployeesOnLeave(DateTime date);
     }
 }

@@ -1,1 +1,46 @@
-﻿<h2>HR Dashboard Page</h2>
+﻿@model List<TakeLeave.Web.Areas.HR.Models.LeaveCalendarViewModel>
+@{
+    var daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+    var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+    var currentDay = DateTime.Now.Day;
+
+    var firstDayOffset = ((int)firstDayOfMonth.DayOfWeek + 6) % 7;
+}
+
+<h2>Leaves for @DateTime.Now.ToString("MMMM yyyy")</h2>
+
+<div class="calendar mt-4">
+    <div class="calendar-header">Monday</div>
+    <div class="calendar-header">Tuesday</div>
+    <div class="calendar-header">Wednesday</div>
+    <div class="calendar-header">Thursday</div>
+    <div class="calendar-header">Friday</div>
+    <div class="calendar-header">Saturday</div>
+    <div class="calendar-header">Sunday</div>
+
+    @for (int i = 0; i < firstDayOffset; i++)
+    {
+        <div class="calendar-day empty-day"></div>
+    }
+
+    @for (int day = 1; day <= daysInMonth; day++)
+    {
+        var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, day);
+        var employeesOnLeave = Model.FirstOrDefault(m => m.Date == date)?.EmployeesOnLeave;
+        var isCurrentDay = day == currentDay;
+
+        <div class="calendar-day @(isCurrentDay ? "current-day" : "")">
+            <div>@day</div>
+            @if (employeesOnLeave != null && employeesOnLeave.Any())
+            {
+                <ul>
+                    @foreach (var employee in employeesOnLeave)
+                    {
+                        <li>@employee.EmployeeFirstName @employee.EmployeeLastName</li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+</div>
+

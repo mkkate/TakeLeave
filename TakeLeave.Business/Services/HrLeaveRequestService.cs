@@ -2,6 +2,7 @@
 using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Mappers;
+using TakeLeave.Business.Models;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Data.Database.LeaveRequests;
 using TakeLeave.Data.Interfaces;
@@ -128,6 +129,30 @@ namespace TakeLeave.Business.Services
 
                 _leaveRequestRepository.Update(leaveRequest);
                 _leaveRequestRepository.Save();
+            }
+        }
+
+        public List<CalendarDTO> GetEmployeesOnLeave(DateTime date)
+        {
+            List<LeaveRequest>? leaves = _leaveRequestRepository
+                .GetByCondition(leave =>
+                leave.LeaveStartDate <= date &&
+                leave.LeaveEndDate >= date &&
+                leave.Status.Equals(LeaveRequestStatus.Approved))
+                .Include(leave => leave.RequestedByEmployee)
+                .ToList();
+
+            if (leaves.Any())
+            {
+                List<CalendarDTO> calendarDTOs = leaves
+                    .Select(leave => leave.MapLeaveRequestToCalendarDto())
+                    .ToList();
+
+                return calendarDTOs;
+            }
+            else
+            {
+                return new List<CalendarDTO>();
             }
         }
     }

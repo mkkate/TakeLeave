@@ -1,0 +1,27 @@
+﻿.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+}
+
+.calendar-day {
+    border: 2px solid #ddd;
+    padding: 10px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: #BDE8F5;
+}
+
+.calendar-header {
+    font-weight: bold;
+    text-align: center;
+}
+
+.empty-day {
+    background-color: #C7C5C5;
+}
+
+.current-day {
+    background-color: #F5BDCA;
+}
