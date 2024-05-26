@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.HR.Models;
@@ -23,13 +24,24 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             for (var date = startDate; date <= endDate; date = date.AddDays(1))
             {
-                List<CalendarDTO> employeesOnLeave = _hrLeaveRequestService.GetEmployeesOnLeave(date);
-
-                leaveViewModel.Add(new LeaveCalendarViewModel
+                if (DaysOffHelper.CurrentDateIsWeekendDay(date))
                 {
-                    Date = date,
-                    EmployeesOnLeave = employeesOnLeave
-                });
+                    leaveViewModel.Add(new LeaveCalendarViewModel
+                    {
+                        Date = date,
+                        EmployeesOnLeave = new()
+                    });
+                }
+                else
+                {
+                    List<CalendarDTO> employeesOnLeave = _hrLeaveRequestService.GetEmployeesOnLeave(date);
+
+                    leaveViewModel.Add(new LeaveCalendarViewModel
+                    {
+                        Date = date,
+                        EmployeesOnLeave = employeesOnLeave
+                    });
+                }
             }
 
             return View(leaveViewModel);

@@ -28,7 +28,7 @@ namespace TakeLeave.Business.Helpers
             return countWeekendDays;
         }
 
-        private static bool CurrentDateIsWeekendDay(DateTime currentDate)
+        public static bool CurrentDateIsWeekendDay(DateTime currentDate)
         {
             return currentDate.DayOfWeek == DayOfWeek.Saturday ||
                 currentDate.DayOfWeek == DayOfWeek.Sunday;

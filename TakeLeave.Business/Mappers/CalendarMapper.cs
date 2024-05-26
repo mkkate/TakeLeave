@@ -1,4 +1,5 @@
-﻿using TakeLeave.Business.Models;
+﻿using TakeLeave.Business.Helpers;
+using TakeLeave.Business.Models;
 using TakeLeave.Data.Database.LeaveRequests;
 
 namespace TakeLeave.Business.Mappers
@@ -15,6 +16,9 @@ namespace TakeLeave.Business.Mappers
             calendarDTO.EmployeeLastName = leaveRequest.RequestedByEmployee.LastName;
             calendarDTO.LeaveStartDate = leaveRequest.LeaveStartDate;
             calendarDTO.LeaveEndDate = leaveRequest.LeaveEndDate;
+
+            Models.LeaveRequests.LeaveRequestType leaveRequestType = Enum.Parse<Models.LeaveRequests.LeaveRequestType>(Enum.GetName(leaveRequest.LeaveType));
+            calendarDTO.LeaveType = leaveRequestType.GetEnumDescription();
 
             return calendarDTO;
         }
