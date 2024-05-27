@@ -5,10 +5,10 @@
     var currentYear = Model.Any() ? Model.First().Date.Year : DateTime.UtcNow.Year;
 }
 
-<div class="container justify-content-center">
+<div class="container calendar-navigation justify-content-center">
     <div class="row">
         <div class="col">
-            <ul class="pagination">
+            <ul class="pagination justify-content-end">
                 <li class="page-item"><a class="page-link" href="#" id="prev-month"><</a></li>
                 <li class="page-item"><a class="page-link" id="current-month" data-month="@currentMonth">@DateTime.Now.ToString("MMMM")</a></li>
                 <li class="page-item"><a class="page-link" href="#" id="next-month">></a></li>
@@ -22,19 +22,11 @@
                 <li class="page-item"><a class="page-link" href="#" id="next-year">></a></li>
             </ul>
         </div>
-
-        <div class="col">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">today</a></li>
-                <li class="page-item"><a class="page-link" href="#">week</a></li>
-                <li class="page-item"><a class="page-link" href="#">month</a></li>
-            </ul>
-        </div>
     </div>
 </div>
 
 
-<div class="calendar mt-4" id="calendar">
+<div class="calendar mt-2" id="calendar">
     <partial name="Partial/_CalendarPartial" />
 </div>
 
