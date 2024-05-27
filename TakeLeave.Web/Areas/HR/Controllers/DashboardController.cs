@@ -15,11 +15,11 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             _hrLeaveRequestService = hrLeaveRequestService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? year, int? month)
         {
             List<LeaveCalendarViewModel> leaveViewModel = new List<LeaveCalendarViewModel>();
 
-            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime startDate = new DateTime(year ?? DateTime.Now.Year, month ?? DateTime.Now.Month, 1);
             DateTime endDate = startDate.AddMonths(1).AddDays(-1);
 
             for (var date = startDate; date <= endDate; date = date.AddDays(1))
@@ -44,7 +44,14 @@ namespace TakeLeave.Web.Areas.HR.Controllers
                 }
             }
 
-            return View(leaveViewModel);
+            if (year.HasValue && month.HasValue)
+            {
+                return PartialView("Partial/_CalendarPartial", leaveViewModel);
+            }
+            else
+            {
+                return View(leaveViewModel);
+            }
         }
     }
 }

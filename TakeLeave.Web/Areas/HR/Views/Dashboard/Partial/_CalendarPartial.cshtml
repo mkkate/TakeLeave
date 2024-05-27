@@ -1,0 +1,52 @@
+﻿@model List<TakeLeave.Web.Areas.HR.Models.LeaveCalendarViewModel>
+@{
+    var currentMonth = Model.Any() ? Model.First().Date.Month : DateTime.UtcNow.Month;
+    var currentYear = Model.Any() ? Model.First().Date.Year : DateTime.UtcNow.Year;
+    var daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+    var firstDayOfMonth = new DateTime(currentYear, currentMonth, 1);
+    var currentDate = DateTime.UtcNow;
+
+    var firstDayOffset = ((int)firstDayOfMonth.DayOfWeek + 6) % 7;
+}
+
+<div class="calendar-header">Monday</div>
+<div class="calendar-header">Tuesday</div>
+<div class="calendar-header">Wednesday</div>
+<div class="calendar-header">Thursday</div>
+<div class="calendar-header">Friday</div>
+<div class="calendar-header">Saturday</div>
+<div class="calendar-header">Sunday</div>
+
+@for (int i = 0; i < firstDayOffset; i++)
+{
+    <div class="calendar-day empty-day"></div>
+}
+
+@for (int day = 1; day <= daysInMonth; day++)
+{
+    var date = new DateTime(firstDayOfMonth.Year, firstDayOfMonth.Month, day);
+    var employeesOnLeave = Model.FirstOrDefault(m => m.Date == date)?.EmployeesOnLeave;
+    var isCurrentDay = date.Date == currentDate.Date;
+
+    bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+
+    <div class="calendar-day @(isCurrentDay ? "current-day" : "") @(isWeekend ? "weekend" : "")">
+        <h5>@day</h5>
+        @if (employeesOnLeave != null && employeesOnLeave.Any())
+        {
+            var employeesCount = employeesOnLeave.Count();
+            <div class="dropdown">
+                <button class="btn dropdown-toggle">@employeesCount @(employeesCount == 1 ? "employee" : "employees")</button>
+                <div class="employee-dropdown flex-container">
+                    @foreach (var employee in employeesOnLeave)
+                    {
+                        <a data-toggle="tooltip"
+                           title="@employee.LeaveType:&#10;From: @employee.LeaveStartDate.ToString("dd.MM.yyyy")&#10;To: @employee.LeaveEndDate.ToString("dd.MM.yyyy.")">
+                            @employee.EmployeeFirstName @employee.EmployeeLastName
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}

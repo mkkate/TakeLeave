@@ -1,27 +1,25 @@
-﻿@model List<TakeLeave.Web.Areas.HR.Models.LeaveCalendarViewModel>
+﻿@using System.Globalization
+@model List<TakeLeave.Web.Areas.HR.Models.LeaveCalendarViewModel>
 @{
-    var daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-    var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-    var currentDay = DateTime.Now.Day;
-
-    var firstDayOffset = ((int)firstDayOfMonth.DayOfWeek + 6) % 7;
+    var currentMonth = Model.Any() ? Model.First().Date.Month : DateTime.UtcNow.Month;
+    var currentYear = Model.Any() ? Model.First().Date.Year : DateTime.UtcNow.Year;
 }
 
 <div class="container justify-content-center">
     <div class="row">
         <div class="col">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><</a></li>
-                <li class="page-item"><a class="page-link">@DateTime.Now.ToString("MMMM")</a></li>
-                <li class="page-item"><a class="page-link" href="#">></a></li>
+                <li class="page-item"><a class="page-link" href="#" id="prev-month"><</a></li>
+                <li class="page-item"><a class="page-link" id="current-month" data-month="@currentMonth">@DateTime.Now.ToString("MMMM")</a></li>
+                <li class="page-item"><a class="page-link" href="#" id="next-month">></a></li>
             </ul>
         </div>
 
         <div class="col">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><</a></li>
-                <li class="page-item"><a class="page-link">@DateTime.Now.ToString("yyy")</a></li>
-                <li class="page-item"><a class="page-link" href="#">></a></li>
+                <li class="page-item"><a class="page-link" href="#" id="prev-year"><</a></li>
+                <li class="page-item"><a class="page-link" id="current-year" data-year="@currentYear">@DateTime.Now.ToString("yyyy")</a></li>
+                <li class="page-item"><a class="page-link" href="#" id="next-year">></a></li>
             </ul>
         </div>
 
@@ -35,56 +33,11 @@
     </div>
 </div>
 
-<div class="calendar mt-4">
-    <div class="calendar-header">Monday</div>
-    <div class="calendar-header">Tuesday</div>
-    <div class="calendar-header">Wednesday</div>
-    <div class="calendar-header">Thursday</div>
-    <div class="calendar-header">Friday</div>
-    <div class="calendar-header">Saturday</div>
-    <div class="calendar-header">Sunday</div>
 
-    @for (int i = 0; i < firstDayOffset; i++)
-    {
-        <div class="calendar-day empty-day"></div>
-    }
-
-    @for (int day = 1; day <= daysInMonth; day++)
-    {
-        var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, day);
-        var employeesOnLeave = Model.FirstOrDefault(m => m.Date == date)?.EmployeesOnLeave;
-        var isCurrentDay = day == currentDay;
-
-        bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
-
-        <div class="calendar-day @(isCurrentDay ? "current-day" : "") @(isWeekend ? "weekend" : "")">
-            <h5>@day</h5>
-            @if (employeesOnLeave != null && employeesOnLeave.Any())
-            {
-                var employeesCount = @employeesOnLeave.Count();
-                <div class="dropdown">
-                    @if (employeesCount == 1)
-                    {
-                        <button class="btn dropdown-toggle">@employeesCount employee</button>
-                    }
-                    else
-                    {
-                        <button class="btn dropdown-toggle">@employeesCount employees</button>
-                    }
-                    <div class="employee-dropdown">
-                        @foreach (var employee in employeesOnLeave)
-                        {
-                            <a data-toggle="tooltip"
-                               title="@employee.LeaveType:&#10;From: @employee.LeaveStartDate.ToString("dd.MM.yyyy")&#10;To: @employee.LeaveEndDate.ToString("dd.MM.yyyy.")">
-                                @employee.EmployeeFirstName @employee.EmployeeLastName
-                            </a>
-                        }
-                    </div>
-                </div>
-            }
-        </div>
-    }
+<div class="calendar mt-4" id="calendar">
+    <partial name="Partial/_CalendarPartial" />
 </div>
+
 
 @section Scripts {
     <script>
@@ -104,6 +57,59 @@
 
             $('.employee-dropdown').on('click', function (e) {
                 e.stopPropagation();
+            });
+
+            function loadCalendar(year, month) {
+                $.ajax({
+                    url: '@Url.Action("Index", "Dashboard")',
+                    data: { year: year, month: month },
+                    success: function (data) {
+                        $('#calendar').html(data);
+                        $('[data-toggle="tooltip"]').tooltip();
+                        $('#current-month').data('month', month).text(new Date(year, month - 1, 1).toLocaleString('default', { month: 'long' }));
+                        $('#current-year').data('year', year).text(year);
+                    }
+                });
+            }
+
+            $('#prev-month').on('click', function (e) {
+                e.preventDefault();
+                var currentMonth = parseInt($('#current-month').data('month'));
+                var currentYear = parseInt($('#current-year').data('year'));
+                if (currentMonth === 1) {
+                    currentMonth = 12;
+                    currentYear--;
+                } else {
+                    currentMonth--;
+                }
+                loadCalendar(currentYear, currentMonth);
+            });
+
+            $('#next-month').on('click', function (e) {
+                e.preventDefault();
+                var currentMonth = parseInt($('#current-month').data('month'));
+                var currentYear = parseInt($('#current-year').data('year'));
+                if (currentMonth === 12) {
+                    currentMonth = 1;
+                    currentYear++;
+                } else {
+                    currentMonth++;
+                }
+                loadCalendar(currentYear, currentMonth);
+            });
+
+            $('#prev-year').on('click', function (e) {
+                e.preventDefault();
+                var currentYear = parseInt($('#current-year').data('year'));
+                currentYear--;
+                loadCalendar(currentYear, parseInt($('#current-month').data('month')));
+            });
+
+            $('#next-year').on('click', function (e) {
+                e.preventDefault();
+                var currentYear = parseInt($('#current-year').data('year'));
+                currentYear++;
+                loadCalendar(currentYear, parseInt($('#current-month').data('month')));
             });
         });
     </script>
