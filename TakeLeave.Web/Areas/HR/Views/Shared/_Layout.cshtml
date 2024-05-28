@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/TakeLeave.Web.styles.css" asp-append-version="true" />
     <link href="~/css/customStyles.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/calendarStyles.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/layout.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -48,9 +49,14 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
+    <div class="full-width-container">
+        <main role="main" class="pb-3 full-width-row">
+            <div class="content">
+                @RenderBody()
+            </div>
+            <div class="sidebar">
+                <div id="userListContainer"></div>
+            </div>
         </main>
     </div>
 
@@ -62,6 +68,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/chatScript.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

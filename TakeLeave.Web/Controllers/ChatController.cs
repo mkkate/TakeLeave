@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
+using TakeLeave.Web.Mappers;
+using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Controllers
 {
@@ -16,7 +18,12 @@ namespace TakeLeave.Web.Controllers
         public IActionResult GetUsers()
         {
             List<EmployeeChatDTO> employeeChatDTOs = _chatService.GetEmployeesChatList();
-            return Json(employeeChatDTOs);
+
+            List<EmployeeChatViewModel> employeeChatViewModels = employeeChatDTOs
+                .Select(dto => dto.MapEmployeeChatDtoToEmployeeChatViewModel())
+                .ToList();
+
+            return PartialView("~/Views/Shared/GetUsersPartial.cshtml", employeeChatViewModels);
         }
     }
 }
