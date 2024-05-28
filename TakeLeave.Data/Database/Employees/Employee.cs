@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
+using TakeLeave.Data.Database.ChatMessages;
 using TakeLeave.Data.Database.DaysOffs;
 using TakeLeave.Data.Database.LeaveRequests;
 using TakeLeave.Data.Database.Positions;
@@ -35,5 +36,8 @@ namespace TakeLeave.Data.Database.Employees
         public Position Position { get; set; }
         public ICollection<LeaveRequest> EmployeeLeaveRequests { get; } = new List<LeaveRequest>();
         public ICollection<LeaveRequest>? HandledLeaveRequests { get; } = new List<LeaveRequest>();
+
+        public ICollection<ChatMessage> SentMessages { get; } = new List<ChatMessage>();
+        public ICollection<ChatMessage> ReceivedMessages { get; } = new List<ChatMessage>();
     }
 }

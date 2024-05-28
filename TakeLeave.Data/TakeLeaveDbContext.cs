@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TakeLeave.Data.Database.ChatMessages;
 using TakeLeave.Data.Database.DaysOffs;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Data.Database.LeaveRequests;
@@ -18,6 +19,7 @@ namespace TakeLeave.Data
         public DbSet<DaysOff> DaysOffs { get; set; }
         public DbSet<LeaveRequest> LeaveRequests { get; set; }
         public DbSet<Position> Positions { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -116,6 +118,36 @@ namespace TakeLeave.Data
                 .HasOne(d => d.Employee)
                 .WithOne(e => e.DaysOff)
                 .HasForeignKey<Employee>(e => e.DaysOffID)
+                .IsRequired();
+
+
+            // Employee -> ChatMessage
+            modelBuilder.Entity<Employee>()
+                .HasMany(e => e.SentMessages)
+                .WithOne(cm => cm.Sender)
+                .HasForeignKey(cm => cm.SenderId)
+                .IsRequired();
+
+            modelBuilder.Entity<Employee>()
+                .HasMany(e => e.ReceivedMessages)
+                .WithOne(cm => cm.Receiver)
+                .HasForeignKey(cm => cm.ReceiverId)
+                .IsRequired();
+
+
+            // ChatMessage -> Employee
+            modelBuilder.Entity<ChatMessage>()
+                .HasOne(cm => cm.Sender)
+                .WithMany(e => e.SentMessages)
+                .HasForeignKey(cm => cm.SenderId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            modelBuilder.Entity<ChatMessage>()
+                .HasOne(cm => cm.Receiver)
+                .WithMany(e => e.ReceivedMessages)
+                .HasForeignKey(cm => cm.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         }
     }
