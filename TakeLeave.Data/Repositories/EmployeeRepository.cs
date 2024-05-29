@@ -14,9 +14,10 @@ namespace TakeLeave.Data.Repositories
             return GetByCondition(e => e.DeleteDate.Equals(null));
         }
 
-        public IQueryable<Employee> GetCurrentlyEmployedEmployees()
+        public IQueryable<Employee> GetCurrentlyEmployedEmployees(int logedEmployeeId)
         {
             return GetByCondition(employee =>
+                employee.Id != logedEmployeeId &&
                 employee.DeleteDate.Equals(null) &&
                 employee.EmploymentStartDate <= DateTime.UtcNow &&
                 employee.EmploymentEndDate >= DateTime.UtcNow);

@@ -15,10 +15,10 @@ namespace TakeLeave.Business.Services
             _employeeRepository = employeeRepository;
         }
 
-        public List<EmployeeChatDTO> GetEmployeesChatList()
+        public List<EmployeeChatDTO> GetEmployeesChatList(int logedEmployeeId)
         {
             List<EmployeeChatDTO>? employeeChatDTOs = _employeeRepository
-                .GetCurrentlyEmployedEmployees()
+                .GetCurrentlyEmployedEmployees(logedEmployeeId)
                 .Include(employee => employee.Position)
                 .Select(employee => employee.MapEmployeeToEmployeeChatDto())
                 .ToList();

@@ -6,7 +6,7 @@ using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Controllers
 {
-    public class ChatController : Controller
+    public class ChatController : BaseController
     {
         private readonly IChatService _chatService;
 
@@ -17,7 +17,7 @@ namespace TakeLeave.Web.Controllers
 
         public IActionResult GetUsers()
         {
-            List<EmployeeChatDTO> employeeChatDTOs = _chatService.GetEmployeesChatList();
+            List<EmployeeChatDTO> employeeChatDTOs = _chatService.GetEmployeesChatList(GetLoggedInEmployeeId());
 
             List<EmployeeChatViewModel> employeeChatViewModels = employeeChatDTOs
                 .Select(dto => dto.MapEmployeeChatDtoToEmployeeChatViewModel())

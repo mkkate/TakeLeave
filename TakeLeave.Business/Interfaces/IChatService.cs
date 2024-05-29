@@ -4,6 +4,6 @@ namespace TakeLeave.Business.Interfaces
 {
     public interface IChatService
     {
-        List<EmployeeChatDTO> GetEmployeesChatList();
+        List<EmployeeChatDTO> GetEmployeesChatList(int logedEmployeeId);
     }
 }
