@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TakeLeave.Data;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Web;
+using TakeLeave.Web.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,8 @@ builder.Services.ConfigureAppServices();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,5 +58,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=IndexPageByRole}/{id?}");
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
