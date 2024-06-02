@@ -14,6 +14,7 @@ namespace TakeLeave.Web
             services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddScoped<IDaysOffRepository, DaysOffRepository>();
             services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+            services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
         }
 
         public static void ConfigureAppServices(this IServiceCollection services)
