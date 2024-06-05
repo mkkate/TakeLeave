@@ -1,9 +1,17 @@
 ﻿@model List<TakeLeave.Web.Models.EmployeeChatViewModel>
 
 <h5>Chat with:</h5>
-<ul>
+<ul class="list-group list-group-flush">
     @foreach (var employee in Model)
     {
-        <li>@employee.FirstName @employee.LastName</li>
+        <li class="list-group-item">
+            <a class="user-item"
+               data-userid="@employee.Id"
+               data-user-first-name="@employee.FirstName"
+               data-user-last-name="@employee.LastName">
+                @employee.FirstName @employee.LastName
+            </a>
+        </li>
     }
 </ul>
+

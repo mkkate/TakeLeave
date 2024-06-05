@@ -25,5 +25,14 @@ namespace TakeLeave.Web.Controllers
 
             return PartialView("~/Views/Shared/GetUsersPartial.cshtml", employeeChatViewModels);
         }
+
+        public IActionResult GetMessages(int receiverId)
+        {
+            int senderId = GetLoggedInEmployeeId();
+
+            List<ChatMessageDTO> chatMessageDTOs = _chatService.GetMessagesBetweenUsers(senderId, receiverId);
+
+            return Json(chatMessageDTOs);
+        }
     }
 }

@@ -46,5 +46,21 @@ namespace TakeLeave.Business.Services
 
             return chatMessage.ID > 0 ? true : false;
         }
+
+        public List<ChatMessageDTO> GetMessagesBetweenUsers(int userId1, int userId2)
+        {
+            List<ChatMessage> chatMessages = _chatMessageRepository
+                .GetByCondition(message =>
+                (message.SenderId.Equals(userId1) && message.ReceiverId.Equals(userId2)) ||
+                (message.SenderId.Equals(userId2) && message.ReceiverId.Equals(userId1)))
+                .OrderBy(message => message.Timestamp)
+                .ToList();
+
+            List<ChatMessageDTO> chatMessageDTOs = chatMessages
+                .Select(message => message.MapChatMessageToChatMessageDto())
+                .ToList();
+
+            return chatMessageDTOs;
+        }
     }
 }
