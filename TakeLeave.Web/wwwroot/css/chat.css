@@ -20,6 +20,26 @@
     flex-grow: 1;
     padding: 10px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.sender-side {
+    background-color: cornflowerblue;
+    align-self: flex-end;
+    width: fit-content;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.receiver-side {
+    background-color: lightgoldenrodyellow;
+    align-self: flex-start;
+    width: fit-content;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .chat-box-footer {

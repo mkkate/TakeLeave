@@ -86,15 +86,31 @@ async function sendMessage(userId) {
 }
 
 function selectUser(userId) {
-    console.log("User id = " + userId);
-    //document.getElementById('messages').innerHTML = '';
+    console.log("Receiver id = " + userId);
     // Load previous messages
     fetch(`/Chat/GetMessages?receiverId=${userId}`).then(response => response.json()).then(messages => {
         var chatBoxBody = $("#chatBox_" + userId + " .chat-box-body");
         chatBoxBody.empty();
         messages.forEach(message => {
-            var msg = $('<div></div>').text(`${message.senderId}->${message.receiverId} @ ${message.timestamp}: ${message.content}`);
+            var userRole = message.senderId === userId ? "receiver-side" : "sender-side";
+            console.log(userRole + ' ' + message.receiverId);
+            const date = new Date(message.timestamp);
+            const formattedDate = date.toLocaleDateString("en-UK", {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
+            }) + ' ' + date.toLocaleTimeString("en-UK", {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            var msg = $(`<div class="${userRole}">` +
+                `<a data-toggle="tooltip" title="${formattedDate}">` +
+                `${message.senderId}->${message.receiverId}: ${message.content}` +
+                '</a></div>');
             chatBoxBody.append(msg);
         });
+
+        chatBoxBody.find('[data-toggle="tooltip"]').tooltip();
     });
 }
