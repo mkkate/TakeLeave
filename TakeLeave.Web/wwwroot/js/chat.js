@@ -45,6 +45,11 @@ function openChatBox(receiverId, receiverFirstName, receiverLastName) {
             '</div>' +
             '</div>');
         $('body').append(chatBox);
+        $(`#chatInput_${receiverId}`).on('keypress', function (e) {
+            if (e.which === 13) { // 'enter'
+                sendMessage(receiverId);
+            }
+        });
     }
     chatBox.show();
     selectUser(receiverId);
