@@ -18,7 +18,7 @@ namespace TakeLeave.Web.Hubs
             _employeeUserManager = employeeUserManager;
         }
 
-        public async Task SendMessage(string userId, string message)
+        public async Task SendMessage(string receiverId, string message)
         {
             string? loggedInUserId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -31,12 +31,12 @@ namespace TakeLeave.Web.Hubs
                 if (sender != null)
                 {
                     bool writtenToDb = _chatService
-                        .InsertMessageIntoDatabase(sender.Id, Int32.Parse(userId), message);
+                        .InsertMessageIntoDatabase(sender.Id, Int32.Parse(receiverId), message);
 
                     if (writtenToDb)
                     {
                         await Clients
-                            .User(userId)
+                            .User(receiverId)
                             .SendAsync("ReceiveMessage", sender.Id, sender.FirstName, sender.LastName, message);
                     }
                 }

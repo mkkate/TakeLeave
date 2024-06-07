@@ -20,6 +20,7 @@ connection.on("ReceiveMessage", function (senderId, senderFirstName, senderLastN
     }
     var messageElement = $('<div class="receiver-side"></div>').text(message);
     chatBox.find(".chat-box-body").append(messageElement);
+    scrollToLatestMessage(senderId);
 });
 
 $(document).on('click', '.user-item', function () {
@@ -29,35 +30,35 @@ $(document).on('click', '.user-item', function () {
     openChatBox(userId, userFirstName, userLastName);
 });
 
-function openChatBox(userId, userFirstName, userLastName) {
-    var chatBox = $("#chatBox_" + userId);
+function openChatBox(receiverId, receiverFirstName, receiverLastName) {
+    var chatBox = $("#chatBox_" + receiverId);
     if (chatBox.length == 0) {
-        chatBox = $('<div class="chat-box" id="chatBox_' + userId + '">' +
-            `<div class="chat-box-header">${userFirstName} ${userLastName}` +
-            `<span class="close-button" onclick="closeChatBox(${userId})">×</span>` +
+        chatBox = $('<div class="chat-box" id="chatBox_' + receiverId + '">' +
+            `<div class="chat-box-header">${receiverFirstName} ${receiverLastName}` +
+            `<span class="close-button" onclick="closeChatBox(${receiverId})">×</span>` +
             '</div>' +
             '<div class="chat-box-body">' +
             '</div>' +
             '<div class="chat-box-footer">' +
             '<input type="text" class="chat-input" />' +
-            `<button onclick="sendMessage(${userId})">Send</button>` +
+            `<button onclick="sendMessage(${receiverId})">Send</button>` +
             '</div>' +
             '</div>');
         $('body').append(chatBox);
     }
     chatBox.show();
-    selectUser(userId);
+    selectUser(receiverId);
 }
 
-async function sendMessage(userId) {
-    var message = $("#chatBox_" + userId + " .chat-input").val();
+async function sendMessage(receiverId) {
+    var message = $("#chatBox_" + receiverId + " .chat-input").val();
     if (connection.state === signalR.HubConnectionState.Connected) {
         try {
-            await connection.invoke("SendMessage", userId.toString(), message).catch(function (err) {
+            await connection.invoke("SendMessage", receiverId.toString(), message).catch(function (err) {
                 return console.error(err.toString());
             });
-            selectUser(userId);
-            $("#chatBox_" + userId + " .chat-input").val('');
+            selectUser(receiverId);
+            $("#chatBox_" + receiverId + " .chat-input").val('');
         } catch (err) {
             console.error("Error sending message: ", err.toString());
         }
@@ -66,13 +67,13 @@ async function sendMessage(userId) {
     }
 }
 
-function selectUser(userId) {
+function selectUser(receiverId) {
     // Load previous messages
-    fetch(`/Chat/GetMessages?receiverId=${userId}`).then(response => response.json()).then(messages => {
-        var chatBoxBody = $("#chatBox_" + userId + " .chat-box-body");
+    fetch(`/Chat/GetMessages?receiverId=${receiverId}`).then(response => response.json()).then(messages => {
+        var chatBoxBody = $("#chatBox_" + receiverId + " .chat-box-body");
         chatBoxBody.empty();
         messages.forEach(message => {
-            var userRole = message.senderId === userId ? "receiver-side" : "sender-side";
+            var userRole = message.senderId === receiverId ? "receiver-side" : "sender-side";
             const date = new Date(message.timestamp);
             const formattedDate = date.toLocaleDateString("en-UK", {
                 day: '2-digit',
@@ -85,15 +86,21 @@ function selectUser(userId) {
             });
             var msg = $(`<div class="${userRole}">` +
                 `<a data-toggle="tooltip" title="${formattedDate}">` +
-                `${message.senderId}->${message.receiverId}: ${message.content}` +
+                `${message.content}` +
                 '</a></div>');
             chatBoxBody.append(msg);
         });
 
         chatBoxBody.find('[data-toggle="tooltip"]').tooltip();
+        scrollToLatestMessage(receiverId);
     });
 }
 
 function closeChatBox(userId) {
     $("#chatBox_" + userId).remove();
+}
+
+function scrollToLatestMessage(userId) {
+    var chatBoxBody = $("#chatBox_" + userId + " .chat-box-body");
+    chatBoxBody.scrollTop(chatBoxBody.prop("scrollHeight"));
 }
