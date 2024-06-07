@@ -32,12 +32,12 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
 });
 
-connection.on("ReceiveMessage", function (user, message) {
-    var chatBox = $("#chatBox_" + user);
+connection.on("ReceiveMessage", function (senderId, senderFirstName, senderLastName, message) {
+    var chatBox = $("#chatBox_" + senderId);
     if (chatBox.length === 0) {
-        openChatBox(user);
+        openChatBox(senderId, senderFirstName, senderLastName);
     }
-    var messageElement = $('<div class="message received"></div>').text(message);
+    var messageElement = $('<div class="receiver-side"></div>').text(message);
     chatBox.find(".chat-box-body").append(messageElement);
 });
 
@@ -52,12 +52,14 @@ function openChatBox(userId, userFirstName, userLastName) {
     var chatBox = $("#chatBox_" + userId);
     if (chatBox.length == 0) {
         chatBox = $('<div class="chat-box" id="chatBox_' + userId + '">' +
-            '<div class="chat-box-header">' + userFirstName + ' ' + userLastName + '</div>' +
+            `<div class="chat-box-header">${userFirstName} ${userLastName}` +
+            `<span class="close-button" onclick="closeChatBox(${userId})">×</span>` +
+            '</div>' +
             '<div class="chat-box-body">' +
             '</div>' +
             '<div class="chat-box-footer">' +
             '<input type="text" class="chat-input" />' +
-            '<button onclick="sendMessage(' + userId + ')">Send</button>' +
+            `<button onclick="sendMessage(${userId})">Send</button>` +
             '</div>' +
             '</div>');
         $('body').append(chatBox);
@@ -73,9 +75,7 @@ async function sendMessage(userId) {
             await connection.invoke("SendMessage", userId.toString(), message).catch(function (err) {
                 return console.error(err.toString());
             });
-            var chatBox = $("#chatBox_" + userId + " .chat-box-body");
-            var messageElement = $('<div class="message sent"></div>').text(message);
-            chatBox.append(messageElement);
+            selectUser(userId);
             $("#chatBox_" + userId + " .chat-input").val('');
         } catch (err) {
             console.error("Error sending message: ", err.toString());
@@ -113,4 +113,8 @@ function selectUser(userId) {
 
         chatBoxBody.find('[data-toggle="tooltip"]').tooltip();
     });
+}
+
+function closeChatBox(userId) {
+    $("#chatBox_" + userId).remove();
 }
