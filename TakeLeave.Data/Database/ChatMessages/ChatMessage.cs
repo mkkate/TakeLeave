@@ -11,6 +11,7 @@ namespace TakeLeave.Data.Database.ChatMessages
         public int ReceiverId { get; set; }
         public string Content { get; set; }
         public DateTime Timestamp { get; set; }
+        public bool Seen { get; set; }
 
         public Employee Sender { get; set; }
         public Employee Receiver { get; set; }
