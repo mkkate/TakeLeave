@@ -38,7 +38,7 @@ namespace TakeLeave.Business.Services
                 SenderId = senderId,
                 ReceiverId = receiverId,
                 Content = content,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.Now
             };
 
             _chatMessageRepository.Insert(chatMessage);
