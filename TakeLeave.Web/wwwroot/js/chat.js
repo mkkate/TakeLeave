@@ -57,18 +57,20 @@ function openChatBox(receiverId, receiverFirstName, receiverLastName) {
 
 async function sendMessage(receiverId) {
     var message = $("#chatBox_" + receiverId + " .chat-input").val();
-    if (connection.state === signalR.HubConnectionState.Connected) {
-        try {
-            await connection.invoke("SendMessage", receiverId.toString(), message).catch(function (err) {
-                return console.error(err.toString());
-            });
-            selectUser(receiverId);
-            $("#chatBox_" + receiverId + " .chat-input").val('');
-        } catch (err) {
-            console.error("Error sending message: ", err.toString());
+    if (message !== "") {
+        if (connection.state === signalR.HubConnectionState.Connected) {
+            try {
+                await connection.invoke("SendMessage", receiverId.toString(), message).catch(function (err) {
+                    return console.error(err.toString());
+                });
+                selectUser(receiverId);
+                $("#chatBox_" + receiverId + " .chat-input").val('');
+            } catch (err) {
+                console.error("Error sending message: ", err.toString());
+            }
+        } else {
+            console.error("Connection is not in the 'Connected' state.");
         }
-    } else {
-        console.error("Connection is not in the 'Connected' state.");
     }
 }
 
