@@ -25,7 +25,6 @@ namespace TakeLeave.Data.Database.Employees
         public DateTime? EmploymentEndDate { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? DeleteDate { get; set; }
-        public bool IsAdmin { get; set; }
 
 
         public int DaysOffID { get; set; }
