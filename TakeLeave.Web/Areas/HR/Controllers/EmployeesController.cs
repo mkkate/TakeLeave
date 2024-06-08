@@ -6,6 +6,7 @@ using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.HR.Mappers;
 using TakeLeave.Web.Areas.HR.Models;
+using TakeLeave.Web.Constants;
 
 namespace TakeLeave.Web.Areas.HR.Controllers
 {
@@ -38,6 +39,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             EmployeeDTO employeeDTO = employeeViewModel.MapEmployeeViewModelToEmployeeDto();
 
             await _employeeService.CreateEmployeeAsync(employeeDTO);
+
+            Notification(NotificationMessageConstants.EmployeeSuccessfullyCreated, NoticifationTypeConstants.Create);
 
             return RedirectToAction(nameof(EmployeeList));
         }
@@ -75,6 +78,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             employeeViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
 
+            Notification(NotificationMessageConstants.EmployeeSuccessfullyUpdated, NoticifationTypeConstants.Update);
+
             return View(employeeViewModel);
         }
 
@@ -93,6 +98,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         public async Task<IActionResult> DeleteEmployee(EmployeeInfoViewModel employeeInfoViewModel)
         {
             await _employeeService.DeleteEmployeeAsync(employeeInfoViewModel.Id);
+
+            Notification(NotificationMessageConstants.EmployeeSuccessfullyDeleted, NoticifationTypeConstants.Delete);
 
             return RedirectToAction(nameof(EmployeeList));
         }
