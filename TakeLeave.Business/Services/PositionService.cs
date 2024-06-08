@@ -125,5 +125,15 @@ namespace TakeLeave.Business.Services
                 _positionRepository.Save();
             }
         }
+
+        public HashSet<string> GetSeniorityLevelsForSpecifiedTitle(string title)
+        {
+            HashSet<string> seniorityLevels = _positionRepository
+                .GetByCondition(position => position.Title.Equals(title))
+                .Select(position => position.SeniorityLevel.ToString())
+                .ToHashSet();
+
+            return seniorityLevels;
+        }
     }
 }

@@ -93,5 +93,12 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             return RedirectToAction(nameof(PositionsList));
         }
+
+        public IActionResult GetSeniorityLevelsForSpecifiedTitle(string title)
+        {
+            HashSet<string> seniorityLevels = _positionService.GetSeniorityLevelsForSpecifiedTitle(title);
+
+            return Json(seniorityLevels);
+        }
     }
 }

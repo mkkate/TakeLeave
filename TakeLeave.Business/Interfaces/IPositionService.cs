@@ -11,5 +11,6 @@ namespace TakeLeave.Business.Interfaces
         void CreatePosition(PositionDTO positionDTO);
         PositionDTO GetPosition(string title, Models.SeniorityLevel seniorityLevel);
         void UpdatePosition(PositionDTO positionDTO);
+        HashSet<string> GetSeniorityLevelsForSpecifiedTitle(string title);
     }
 }

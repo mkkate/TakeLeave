@@ -56,14 +56,18 @@
             <div class="row mb-3">
                 <div class="col">
                     <label asp-for="@Model.PositionTitlesAndSeniorityLevels.Item1" class="control-label">Position:</label>
-                    <select asp-for="@Model.Position.Title" class="form-control"
+                    <select class="form-control"
+                            id="position-title"
+                            asp-for="@Model.Position.Title"
                             asp-items="@(new SelectList(Model.PositionTitlesAndSeniorityLevels.Item1))">
                         <option value="">Select title:</option>
                     </select>
                 </div>
                 <div class="col">
                     <label asp-for="@Model.PositionTitlesAndSeniorityLevels.Item2" class="control-label">Seniority:</label>
-                    <select asp-for="@Model.Position.SeniorityLevel" class="form-control"
+                    <select class="form-control"
+                            id="seniority-level"
+                            asp-for="@Model.Position.SeniorityLevel"
                             asp-items="@(new SelectList(Model.PositionTitlesAndSeniorityLevels.Item2))">
                         <option value="">Select level:</option>
                     </select>
