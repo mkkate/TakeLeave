@@ -34,5 +34,23 @@ namespace TakeLeave.Web.Controllers
 
             return Json(chatMessageDTOs);
         }
+
+        public IActionResult GetNumberOfUnreadMessages()
+        {
+            int receiverId = GetLoggedInEmployeeId();
+
+            Dictionary<int, int> unreadMessagesCount = _chatService.GetNumberOfUnreadMessagesForCurrentUser(receiverId);
+
+            return Json(unreadMessagesCount);
+        }
+
+        public IActionResult ReadAllUnreadMessagesFromUser(int fromUserId)
+        {
+            int receiverId = GetLoggedInEmployeeId();
+
+            bool allRead = _chatService.ReadAllUnreadMessagesFromUser(fromUserId, receiverId);
+
+            return Json(allRead);
+        }
     }
 }

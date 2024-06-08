@@ -62,5 +62,54 @@ namespace TakeLeave.Business.Services
 
             return chatMessageDTOs;
         }
+
+        public Dictionary<int, int> GetNumberOfUnreadMessagesForCurrentUser(int receiverId)
+        {
+            var count = _chatMessageRepository
+                .GetByCondition(message =>
+                message.ReceiverId.Equals(receiverId) &&
+                message.Seen.Equals(false));
+
+            Dictionary<int, int> sendersCounts = new();
+
+            foreach (var message in count)
+            {
+                if (sendersCounts.ContainsKey(message.SenderId))
+                {
+                    sendersCounts[message.SenderId]++;
+                }
+                else
+                {
+                    sendersCounts.Add(message.SenderId, 1);
+                }
+            }
+
+            return sendersCounts;
+        }
+
+        public bool ReadAllUnreadMessagesFromUser(int fromUserId, int receiverId)
+        {
+            List<ChatMessage> chatMessages = _chatMessageRepository
+                .GetByCondition(message =>
+                message.SenderId.Equals(fromUserId) &&
+                message.ReceiverId.Equals(receiverId))
+                .OrderBy(message => message.Timestamp)
+                .ToList();
+
+            if (chatMessages.Any(message => message.Seen.Equals(false)))
+            {
+                foreach (ChatMessage message in chatMessages)
+                {
+                    if (message.Seen.Equals(false))
+                    {
+                        message.Seen = true;
+                        _chatMessageRepository.Update(message);
+                    }
+                }
+                _chatMessageRepository.Save();
+            }
+
+            return true;
+        }
     }
 }

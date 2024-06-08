@@ -16,3 +16,20 @@
 .sidebar {
     width: auto;
 }
+
+.badge-pill {
+    display: inline-block;
+    padding: 0.5em 0.75em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 10rem;
+}
+
+.badge-danger {
+    background-color: indianred;
+}

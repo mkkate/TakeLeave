@@ -4,8 +4,21 @@ $(function () {
     var url = '/Chat/GetUsers';
     $.get(url, function (data) {
         $("#userListContainer").html(data);
+        getUnreadMessages();
     });
 });
+
+function getUnreadMessages() {
+    var url = '/Chat/GetNumberOfUnreadMessages';
+    $.get(url, function (data) {
+        $(".badge.badge-pill.badge-danger").remove();
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                $(`#user_${key}`).append(`<span class="badge badge-pill badge-danger">${data[key]}</span>`);
+            }
+        }
+    });
+};
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
@@ -40,7 +53,7 @@ function openChatBox(receiverId, receiverFirstName, receiverLastName) {
             '<div class="chat-box-body">' +
             '</div>' +
             '<div class="chat-box-footer">' +
-            '<input type="text" class="chat-input" />' +
+            `<input type="text" class="chat-input" id="chatInput_${receiverId}"/>` +
             `<button onclick="sendMessage(${receiverId})">Send</button>` +
             '</div>' +
             '</div>');
@@ -52,6 +65,7 @@ function openChatBox(receiverId, receiverFirstName, receiverLastName) {
         });
     }
     chatBox.show();
+    readAllUnreadMessages(receiverId);
     selectUser(receiverId);
 }
 
@@ -100,6 +114,15 @@ function selectUser(receiverId) {
 
         chatBoxBody.find('[data-toggle="tooltip"]').tooltip();
         scrollToLatestMessage(receiverId);
+    });
+}
+
+function readAllUnreadMessages(fromUserId) {
+    var url = `/Chat/ReadAllUnreadMessagesFromUser?fromUserId=${fromUserId}`;
+    $.get(url, function (result) {
+        if (result) {
+            getUnreadMessages();
+        }
     });
 }
 
