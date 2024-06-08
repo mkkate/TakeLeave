@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Business.Models.LeaveRequests;
@@ -15,7 +16,9 @@ namespace TakeLeave.Web.Areas.User.Controllers
 
         public LeaveRequestsController(
             IUserLeaveRequestService userLeaveRequestService,
-            IUserService userService)
+            IUserService userService,
+            INotyfService notyfService)
+            : base(notyfService)
         {
             _userLeaveRequestService = userLeaveRequestService;
             _userService = userService;

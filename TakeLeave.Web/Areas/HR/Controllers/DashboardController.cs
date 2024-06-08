@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
@@ -10,7 +11,10 @@ namespace TakeLeave.Web.Areas.HR.Controllers
     {
         private readonly IHrLeaveRequestService _hrLeaveRequestService;
 
-        public DashboardController(IHrLeaveRequestService hrLeaveRequestService)
+        public DashboardController(
+            IHrLeaveRequestService hrLeaveRequestService,
+            INotyfService notyfService)
+            : base(notyfService)
         {
             _hrLeaveRequestService = hrLeaveRequestService;
         }

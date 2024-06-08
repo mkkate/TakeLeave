@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Mappers;
@@ -10,7 +11,10 @@ namespace TakeLeave.Web.Controllers
     {
         private readonly IChatService _chatService;
 
-        public ChatController(IChatService chatService)
+        public ChatController(
+            IChatService chatService,
+            INotyfService notyfService)
+            : base(notyfService)
         {
             _chatService = chatService;
         }

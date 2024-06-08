@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Constants;
 using TakeLeave.Business.Interfaces;
@@ -16,7 +17,9 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
         public PositionsController(
             IPositionService positionService,
-            IEmployeeRoleService employeeRoleService)
+            IEmployeeRoleService employeeRoleService,
+            INotyfService notyfService)
+            : base(notyfService)
         {
             _positionService = positionService;
             _employeeRoleService = employeeRoleService;

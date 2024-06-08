@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.User.Mappers;
@@ -10,7 +11,10 @@ namespace TakeLeave.Web.Areas.User.Controllers
     {
         private readonly IUserService _userService;
 
-        public DashboardController(IUserService userService)
+        public DashboardController(
+            IUserService userService,
+            INotyfService notyfService)
+            : base(notyfService)
         {
             _userService = userService;
         }

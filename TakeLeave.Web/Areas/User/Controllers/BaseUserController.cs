@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Constants;
 using TakeLeave.Web.Areas.Constants;
@@ -10,6 +11,8 @@ namespace TakeLeave.Web.Areas.User.Controllers
     [Authorize(Roles = EmployeeRoles.User)]
     public class BaseUserController : BaseController
     {
-
+        public BaseUserController(INotyfService notyfService) : base(notyfService)
+        {
+        }
     }
 }

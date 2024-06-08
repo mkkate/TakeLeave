@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TakeLeave.Business.Constants;
 using TakeLeave.Web.Areas.Constants;
@@ -10,6 +11,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
     [Authorize(Roles = EmployeeRoles.AdminOrHR)]
     public class BaseHrController : BaseController
     {
-
+        public BaseHrController(INotyfService notyfService) : base(notyfService)
+        {
+        }
     }
 }
