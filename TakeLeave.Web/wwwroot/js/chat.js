@@ -34,6 +34,7 @@ connection.on("ReceiveMessage", function (senderId, senderFirstName, senderLastN
     var messageElement = $('<div class="receiver-side"></div>').text(message);
     chatBox.find(".chat-box-body").append(messageElement);
     scrollToLatestMessage(senderId);
+    readAllUnreadMessages(senderId);
 });
 
 $(document).on('click', '.user-item', function () {
