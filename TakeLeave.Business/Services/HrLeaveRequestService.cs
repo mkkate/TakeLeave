@@ -25,6 +25,7 @@ namespace TakeLeave.Business.Services
             List<LeaveRequest> leaveRequests = _leaveRequestRepository
                 .GetAll()
                 .Include(lr => lr.RequestedByEmployee)
+                .OrderByDescending(lr => lr.LeaveStartDate)
                 .ToList();
 
             List<HrLeaveRequestDTO> leaveRequestDTOs = leaveRequests

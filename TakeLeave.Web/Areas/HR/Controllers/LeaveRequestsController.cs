@@ -8,6 +8,7 @@ using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Web.Areas.Hr.Mappers;
 using TakeLeave.Web.Areas.HR.Models;
 using TakeLeave.Web.Areas.User.Mappers;
+using TakeLeave.Web.Constants;
 using TakeLeave.Web.Mappers;
 using TakeLeave.Web.Models;
 
@@ -66,6 +67,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             HrLeaveRequestDTO hrLeaveRequestDTO = hrLeaveRequestViewModel.MapHrLeaveRequestViewModelToHrLeaveRequestDto();
 
             _hrLeaveRequestService.UpdateLeaveRequest(hrLeaveRequestDTO);
+
+            Notification(NotificationMessageConstants.LeaveRequestEdited, NoticifationTypeConstants.Update);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }

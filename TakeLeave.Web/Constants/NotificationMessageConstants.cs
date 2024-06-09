@@ -10,5 +10,7 @@
         public const string PositionSuccessfullyUpdated = "Position successfully updated";
 
         public const string LeaveRequestSuccessfullyCreated = "Leave request successfully created";
+
+        public const string LeaveRequestEdited = "Leave request edited";
     }
 }
