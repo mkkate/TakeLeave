@@ -41,7 +41,9 @@ namespace TakeLeave.Web.Controllers
                     _notyfService.Warning(message);
                     break;
 
-                case NoticifationTypeConstants.Error or NoticifationTypeConstants.Delete:
+                case NoticifationTypeConstants.Error or
+                NoticifationTypeConstants.Delete or
+                NoticifationTypeConstants.Reject:
                     _notyfService.Error(message);
                     break;
             }

@@ -13,5 +13,6 @@
 
         public const string LeaveRequestEdited = "Leave request edited";
         public const string LeaveRequestApproved = "Leave request approved";
+        public const string LeaveRequestRejected = "Leave request rejected";
     }
 }

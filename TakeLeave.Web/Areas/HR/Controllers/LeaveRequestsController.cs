@@ -88,6 +88,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         {
             _hrLeaveRequestService.RejectLeaveRequest(id, GetLoggedInEmployeeId());
 
+            Notification(NotificationMessageConstants.LeaveRequestRejected, NoticifationTypeConstants.Reject);
+
             return RedirectToAction(nameof(GetLeaveRequests));
         }
 
