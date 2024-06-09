@@ -27,7 +27,9 @@ namespace TakeLeave.Web.Controllers
         {
             switch (type)
             {
-                case NoticifationTypeConstants.Success or NoticifationTypeConstants.Create:
+                case NoticifationTypeConstants.Success or
+                NoticifationTypeConstants.Create or
+                NoticifationTypeConstants.Approve:
                     _notyfService.Success(message);
                     break;
 

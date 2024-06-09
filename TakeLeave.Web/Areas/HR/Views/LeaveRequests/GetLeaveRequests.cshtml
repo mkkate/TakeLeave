@@ -45,9 +45,11 @@
                                 <img src="~/icons/edit.svg" />
                                 Edit
                             </a>
-                            <a href="#"
-                               class="approve-leave-request btn btn-success btn-actions"
-                               data-leave-id="@item.Id">
+                            <a asp-area="HR"
+                               asp-controller="LeaveRequests"
+                               asp-action="ApproveLeaveRequest"
+                               asp-route-id="@item.Id"
+                               class="btn btn-success btn-actions">
                                 <img src="~/icons/approve.svg" />
                                 Approve
                             </a>
@@ -107,29 +109,6 @@
                         e.preventDefault();
                     });
                 }
-            });
-
-            $('.approve-leave-request').click(function (e) {
-                e.preventDefault();
-
-                var leaveId = $(this).data('leave-id');
-                var start = $(this).closest('tr').find('[data-leave-start-date]').data('leave-start-date');
-                var end = $(this).closest('tr').find('[data-leave-end-date]').data('leave-end-date');
-                var leaveType = $(this).closest('tr').find('[data-leave-type]').data('leave-type');
-
-                var modelData = {
-                    Id: leaveId,
-                    LeaveStartDate: start,
-                    LeaveEndDate: end,
-                    LeaveType: leaveType
-                };
-
-                var url = '@Url.Action("ApproveLeaveRequest", "LeaveRequests")';
-
-                $.post(url, modelData, function (responseData, status) {
-                    console.log("Post request status: " + status);
-                    console.log("Response data: " + responseData);
-                });
             });
         });
     </script>

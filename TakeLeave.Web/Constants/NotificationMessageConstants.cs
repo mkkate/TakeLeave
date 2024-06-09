@@ -12,5 +12,6 @@
         public const string LeaveRequestSuccessfullyCreated = "Leave request successfully created";
 
         public const string LeaveRequestEdited = "Leave request edited";
+        public const string LeaveRequestApproved = "Leave request approved";
     }
 }
