@@ -6,6 +6,7 @@ using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Web.Areas.HR.Mappers;
 using TakeLeave.Web.Areas.HR.Models;
+using TakeLeave.Web.Constants;
 using TakeLeave.Web.Models;
 
 namespace TakeLeave.Web.Areas.HR.Controllers
@@ -71,6 +72,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             _positionService.CreatePosition(positionDTO);
 
+            Notification(NotificationMessageConstants.PositionSuccessfullyCreated, NoticifationTypeConstants.Create);
+
             return RedirectToAction(nameof(PositionsList));
         }
 
@@ -95,6 +98,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             PositionDTO positionDTO = positionViewModel.MapPositionViewModelToPositionDto();
 
             _positionService.UpdatePosition(positionDTO);
+
+            Notification(NotificationMessageConstants.PositionSuccessfullyUpdated, NoticifationTypeConstants.Update);
 
             return RedirectToAction(nameof(PositionsList));
         }
