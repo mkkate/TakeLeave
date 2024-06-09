@@ -83,6 +83,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             positionViewModel.SeniorityLevels = _positionService.GetSeniorityLevels();
 
+            positionViewModel.EmployeeRoles = _employeeRoleService.GetEmployeeRoles();
+
             return PartialView(positionViewModel);
         }
 

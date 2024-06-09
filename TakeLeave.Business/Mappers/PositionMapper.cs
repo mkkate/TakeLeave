@@ -19,8 +19,9 @@ namespace TakeLeave.Business.Mappers
             {
                 Title = position.Title,
                 SeniorityLevel = Enum.GetName(position.SeniorityLevel),
-                Description = position.Description
-            }; ;
+                Description = position.Description,
+                EmployeeRoleId = position.EmployeeRoleID
+            };
         }
     }
 }

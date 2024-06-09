@@ -22,7 +22,8 @@ namespace TakeLeave.Web.Areas.HR.Mappers
             {
                 Title = positionDTO.Title,
                 SeniorityLevel = positionDTO.SeniorityLevel,
-                Description = positionDTO.Description
+                Description = positionDTO.Description,
+                EmployeeRoleId = positionDTO.EmployeeRoleId
             };
         }
     }
