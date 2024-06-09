@@ -45,6 +45,7 @@ namespace TakeLeave.Business.Services
             List<LeaveRequest> leaveRequests = _leaveRequestRepository.
                 GetByCondition(leave => leave.EmployeeID.Equals(id))
                 .Include(lr => lr.HandledByHr)
+                .OrderByDescending(lr => lr.LeaveStartDate)
                 .ToList();
 
             List<LeaveRequestDTO> leaveRequestDTOs = leaveRequests

@@ -4,6 +4,7 @@ using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
 using TakeLeave.Business.Models.LeaveRequests;
 using TakeLeave.Web.Areas.User.Mappers;
+using TakeLeave.Web.Constants;
 using TakeLeave.Web.Mappers;
 using TakeLeave.Web.Models;
 
@@ -46,6 +47,8 @@ namespace TakeLeave.Web.Areas.User.Controllers
             leaveRequestDTO.DaysOff = leaveRequestViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
 
             _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
+
+            Notification(NotificationMessageConstants.LeaveRequestSuccessfullyCreated, NoticifationTypeConstants.Create);
 
             return RedirectToAction(nameof(LeaveRequestsList));
         }

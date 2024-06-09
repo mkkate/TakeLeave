@@ -8,5 +8,7 @@
 
         public const string PositionSuccessfullyCreated = "Position successfully created";
         public const string PositionSuccessfullyUpdated = "Position successfully updated";
+
+        public const string LeaveRequestSuccessfullyCreated = "Leave request successfully created";
     }
 }
