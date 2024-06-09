@@ -27,23 +27,24 @@ namespace TakeLeave.Web.Controllers
         {
             switch (type)
             {
-                case NoticifationTypeConstants.Success or
-                NoticifationTypeConstants.Create or
-                NoticifationTypeConstants.Approve:
+                case NotificationTypeConstants.Success or
+                NotificationTypeConstants.Create or
+                NotificationTypeConstants.Approve:
                     _notyfService.Success(message);
                     break;
 
-                case NoticifationTypeConstants.Info or NoticifationTypeConstants.Update:
+                case NotificationTypeConstants.Info or
+                NotificationTypeConstants.Update:
                     _notyfService.Information(message);
                     break;
 
-                case NoticifationTypeConstants.Warning:
+                case NotificationTypeConstants.Warning:
                     _notyfService.Warning(message);
                     break;
 
-                case NoticifationTypeConstants.Error or
-                NoticifationTypeConstants.Delete or
-                NoticifationTypeConstants.Reject:
+                case NotificationTypeConstants.Error or
+                NotificationTypeConstants.Delete or
+                NotificationTypeConstants.Reject:
                     _notyfService.Error(message);
                     break;
             }

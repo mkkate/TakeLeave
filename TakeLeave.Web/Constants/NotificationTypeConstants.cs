@@ -1,6 +1,6 @@
 ﻿namespace TakeLeave.Web.Constants
 {
-    public class NoticifationTypeConstants
+    public class NotificationTypeConstants
     {
         public const string Success = "Success";
         public const string Info = "Info";

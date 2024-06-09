@@ -79,11 +79,9 @@ namespace TakeLeave.Business.Services
         }
 
         public void ApproveLeaveRequest(int id, int loggedHrId)
-        //public void ApproveLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO, int loggedHrId)
         {
             LeaveRequest? leaveRequest = _leaveRequestRepository
                 .GetByCondition(lr => lr.ID.Equals(id))
-                //.GetByCondition(lr => lr.ID.Equals(hrLeaveRequestDTO.Id))
                 .Include(lr => lr.RequestedByEmployee)
                 .Include(e => e.RequestedByEmployee.DaysOff)
                 .FirstOrDefault();
@@ -93,17 +91,11 @@ namespace TakeLeave.Business.Services
                 double requestedDaysOff = DaysOffHelper.CountRequestedDaysOff(
                     leaveRequest.LeaveStartDate,
                     leaveRequest.LeaveEndDate);
-                //hrLeaveRequestDTO.LeaveStartDate,
-                //hrLeaveRequestDTO.LeaveEndDate);
-
-                //LeaveRequestType leaveRequestType = (LeaveRequestType)EnumHelper.
-                //    GetEnumValueFromDisplayName<Models.LeaveRequests.LeaveRequestType>(hrLeaveRequestDTO.LeaveType);
 
                 bool hasEnoughDays = DaysOffHelper.HasEnoughDays(
                     requestedDaysOff,
                     leaveRequest.RequestedByEmployee.DaysOff.MapDaysOffToDaysOffDto(),
                     leaveRequest.LeaveType);
-                //leaveRequestType);
 
                 if (hasEnoughDays)
                 {
@@ -113,7 +105,6 @@ namespace TakeLeave.Business.Services
                     DaysOffHelper.ReduceDaysOff(
                         (int)requestedDaysOff,
                         leaveRequest.LeaveType,
-                        //leaveRequestType,
                         leaveRequest.RequestedByEmployee.DaysOff);
 
                     _leaveRequestRepository.Update(leaveRequest);

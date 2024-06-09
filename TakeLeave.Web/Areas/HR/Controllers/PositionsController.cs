@@ -72,7 +72,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             _positionService.CreatePosition(positionDTO);
 
-            Notification(NotificationMessageConstants.PositionSuccessfullyCreated, NoticifationTypeConstants.Create);
+            Notification(NotificationMessageConstants.PositionSuccessfullyCreated, NotificationTypeConstants.Create);
 
             return RedirectToAction(nameof(PositionsList));
         }
@@ -99,7 +99,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             _positionService.UpdatePosition(positionDTO);
 
-            Notification(NotificationMessageConstants.PositionSuccessfullyUpdated, NoticifationTypeConstants.Update);
+            Notification(NotificationMessageConstants.PositionSuccessfullyUpdated, NotificationTypeConstants.Update);
 
             return RedirectToAction(nameof(PositionsList));
         }

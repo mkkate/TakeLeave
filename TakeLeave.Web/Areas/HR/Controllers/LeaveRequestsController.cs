@@ -68,7 +68,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             _hrLeaveRequestService.UpdateLeaveRequest(hrLeaveRequestDTO);
 
-            Notification(NotificationMessageConstants.LeaveRequestEdited, NoticifationTypeConstants.Update);
+            Notification(NotificationMessageConstants.LeaveRequestEdited, NotificationTypeConstants.Update);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }
@@ -78,7 +78,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         {
             _hrLeaveRequestService.ApproveLeaveRequest(id, GetLoggedInEmployeeId());
 
-            Notification(NotificationMessageConstants.LeaveRequestApproved, NoticifationTypeConstants.Approve);
+            Notification(NotificationMessageConstants.LeaveRequestApproved, NotificationTypeConstants.Approve);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }
@@ -88,7 +88,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         {
             _hrLeaveRequestService.RejectLeaveRequest(id, GetLoggedInEmployeeId());
 
-            Notification(NotificationMessageConstants.LeaveRequestRejected, NoticifationTypeConstants.Reject);
+            Notification(NotificationMessageConstants.LeaveRequestRejected, NotificationTypeConstants.Reject);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }
@@ -115,6 +115,8 @@ namespace TakeLeave.Web.Areas.HR.Controllers
             leaveRequestDTO.DaysOff = leaveRequestViewModel.DaysOff.MapDaysOffViewModelToDaysOffDto();
 
             _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
+
+            Notification(NotificationMessageConstants.LeaveRequestSuccessfullyCreated, NotificationTypeConstants.Create);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }

@@ -48,7 +48,7 @@ namespace TakeLeave.Web.Areas.User.Controllers
 
             _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 
-            Notification(NotificationMessageConstants.LeaveRequestSuccessfullyCreated, NoticifationTypeConstants.Create);
+            Notification(NotificationMessageConstants.LeaveRequestSuccessfullyCreated, NotificationTypeConstants.Create);
 
             return RedirectToAction(nameof(LeaveRequestsList));
         }
