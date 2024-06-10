@@ -116,7 +116,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             _userLeaveRequestService.CreateLeaveRequest(leaveRequestDTO);
 
-            Notification(NotificationMessageConstants.LeaveRequestSuccessfullyCreated, NotificationTypeConstants.Create);
+            Notification(NotificationMessageConstants.LeaveRequestCreated, NotificationTypeConstants.Create);
 
             return RedirectToAction(nameof(GetLeaveRequests));
         }

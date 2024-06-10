@@ -40,7 +40,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             await _employeeService.CreateEmployeeAsync(employeeDTO);
 
-            Notification(NotificationMessageConstants.EmployeeSuccessfullyCreated, NotificationTypeConstants.Create);
+            Notification(NotificationMessageConstants.EmployeeCreated, NotificationTypeConstants.Create);
 
             return RedirectToAction(nameof(EmployeeList));
         }
@@ -78,9 +78,9 @@ namespace TakeLeave.Web.Areas.HR.Controllers
 
             employeeViewModel.PositionTitlesAndSeniorityLevels = _employeeService.GetPositionTitlesAndSeniorityLevels();
 
-            Notification(NotificationMessageConstants.EmployeeSuccessfullyUpdated, NotificationTypeConstants.Update);
+            Notification(NotificationMessageConstants.EmployeeUpdated, NotificationTypeConstants.Update);
 
-            return View(employeeViewModel);
+            return RedirectToAction(nameof(EmployeeList));
         }
 
         [Authorize(Roles = EmployeeRoles.Admin)]
@@ -99,7 +99,7 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         {
             await _employeeService.DeleteEmployeeAsync(employeeInfoViewModel.Id);
 
-            Notification(NotificationMessageConstants.EmployeeSuccessfullyDeleted, NotificationTypeConstants.Delete);
+            Notification(NotificationMessageConstants.EmployeeDeleted, NotificationTypeConstants.Delete);
 
             return RedirectToAction(nameof(EmployeeList));
         }

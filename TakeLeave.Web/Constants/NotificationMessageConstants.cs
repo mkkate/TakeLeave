@@ -2,14 +2,14 @@
 {
     public class NotificationMessageConstants
     {
-        public const string EmployeeSuccessfullyCreated = "Employee successfully created";
-        public const string EmployeeSuccessfullyUpdated = "Employee successfully updated";
-        public const string EmployeeSuccessfullyDeleted = "Employee successfully deleted";
+        public const string EmployeeCreated = "Employee created";
+        public const string EmployeeUpdated = "Employee updated";
+        public const string EmployeeDeleted = "Employee deleted";
 
-        public const string PositionSuccessfullyCreated = "Position successfully created";
-        public const string PositionSuccessfullyUpdated = "Position successfully updated";
+        public const string PositionCreated = "Position created";
+        public const string PositionUpdated = "Position updated";
 
-        public const string LeaveRequestSuccessfullyCreated = "Leave request successfully created";
+        public const string LeaveRequestCreated = "Leave request created";
 
         public const string LeaveRequestEdited = "Leave request edited";
         public const string LeaveRequestApproved = "Leave request approved";
