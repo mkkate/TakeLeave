@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using TakeLeave.Business.CustomSettings;
 using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Mappers;
@@ -18,17 +20,23 @@ namespace TakeLeave.Business.Services
         private readonly IPositionRepository _positionRepository;
         private readonly IDaysOffRepository _daysOffRepository;
         private readonly UserManager<Employee> _userManager;
+        private readonly IEmailSenderService _emailSenderService;
+        private readonly EmailSettings _emailSettings;
 
         public EmployeeService(
             IEmployeeRepository employeeRepository,
             IPositionRepository positionRepository,
             IDaysOffRepository daysOffRepository,
-            UserManager<Employee> userManager)
+            UserManager<Employee> userManager,
+            IEmailSenderService emailSenderService,
+            IOptions<EmailSettings> emailSettings)
         {
             _employeeRepository = employeeRepository;
             _positionRepository = positionRepository;
             _daysOffRepository = daysOffRepository;
             _userManager = userManager;
+            _emailSenderService = emailSenderService;
+            _emailSettings = emailSettings.Value;
         }
 
         public List<EmployeeInfoDTO>? EmployeeList()
@@ -125,6 +133,11 @@ namespace TakeLeave.Business.Services
             _employeeRepository.Save();
 
             await EmployeeHelper.AssignRole(employee, _userManager, _positionRepository);
+
+            await _emailSenderService.SendEmailToSingleRecipient(
+                $"Welcome {employee.FirstName}!",
+                employee.Email,
+                "You have been register into TakeLeave platform. This is your profile information");
         }
 
         public async Task DeleteEmployeeAsync(int id)

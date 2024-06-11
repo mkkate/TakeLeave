@@ -2,6 +2,8 @@ using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Extensions.DependencyInjection;
+using TakeLeave.Business.CustomSettings;
 using TakeLeave.Data;
 using TakeLeave.Data.Database.Employees;
 using TakeLeave.Web;
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<TakeLeaveDbContext>(options =>
 builder.Services.AddIdentity<Employee, EmployeeRole>()
     .AddEntityFrameworkStores<TakeLeaveDbContext>();
 
+builder.Configuration.AddJsonFile("customSettings.json", optional: true, reloadOnChange: true);
+
 builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
 options =>
 {
@@ -26,6 +30,13 @@ options =>
     options.SlidingExpiration = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 });
+
+builder.Services.AddSendGrid(options =>
+    options.ApiKey = builder.Configuration
+    .GetSection(EmailSettings.Email)
+    .GetValue<string>(nameof(EmailSettings.ApiKey)));
+
+builder.Services.ConfigureCustomSettings(builder);
 
 builder.Services.ConfigureRepository();
 

@@ -26,6 +26,7 @@ namespace TakeLeave.Web
             services.AddScoped<IUserLeaveRequestService, UserLeaveRequestService>();
             services.AddScoped<IHrLeaveRequestService, HrLeaveRequestService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
     }
 }
