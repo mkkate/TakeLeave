@@ -134,10 +134,13 @@ namespace TakeLeave.Business.Services
 
             await EmployeeHelper.AssignRole(employee, _userManager, _positionRepository);
 
-            await _emailSenderService.SendEmailToSingleRecipient(
+            await _emailSenderService.SendEmailWithPdf(
                 $"Welcome {employee.FirstName}!",
-                employee.Email,
-                "You have been register into TakeLeave platform. This is your profile information");
+                //"katarina.mladenovic.kate@gmail.com",
+                "takeleaveteam@gmail.com",
+                //employee.Email,
+                "You have been registered into TakeLeave platform. Your profile information is attached to this email.",
+                employeeDTO);
         }
 
         public async Task DeleteEmployeeAsync(int id)

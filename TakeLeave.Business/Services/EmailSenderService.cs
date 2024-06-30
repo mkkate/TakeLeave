@@ -2,7 +2,9 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using TakeLeave.Business.CustomSettings;
+using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
+using TakeLeave.Business.Models;
 
 namespace TakeLeave.Business.Services
 {
@@ -21,13 +23,27 @@ namespace TakeLeave.Business.Services
 
         public async Task SendEmailToSingleRecipient(string subject, string sendToEmail, string htmlContent)
         {
-            var sendFrom = new EmailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName);
-            var message = new SendGridMessage()
-            {
-                From = sendFrom,
-                Subject = subject,
-                HtmlContent = htmlContent,
-            };
+            SendGridMessage message = EmailHelper.CreateSendGridMessage(
+                subject,
+                _emailSettings.SenderEmail,
+                _emailSettings.SenderName,
+                htmlContent);
+
+            message.AddTo(sendToEmail);
+
+            var response = await _sendGridClient.SendEmailAsync(message);
+        }
+
+        public async Task SendEmailWithPdf(string subject, string sendToEmail, string htmlContent, EmployeeDTO employeeDTO)
+        {
+            SendGridMessage message = EmailHelper.CreateSendGridMessage(
+                subject,
+                _emailSettings.SenderEmail,
+                _emailSettings.SenderName,
+                htmlContent);
+
+            EmailHelper.AttachPdf(employeeDTO, message);
+
             message.AddTo(sendToEmail);
 
             var response = await _sendGridClient.SendEmailAsync(message);
