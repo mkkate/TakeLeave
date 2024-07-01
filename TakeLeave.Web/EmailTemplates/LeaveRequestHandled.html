@@ -1,0 +1,89 @@
+﻿﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Leave request report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: black;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 50px 150px 50px 150px;
+            text-align: left;
+            width: 100%;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Leave request report</h2>
+
+    <p>Dear {firstName}, </p>
+    <br />
+    <p>Your leave request has been {requestAction}.</p>
+
+    <h4>This is your leave request status:</h4>
+
+    <table>
+        <tr>
+            <td>Leave type:</td>
+            <td>{leaveType}</td>
+        </tr>
+        <tr>
+            <td>Leave start date:</td>
+            <td>{leaveStartDate}</td>
+        </tr>
+        <tr>
+            <td>Leave end date:</td>
+            <td>{leaveEndDate}</td>
+        </tr>
+        <tr>
+            <td>Leave status:</td>
+            <td>{leaveStatus}</td>
+        </tr>
+    </table>
+
+    <p>You have this amount of available days off left:</p>
+
+    <table>
+        <tr>
+            <td>Vacation:</td>
+            <td>{vacation}</td>
+        </tr>
+        <tr>
+            <td>Unpaid:</td>
+            <td>{unpaid}</td>
+        </tr>
+        <tr>
+            <td>Paid:</td>
+            <td>{paid}</td>
+        </tr>
+        <tr>
+            <td>Sick leave:</td>
+            <td>{sickLeave}</td>
+        </tr>
+    </table>
+
+    <p>Best regards,</p>
+    <p>TakeLeave Team</p>
+</body>
+</html>

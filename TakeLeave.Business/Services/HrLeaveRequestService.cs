@@ -13,10 +13,14 @@ namespace TakeLeave.Business.Services
     public class HrLeaveRequestService : IHrLeaveRequestService
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
+        private readonly IEmailSenderService _emailSenderService;
 
-        public HrLeaveRequestService(ILeaveRequestRepository leaveRequestRepository)
+        public HrLeaveRequestService(
+            ILeaveRequestRepository leaveRequestRepository,
+            IEmailSenderService emailSenderService)
         {
             _leaveRequestRepository = leaveRequestRepository;
+            _emailSenderService = emailSenderService;
         }
 
         public List<HrLeaveRequestDTO> GetLeaveRequests()
@@ -78,7 +82,7 @@ namespace TakeLeave.Business.Services
             }
         }
 
-        public void ApproveLeaveRequest(int id, int loggedHrId)
+        public async Task ApproveLeaveRequest(int id, int loggedHrId)
         {
             LeaveRequest? leaveRequest = _leaveRequestRepository
                 .GetByCondition(lr => lr.ID.Equals(id))
@@ -109,6 +113,21 @@ namespace TakeLeave.Business.Services
 
                     _leaveRequestRepository.Update(leaveRequest);
                     _leaveRequestRepository.Save();
+
+                    HrLeaveRequestDTO hrLeaveRequestDTO = leaveRequest.MapLeaveRequestToHrLeaveRequestDtoWithDaysOff();
+
+                    string subject = "Leave request approved";
+                    string htmlContent = $"Dear {hrLeaveRequestDTO.FirstName}," +
+                        $"\n\nYour leave request has been APPROVED." +
+                        $"\n\nAll details are in the document attached to this email." +
+                        $"\n\nBest regards,\nTakeLeave Team";
+
+                    await _emailSenderService.SendLeaveRequestEmailWithPdf(
+                        subject,
+                        "takeleaveteam@gmail.com",
+                        //leaveRequest.RequestedByEmployee.Email,
+                        htmlContent,
+                        hrLeaveRequestDTO);
                 }
             }
         }

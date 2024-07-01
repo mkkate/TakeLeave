@@ -9,8 +9,8 @@ namespace TakeLeave.Business.Interfaces
         HrLeaveRequestDTO GetLeaveRequestById(int id);
         HashSet<string> GetLeaveTypes();
         void UpdateLeaveRequest(HrLeaveRequestDTO hrLeaveRequestDTO);
-        void ApproveLeaveRequest(int id, int loggedHrId);
         void RejectLeaveRequest(int id, int loggedHrId);
+        Task ApproveLeaveRequest(int id, int loggedHrId);
         List<CalendarDTO> GetEmployeesOnLeave(DateTime date);
     }
 }

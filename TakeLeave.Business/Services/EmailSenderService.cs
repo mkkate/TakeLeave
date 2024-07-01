@@ -5,6 +5,7 @@ using TakeLeave.Business.CustomSettings;
 using TakeLeave.Business.Helpers;
 using TakeLeave.Business.Interfaces;
 using TakeLeave.Business.Models;
+using TakeLeave.Business.Models.LeaveRequests;
 
 namespace TakeLeave.Business.Services
 {
@@ -43,6 +44,21 @@ namespace TakeLeave.Business.Services
                 htmlContent);
 
             EmailHelper.AttachPdf(employeeDTO, message);
+
+            message.AddTo(sendToEmail);
+
+            var response = await _sendGridClient.SendEmailAsync(message);
+        }
+
+        public async Task SendLeaveRequestEmailWithPdf(string subject, string sendToEmail, string htmlContent, HrLeaveRequestDTO hrLeaveRequestDTO)
+        {
+            SendGridMessage message = EmailHelper.CreateSendGridMessage(
+                subject,
+                _emailSettings.SenderEmail,
+                _emailSettings.SenderName,
+                htmlContent);
+
+            EmailHelper.AttachPdfLeaveRequest(hrLeaveRequestDTO, message);
 
             message.AddTo(sendToEmail);
 

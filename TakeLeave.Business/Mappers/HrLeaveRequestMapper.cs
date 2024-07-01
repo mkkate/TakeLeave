@@ -22,6 +22,13 @@ namespace TakeLeave.Business.Mappers
             };
         }
 
+        public static HrLeaveRequestDTO MapLeaveRequestToHrLeaveRequestDtoWithDaysOff(this LeaveRequest leaveRequest)
+        {
+            HrLeaveRequestDTO hrLeaveRequestDTO = leaveRequest.MapLeaveRequestToHrLeaveRequestDto();
+            hrLeaveRequestDTO.DaysOff = leaveRequest.RequestedByEmployee.DaysOff.MapDaysOffToDaysOffDto();
+            return hrLeaveRequestDTO;
+        }
+
         public static void MapHrLeaveRequestDtoToLeaveRequest(this HrLeaveRequestDTO hrLeaveRequestDTO, LeaveRequest leaveRequest)
         {
             leaveRequest.ID = hrLeaveRequestDTO.Id;

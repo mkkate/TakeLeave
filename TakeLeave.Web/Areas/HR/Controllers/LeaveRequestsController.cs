@@ -74,9 +74,9 @@ namespace TakeLeave.Web.Areas.HR.Controllers
         }
 
         [Authorize(Roles = EmployeeRoles.Admin)]
-        public IActionResult ApproveLeaveRequest(int id)
+        public async Task<IActionResult> ApproveLeaveRequest(int id)
         {
-            _hrLeaveRequestService.ApproveLeaveRequest(id, GetLoggedInEmployeeId());
+            await _hrLeaveRequestService.ApproveLeaveRequest(id, GetLoggedInEmployeeId());
 
             Notification(NotificationMessageConstants.LeaveRequestApproved, NotificationTypeConstants.Approve);
 
